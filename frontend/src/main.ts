@@ -21,7 +21,6 @@ interface PuzzleSlot {
   direction: Direction
   answer: string
   clue: string
-  cells: Array<[number, number]>
 }
 
 interface Puzzle {
@@ -66,6 +65,10 @@ const directionLabel: Record<Direction, string> = {
   down: 'v',
 }
 
+function clueOrder(direction: Direction): number {
+  return direction === 'down' ? 0 : 1
+}
+
 function pct(value: number): string {
   return `${Math.round(value * 100)}%`
 }
@@ -83,39 +86,16 @@ function escapeHtml(value: string): string {
   })
 }
 
-function cellKey(row: number, col: number): string {
-  return `${row},${col}`
-}
-
-function buildBoundaryClasses(puzzle: Puzzle): Map<string, string[]> {
-  const boundaries = new Map<string, string[]>()
-  for (const slot of puzzle.slots) {
-    const endCell = slot.cells.at(-1)
-    if (!endCell) {
-      continue
-    }
-    const key = cellKey(endCell[0], endCell[1])
-    const classes = boundaries.get(key) ?? []
-    classes.push(slot.direction === 'right' ? 'end-right' : 'end-down')
-    boundaries.set(key, classes)
-  }
-  return boundaries
-}
-
-function cellClass(cell: PuzzleCell, extraClasses: string[] = []): string {
-  return [
-    'cell',
-    `cell-${cell.type}`,
-    showSolution ? 'show-solution' : '',
-    ...extraClasses,
-  ].join(' ')
+function cellClass(cell: PuzzleCell): string {
+  return ['cell', `cell-${cell.type}`, showSolution ? 'show-solution' : ''].join(' ')
 }
 
 function renderClues(clues: ClueItem[] = []): string {
-  return clues
+  return [...clues]
+    .sort((left, right) => clueOrder(left.direction) - clueOrder(right.direction))
     .map(
       (clue) => `
-        <div class="clue-line">
+        <div class="clue-line clue-${clue.direction}">
           <span class="clue-text">${escapeHtml(clue.text)}</span>
           <span class="clue-arrow" aria-label="${clue.direction}">${directionLabel[clue.direction]}</span>
         </div>
@@ -125,24 +105,22 @@ function renderClues(clues: ClueItem[] = []): string {
 }
 
 function renderGrid(puzzle: Puzzle): string {
-  const boundaries = buildBoundaryClasses(puzzle)
   const rows = puzzle.cells
-    .flatMap((row, rowIndex) =>
-      row.map((cell, colIndex) => {
-        const extraClasses = boundaries.get(cellKey(rowIndex, colIndex)) ?? []
+    .flatMap((row) =>
+      row.map((cell) => {
         if (cell.type === 'clue') {
-          return `<div class="${cellClass(cell, extraClasses)}">${renderClues(cell.clues)}</div>`
+          return `<div class="${cellClass(cell)}">${renderClues(cell.clues)}</div>`
         }
 
         if (cell.type === 'letter') {
           return `
-            <div class="${cellClass(cell, extraClasses)}">
+            <div class="${cellClass(cell)}">
               <span class="letter">${escapeHtml(cell.solution ?? '')}</span>
             </div>
           `
         }
 
-        return `<div class="${cellClass(cell, extraClasses)}"></div>`
+        return `<div class="${cellClass(cell)}"></div>`
       }),
     )
     .join('')

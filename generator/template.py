@@ -14,6 +14,7 @@ class Slot:
     direction: Direction
     origin: tuple[int, int]
     cells: tuple[tuple[int, int], ...]
+    clue_direction: Direction | None = None
 
     @property
     def length(self) -> int:
@@ -27,10 +28,20 @@ class Slot:
             return row, col + 1
         return row + 1, col
 
+    def arrow_direction(self) -> Direction:
+        return self.clue_direction or self.direction
+
+    def expected_first_cell(self) -> tuple[int, int]:
+        row, col = self.origin
+        if self.arrow_direction() == "right":
+            return row, col + 1
+        return row + 1, col
+
     def to_dict(self) -> dict:
         return {
             "id": self.id,
             "direction": self.direction,
+            "clueDirection": self.arrow_direction(),
             "origin": list(self.origin),
             "cells": [list(cell) for cell in self.cells],
         }
@@ -42,6 +53,7 @@ class Slot:
             direction=data["direction"],
             origin=tuple(data["origin"]),
             cells=tuple(tuple(cell) for cell in data["cells"]),
+            clue_direction=data.get("clueDirection", data.get("clue_direction", data["direction"])),
         )
 
 
@@ -147,6 +159,77 @@ class Template:
     def clue_cells(self) -> set[tuple[int, int]]:
         return {slot.origin for slot in self.slots}
 
+    def clue_cell_directions(self) -> dict[tuple[int, int], set[Direction]]:
+        directions: dict[tuple[int, int], set[Direction]] = {}
+        for slot in self.slots:
+            directions.setdefault(slot.origin, set()).add(slot.arrow_direction())
+        return directions
+
+    def invalid_clue_cells(self, max_clues_per_cell: int = 2) -> list[str]:
+        errors: list[str] = []
+        by_origin: dict[tuple[int, int], list[Slot]] = {}
+        letter_cells = self.letter_cells()
+
+        for slot in self.slots:
+            by_origin.setdefault(slot.origin, []).append(slot)
+            row, col = slot.origin
+            if row < 0 or row >= self.height or col < 0 or col >= self.width:
+                errors.append(f"{slot.id} origin {slot.origin} is outside the grid")
+            if slot.origin in letter_cells:
+                errors.append(f"{slot.id} origin {slot.origin} overlaps a letter cell")
+            if not slot.cells:
+                errors.append(f"{slot.id} has no cells")
+                continue
+            if slot.cells[0] != slot.expected_first_cell():
+                errors.append(
+                    f"{slot.id} {slot.arrow_direction()} arrow from {slot.origin} does not point "
+                    f"to first cell {slot.cells[0]}"
+                )
+
+        for origin, slots in by_origin.items():
+            directions = [slot.arrow_direction() for slot in slots]
+            if len(slots) > max_clues_per_cell:
+                errors.append(f"clue cell {origin} has {len(slots)} clues")
+            if len(directions) != len(set(directions)):
+                errors.append(f"clue cell {origin} has overlapping arrows {directions}")
+            if set(directions).difference({"right", "down"}):
+                errors.append(f"clue cell {origin} has unsupported arrows {directions}")
+
+        return errors
+
+    def invalid_cross_entry_cells(self) -> list[str]:
+        errors: list[str] = []
+        letter_cells = self.letter_cells()
+
+        for slot in self.slots:
+            if slot.arrow_direction() == slot.direction or not slot.cells:
+                continue
+
+            first_cell = slot.cells[0]
+            allowed_letter_neighbors = {slot.origin}
+            if len(slot.cells) > 1:
+                allowed_letter_neighbors.add(slot.cells[1])
+
+            row, col = first_cell
+            for neighbor in (
+                (row - 1, col),
+                (row + 1, col),
+                (row, col - 1),
+                (row, col + 1),
+            ):
+                n_row, n_col = neighbor
+                if n_row < 0 or n_row >= self.height or n_col < 0 or n_col >= self.width:
+                    continue
+                if neighbor in allowed_letter_neighbors:
+                    continue
+                if neighbor in letter_cells:
+                    errors.append(
+                        f"{slot.id} cross-oriented entry {first_cell} touches letter {neighbor}"
+                    )
+                    break
+
+        return errors
+
     def unterminated_slots(self) -> list[tuple[str, tuple[int, int]]]:
         letter_cells = self.letter_cells()
         clue_cells = self.clue_cells()
@@ -165,6 +248,43 @@ class Template:
                 invalid.append((slot.id, stop_cell))
 
         return invalid
+
+    def readable_runs(
+        self, min_length: int = 3
+    ) -> list[tuple[Direction, tuple[tuple[int, int], ...]]]:
+        letter_cells = self.letter_cells()
+        runs: list[tuple[Direction, tuple[tuple[int, int], ...]]] = []
+
+        for row, col in sorted(letter_cells):
+            if (row, col - 1) not in letter_cells:
+                cells = []
+                scan_col = col
+                while (row, scan_col) in letter_cells:
+                    cells.append((row, scan_col))
+                    scan_col += 1
+                if len(cells) >= min_length:
+                    runs.append(("right", tuple(cells)))
+
+            if (row - 1, col) not in letter_cells:
+                cells = []
+                scan_row = row
+                while (scan_row, col) in letter_cells:
+                    cells.append((scan_row, col))
+                    scan_row += 1
+                if len(cells) >= min_length:
+                    runs.append(("down", tuple(cells)))
+
+        return runs
+
+    def unclued_readable_runs(
+        self, min_length: int = 3
+    ) -> list[tuple[Direction, tuple[tuple[int, int], ...]]]:
+        explicit_slots = {(slot.direction, slot.cells) for slot in self.slots}
+        return [
+            (direction, cells)
+            for direction, cells in self.readable_runs(min_length=min_length)
+            if (direction, cells) not in explicit_slots
+        ]
 
 
 def derive_overlaps(slots: tuple[Slot, ...]) -> list[Overlap]:

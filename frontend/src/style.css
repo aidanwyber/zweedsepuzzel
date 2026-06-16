@@ -114,20 +114,6 @@ h1 {
   justify-content: center;
 }
 
-.cell-letter.end-right {
-  box-shadow: inset -5px 0 0 var(--line);
-}
-
-.cell-letter.end-down {
-  box-shadow: inset 0 -5px 0 var(--line);
-}
-
-.cell-letter.end-right.end-down {
-  box-shadow:
-    inset -5px 0 0 var(--line),
-    inset 0 -5px 0 var(--line);
-}
-
 .letter {
   color: transparent;
   font-size: 30px;
@@ -144,8 +130,8 @@ h1 {
   background: var(--clue);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 5px;
+  justify-content: stretch;
+  padding: 0;
 }
 
 .cell-block {
@@ -157,7 +143,22 @@ h1 {
   display: flex;
   gap: 3px;
   justify-content: space-between;
+  min-height: 0;
   min-width: 0;
+  padding: 4px;
+}
+
+.clue-line + .clue-line {
+  border-top: 1px solid rgb(45 48 43 / 55%);
+}
+
+.clue-down {
+  align-items: start;
+  flex: 1 1 0;
+}
+
+.clue-right {
+  flex: 1 1 0;
 }
 
 .clue-text {
@@ -184,6 +185,10 @@ h1 {
   justify-content: center;
   line-height: 1;
   width: 18px;
+}
+
+.clue-down .clue-arrow {
+  align-self: end;
 }
 
 .side-panel {

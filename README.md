@@ -195,7 +195,9 @@ python3 -m generator.template_generator \
   --attempts 1000 \
   --keep 5 \
   --seed 1000 \
-  --max-word-length 9
+  --max-word-length 9 \
+  --clue-directions both \
+  --max-clues-per-cell 2
 ```
 
 Option meanings:
@@ -207,8 +209,12 @@ Option meanings:
 - `--keep`: number of top candidates to report.
 - `--seed`: deterministic starting seed for reproducible searches.
 - `--max-word-length`: longest CSV answer shape used while searching layouts.
+- `--clue-directions`: allowed clue arrows: `right`, `down`, or `both`.
+  Answers always read horizontally right or vertically down.
+- `--max-clues-per-cell`: `1` or `2`. With `2`, a clue cell can contain one
+  right-arrow clue and one down-arrow clue, but never overlapping arrows.
 - `--save-rejected`: also save rejected top candidates for inspection.
-- `--verbose`: print each attempt's pass/reject status and rejection reasons.
+- `--verbose`: print passing attempts as they are found.
 
 The search keeps passing and rejected candidates in separate leaderboards.
 Passing templates are always reported first and saved. Rejected templates are
@@ -221,7 +227,7 @@ inspection:
 python3 -m generator.template_generator --attempts 50 --save-rejected
 ```
 
-To debug why a seed is not finding passing templates:
+To see passing templates as they are found:
 
 ```sh
 python3 -m generator.template_generator --attempts 20 --seed 100001 --verbose
@@ -230,6 +236,18 @@ python3 -m generator.template_generator --attempts 20 --seed 100001 --verbose
 The template generator does not fill the final puzzle with answers. It uses CSV
 word shapes to search plausible slot geometry, then the main generator performs
 the actual CSP fill against the chosen template.
+
+Template slots store both:
+
+- `direction`: the answer reading direction, either `right` or `down`.
+- `clueDirection`: the arrow direction from the clue cell to the first answer
+  cell, either `right` or `down`.
+
+Usually these are the same. The template generator may also place a vertical
+answer whose clue arrow points right, or a horizontal answer whose clue arrow
+points down, when the first answer cell is otherwise surrounded by clue cells,
+block cells, or the grid edge. Existing templates without `clueDirection` still
+load as same-direction clue slots.
 
 Template evaluation follows the research report's template-first approach:
 
@@ -241,6 +259,11 @@ Template evaluation follows the research report's template-first approach:
 - short-slot ratio
 - dual-clue-cell use
 - word-length coverage from the CSV
+- hard word termination: the cell after a slot must be grid edge, clue cell, or
+  block, never another letter cell
+- hard readable-run validation: every contiguous horizontal or vertical run of
+  at least 3 letters must be an explicit slot, and every such filled run must
+  be an answer from the CSV
 
 Recommended workflow:
 
@@ -295,6 +318,8 @@ Current implementation:
 - connected dense 10x17 default template
 - template JSON load/save through `Template`
 - randomized template search and pre-solve evaluation
+- hard template constraint preventing words from visually continuing past their
+  final cell
 - right and down clue directions
 - slot domains filtered by word length
 - MRV slot selection

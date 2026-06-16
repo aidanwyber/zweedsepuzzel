@@ -32,7 +32,13 @@ Zweedse puzzels. The word list remains CSV-based.
 - [x] Templates can be saved to and loaded from JSON.
 - [x] Randomized template generator added.
 - [x] Template search evaluates fill, clue ratio, interlock, connectedness, slot
-  count, short slots, dual clue cells, and CSV length coverage.
+      count, short slots, dual clue cells, and CSV length coverage.
+- [x] Hard validation rejects readable letter runs that are not explicit slots.
+- [x] Filled puzzle validation rejects readable runs that are not CSV answers.
+- [x] Slot JSON supports separate answer direction and clue arrow direction.
+- [x] Template search can place cross-oriented clue arrows when the entry cell
+      is otherwise isolated by clue cells, block cells, or the grid edge.
+- [x] Support clue cells with two clue arrows in one cell.
 
 ## In Progress
 
@@ -40,13 +46,14 @@ Zweedse puzzels. The word list remains CSV-based.
 - [ ] Increase CSV coverage for all template slot lengths.
 - [ ] Raise interlock targets with denser templates.
 - [ ] Curate saved generated templates and promote the strongest ones.
+- [ ] Regenerate and verify saved templates against the readable-run constraint.
 
 ## To Do
 
+- [ ] Stop template generation process whenever the desired number of templates to save has been reached.
 - [ ] Add at least 3 hand-authored dense 10x17 templates.
 - [ ] Add at least 3 generated dense 10x17 templates that pass template
-  evaluation and puzzle generation.
-- [ ] Support clue cells with two clue arrows in one cell.
+      evaluation and puzzle generation.
 - [ ] Add grid connectivity tests.
 - [ ] Add uniqueness regression tests.
 - [ ] Add `IJ` normalization tests.
@@ -64,8 +71,8 @@ Zweedse puzzels. The word list remains CSV-based.
 
 ## Current Blockers
 
-- The current 10x17 template passes the first enforceable publisher profile, but
-  interlock is still below the long-term editorial target.
+- Saved 10x17 templates need regeneration and verification against the newer
+  readable-run and cross-entry constraints.
 - The CSV is large enough for the current template, but not large enough for
   reliable generation across a larger dense template catalog.
 - Structural uniqueness is not guaranteed for every accepted clue-bearing

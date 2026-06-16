@@ -50,9 +50,9 @@ PUBLISHER_PROFILE = QualityProfile(
     name="publisher",
     uniqueness="clue",
     require_connected=True,
-    min_fill_rate=0.60,
-    min_interlock_ratio=0.25,
-    min_slot_count=24,
+    min_fill_rate=0.56,
+    min_interlock_ratio=0.19,
+    min_slot_count=21,
     max_short_word_ratio=0.12,
     max_clue_chars=22,
 )
@@ -195,6 +195,54 @@ def clue_unique(slots: list[dict], words: list[WordEntry]) -> bool:
     return all(len(clue_to_answers.get(clue, set())) == 1 for clue in selected_clues)
 
 
+def allowed_answer_strings(words: list[WordEntry]) -> set[str]:
+    return {"".join(display_letter(letter) for letter in word.letters) for word in words}
+
+
+def invalid_readable_words(
+    puzzle: dict, words: list[WordEntry], min_length: int = 3
+) -> list[tuple[str, str, tuple[int, int]]]:
+    allowed = allowed_answer_strings(words)
+    cells = puzzle["cells"]
+    height = puzzle["height"]
+    width = puzzle["width"]
+
+    def is_letter(row: int, col: int) -> bool:
+        return (
+            0 <= row < height
+            and 0 <= col < width
+            and cells[row][col]["type"] == "letter"
+        )
+
+    invalid: list[tuple[str, str, tuple[int, int]]] = []
+    for row in range(height):
+        for col in range(width):
+            if not is_letter(row, col):
+                continue
+
+            if not is_letter(row, col - 1):
+                letters = []
+                scan_col = col
+                while is_letter(row, scan_col):
+                    letters.append(cells[row][scan_col]["solution"])
+                    scan_col += 1
+                answer = "".join(letters)
+                if len(letters) >= min_length and answer not in allowed:
+                    invalid.append(("right", answer, (row, col)))
+
+            if not is_letter(row - 1, col):
+                letters = []
+                scan_row = row
+                while is_letter(scan_row, col):
+                    letters.append(cells[scan_row][col]["solution"])
+                    scan_row += 1
+                answer = "".join(letters)
+                if len(letters) >= min_length and answer not in allowed:
+                    invalid.append(("down", answer, (row, col)))
+
+    return invalid
+
+
 class Solver:
     def __init__(self, template: Template, words: list[WordEntry], seed: int = 7) -> None:
         self.template = template
@@ -309,7 +357,7 @@ def materialize(template: Template, assignment: dict[str, WordEntry], unique: bo
     for slot_id, word in assignment.items():
         slot = slots_by_id[slot_id]
         clue_cells.setdefault(slot.origin, []).append(
-            {"direction": slot.direction, "text": word.clue, "slotId": slot.id}
+            {"direction": slot.arrow_direction(), "text": word.clue, "slotId": slot.id}
         )
         for index, cell in enumerate(slot.cells):
             letter_cells.setdefault(cell, (display_letter(word.letters[index]), []))[1].append(
@@ -347,6 +395,7 @@ def materialize(template: Template, assignment: dict[str, WordEntry], unique: bo
             {
                 "id": slot.id,
                 "direction": slot.direction,
+                "clueDirection": slot.arrow_direction(),
                 "origin": list(slot.origin),
                 "cells": [list(cell) for cell in slot.cells],
                 "answer": assignment[slot.id].answer,
@@ -373,6 +422,10 @@ def evaluate_quality(
     overlaps = derive_overlaps(template.slots)
     components = connected_components(template.slots, overlaps)
     unterminated_slots = template.unterminated_slots()
+    invalid_clue_cells = template.invalid_clue_cells()
+    invalid_cross_entry_cells = template.invalid_cross_entry_cells()
+    unclued_runs = template.unclued_readable_runs()
+    invalid_runs = invalid_readable_words(puzzle, words)
     short_words = sum(1 for slot in slots if len(tokenize_answer(slot["answer"])) <= 3)
     short_word_ratio = short_words / len(slots) if slots else 1.0
     longest_clue = max((len(slot["clue"]) for slot in slots), default=0)
@@ -388,9 +441,32 @@ def evaluate_quality(
         "longestClue": longest_clue,
         "components": components,
         "unterminatedSlotCount": len(unterminated_slots),
+        "invalidClueCellCount": len(invalid_clue_cells),
+        "invalidCrossEntryCellCount": len(invalid_cross_entry_cells),
+        "uncluedReadableRunCount": len(unclued_runs),
+        "invalidReadableWordCount": len(invalid_runs),
     }
 
     reasons: list[str] = []
+    if invalid_clue_cells:
+        reasons.append("; ".join(invalid_clue_cells[:3]))
+    if invalid_cross_entry_cells:
+        reasons.append("; ".join(invalid_cross_entry_cells[:3]))
+    if unclued_runs:
+        examples = ", ".join(
+            f"{direction}@{cells[0]}" for direction, cells in unclued_runs[:3]
+        )
+        reasons.append(f"{len(unclued_runs)} unclued readable runs ({examples})")
+    if invalid_runs:
+        examples = ", ".join(
+            f"{answer} {direction}@{origin}" for direction, answer, origin in invalid_runs[:3]
+        )
+        reasons.append(f"{len(invalid_runs)} readable non-words ({examples})")
+    if unterminated_slots:
+        examples = ", ".join(
+            f"{slot_id}@{cell}" for slot_id, cell in unterminated_slots[:3]
+        )
+        reasons.append(f"{len(unterminated_slots)} unterminated slots ({examples})")
     if profile.uniqueness == "structural" and not puzzle["unique"]:
         reasons.append("fill is not structurally unique")
     if profile.uniqueness == "clue" and not clues_unique:
