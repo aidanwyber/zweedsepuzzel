@@ -39,6 +39,16 @@ interface Puzzle {
     clueCells: number
     slotCount: number
   }
+  quality?: {
+    profile: string
+    passed: boolean
+    score: number
+    reasons: string[]
+    values?: {
+      structuralUnique?: boolean
+      clueUnique?: boolean
+    }
+  }
 }
 
 const app = document.querySelector<HTMLDivElement>('#app')
@@ -131,7 +141,32 @@ function renderSlotList(slots: PuzzleSlot[]): string {
     .join('')
 }
 
+function renderQuality(puzzle: Puzzle): string {
+  if (!puzzle.quality) {
+    return ''
+  }
+
+  const accepted = puzzle.quality.profile === 'publisher' && puzzle.quality.passed
+  const reasons = puzzle.quality.reasons.length
+    ? `<ul>${puzzle.quality.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join('')}</ul>`
+    : ''
+
+  return `
+    <div class="quality-panel ${accepted ? 'quality-pass' : 'quality-fail'}">
+      <div>
+        <span>${escapeHtml(puzzle.quality.profile)}</span>
+        <strong>${accepted ? 'goedgekeurd' : 'concept'}</strong>
+      </div>
+      <small>score ${puzzle.quality.score}</small>
+      ${reasons}
+    </div>
+  `
+}
+
 function render(puzzle: Puzzle): void {
+  const uniquenessValue = puzzle.quality?.values?.clueUnique ?? puzzle.unique
+  const uniquenessLabel = puzzle.quality?.values?.clueUnique === undefined ? 'structuur' : 'clues'
+
   root.innerHTML = `
     <main class="shell">
       <header class="topbar">
@@ -150,10 +185,11 @@ function render(puzzle: Puzzle): void {
         </div>
 
         <aside class="side-panel">
+          ${renderQuality(puzzle)}
           <div class="metrics">
             <div><span>${pct(puzzle.metrics.fillRate)}</span><small>vulling</small></div>
             <div><span>${pct(puzzle.metrics.interlockRatio)}</span><small>kruising</small></div>
-            <div><span>${puzzle.unique ? 'ja' : 'nee'}</span><small>uniek</small></div>
+            <div><span>${uniquenessValue ? 'ja' : 'nee'}</span><small>${uniquenessLabel}</small></div>
           </div>
           <ol class="slot-list">
             ${renderSlotList(puzzle.slots)}

@@ -179,6 +179,58 @@ h1 {
   padding: 16px;
 }
 
+.quality-panel {
+  border-radius: 6px;
+  margin-bottom: 14px;
+  padding: 12px;
+  text-align: left;
+}
+
+.quality-panel div {
+  align-items: baseline;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.quality-panel span {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.quality-panel strong {
+  font-size: 14px;
+}
+
+.quality-panel small {
+  color: var(--muted);
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.quality-panel ul {
+  color: var(--muted);
+  display: grid;
+  font-size: 12px;
+  gap: 4px;
+  line-height: 1.25;
+  margin: 10px 0 0;
+  padding-left: 16px;
+}
+
+.quality-pass {
+  background: #e7f3ea;
+  border: 1px solid rgb(54 125 77 / 25%);
+}
+
+.quality-fail {
+  background: #faeee8;
+  border: 1px solid rgb(176 68 50 / 24%);
+}
+
 .metrics {
   display: grid;
   gap: 10px;

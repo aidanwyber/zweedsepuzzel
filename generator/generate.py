@@ -56,6 +56,49 @@ class Overlap:
     b_index: int
 
 
+@dataclass(frozen=True)
+class QualityProfile:
+    name: str
+    uniqueness: Literal["none", "structural", "clue"]
+    require_connected: bool
+    min_fill_rate: float
+    min_interlock_ratio: float
+    min_slot_count: int
+    max_short_word_ratio: float
+    max_clue_chars: int
+
+
+@dataclass(frozen=True)
+class QualityReport:
+    passed: bool
+    score: float
+    reasons: tuple[str, ...]
+    values: dict[str, float | int | bool]
+
+
+PUBLISHER_PROFILE = QualityProfile(
+    name="publisher",
+    uniqueness="clue",
+    require_connected=True,
+    min_fill_rate=0.60,
+    min_interlock_ratio=0.25,
+    min_slot_count=24,
+    max_short_word_ratio=0.12,
+    max_clue_chars=22,
+)
+
+DRAFT_PROFILE = QualityProfile(
+    name="draft",
+    uniqueness="none",
+    require_connected=False,
+    min_fill_rate=0.0,
+    min_interlock_ratio=0.0,
+    min_slot_count=1,
+    max_short_word_ratio=1.0,
+    max_clue_chars=80,
+)
+
+
 def tokenize_answer(answer: str) -> tuple[str, ...]:
     normalized = re.sub(r"[^A-ZĲIJ]", "", answer.upper())
     letters: list[str] = []
@@ -125,22 +168,49 @@ def offset_slots(slots: tuple[Slot, ...], prefix: str, row_offset: int, col_offs
     return tuple(offset_slot(slot, prefix, row_offset, col_offset) for slot in slots)
 
 
-def wide_10x17_template() -> Template:
-    compact_slots = compact_template().slots
-    top_cluster = offset_slots(compact_slots, "top", 0, 0)
-    lower_cluster = offset_slots(compact_slots, "lower", 10, 3)
+def dense_10x17_template() -> Template:
     return Template(
         id="10x17",
         title="Zweedse puzzel 10x17",
         width=10,
         height=17,
-        slots=top_cluster + lower_cluster,
+        slots=(
+            Slot("v_landschap", "down", (1, 1), ((2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1))),
+            Slot("h_potlood", "right", (10, 0), ((10, 1), (10, 2), (10, 3), (10, 4), (10, 5), (10, 6), (10, 7))),
+            Slot("v_computer", "down", (4, 3), ((5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3))),
+            Slot("v_telefoon", "down", (3, 5), ((4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5), (11, 5))),
+            Slot("h_treinstel", "right", (11, 0), ((11, 1), (11, 2), (11, 3), (11, 4), (11, 5), (11, 6), (11, 7), (11, 8), (11, 9))),
+            Slot("v_olifant", "down", (8, 4), ((9, 4), (10, 4), (11, 4), (12, 4), (13, 4), (14, 4), (15, 4))),
+            Slot("v_dorp", "down", (8, 2), ((9, 2), (10, 2), (11, 2), (12, 2))),
+            Slot("v_venster", "down", (9, 8), ((10, 8), (11, 8), (12, 8), (13, 8), (14, 8), (15, 8), (16, 8))),
+            Slot("v_schilder", "down", (6, 9), ((7, 9), (8, 9), (9, 9), (10, 9), (11, 9), (12, 9), (13, 9), (14, 9))),
+            Slot("v_brood", "down", (5, 7), ((6, 7), (7, 7), (8, 7), (9, 7), (10, 7))),
+            Slot("h_winkel", "right", (14, 1), ((14, 2), (14, 3), (14, 4), (14, 5), (14, 6), (14, 7))),
+            Slot("h_stoel", "right", (6, 0), ((6, 1), (6, 2), (6, 3), (6, 4), (6, 5))),
+            Slot("h_camera", "right", (16, 3), ((16, 4), (16, 5), (16, 6), (16, 7), (16, 8), (16, 9))),
+            Slot("h_fietser", "right", (15, 0), ((15, 1), (15, 2), (15, 3), (15, 4), (15, 5), (15, 6), (15, 7))),
+            Slot("v_spiegel", "down", (0, 4), ((1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4))),
+            Slot("h_alarm", "right", (13, 1), ((13, 2), (13, 3), (13, 4), (13, 5), (13, 6))),
+            Slot("v_fluit", "down", (1, 2), ((2, 2), (3, 2), (4, 2), (5, 2), (6, 2))),
+            Slot("v_roos", "down", (7, 6), ((8, 6), (9, 6), (10, 6), (11, 6))),
+            Slot("h_school", "right", (1, 3), ((1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9))),
+            Slot("v_oven", "down", (0, 7), ((1, 7), (2, 7), (3, 7), (4, 7))),
+            Slot("v_huis", "down", (0, 6), ((1, 6), (2, 6), (3, 6), (4, 6))),
+            Slot("v_lepel", "down", (0, 9), ((1, 9), (2, 9), (3, 9), (4, 9), (5, 9))),
+            Slot("v_oever", "down", (0, 8), ((1, 8), (2, 8), (3, 8), (4, 8), (5, 8))),
+            Slot("h_wind", "right", (12, 5), ((12, 6), (12, 7), (12, 8), (12, 9))),
+        ),
     )
 
 
 def available_templates() -> dict[str, Template]:
-    templates = (compact_template(), wide_10x17_template())
+    templates = (compact_template(), dense_10x17_template())
     return {template.id: template for template in templates}
+
+
+def available_profiles() -> dict[str, QualityProfile]:
+    profiles = (PUBLISHER_PROFILE, DRAFT_PROFILE)
+    return {profile.name: profile for profile in profiles}
 
 
 def derive_overlaps(slots: tuple[Slot, ...]) -> list[Overlap]:
@@ -163,6 +233,48 @@ def build_domains(slots: tuple[Slot, ...], words: list[WordEntry]) -> dict[str, 
     for word in words:
         by_length.setdefault(word.length, []).append(word)
     return {slot.id: list(by_length.get(slot.length, [])) for slot in slots}
+
+
+def connected_components(slots: tuple[Slot, ...], overlaps: list[Overlap]) -> int:
+    slot_ids = {slot.id for slot in slots}
+    if not slot_ids:
+        return 0
+
+    adjacency: dict[str, set[str]] = {slot_id: set() for slot_id in slot_ids}
+    for overlap in overlaps:
+        adjacency[overlap.a_slot].add(overlap.b_slot)
+
+    components = 0
+    seen: set[str] = set()
+    for slot_id in slot_ids:
+        if slot_id in seen:
+            continue
+        components += 1
+        stack = [slot_id]
+        seen.add(slot_id)
+        while stack:
+            current = stack.pop()
+            for neighbor in adjacency[current]:
+                if neighbor not in seen:
+                    seen.add(neighbor)
+                    stack.append(neighbor)
+    return components
+
+
+def normalize_clue(clue: str) -> str:
+    return re.sub(r"\s+", " ", clue.strip().casefold())
+
+
+def clue_unique(slots: list[dict], words: list[WordEntry]) -> bool:
+    clue_to_answers: dict[str, set[str]] = {}
+    for word in words:
+        clue_to_answers.setdefault(normalize_clue(word.clue), set()).add(word.answer)
+
+    selected_clues = [normalize_clue(slot["clue"]) for slot in slots]
+    if len(selected_clues) != len(set(selected_clues)):
+        return False
+
+    return all(len(clue_to_answers.get(clue, set())) == 1 for clue in selected_clues)
 
 
 class Solver:
@@ -335,6 +447,121 @@ def materialize(template: Template, assignment: dict[str, WordEntry], unique: bo
     }
 
 
+def evaluate_quality(
+    template: Template, puzzle: dict, profile: QualityProfile, words: list[WordEntry]
+) -> QualityReport:
+    metrics = puzzle["metrics"]
+    slots = puzzle["slots"]
+    overlaps = derive_overlaps(template.slots)
+    components = connected_components(template.slots, overlaps)
+    short_words = sum(1 for slot in slots if len(tokenize_answer(slot["answer"])) <= 3)
+    short_word_ratio = short_words / len(slots) if slots else 1.0
+    longest_clue = max((len(slot["clue"]) for slot in slots), default=0)
+    clues_unique = clue_unique(slots, words)
+
+    values: dict[str, float | int | bool] = {
+        "structuralUnique": puzzle["unique"],
+        "clueUnique": clues_unique,
+        "fillRate": metrics["fillRate"],
+        "interlockRatio": metrics["interlockRatio"],
+        "slotCount": metrics["slotCount"],
+        "shortWordRatio": round(short_word_ratio, 3),
+        "longestClue": longest_clue,
+        "components": components,
+    }
+
+    reasons: list[str] = []
+    if profile.uniqueness == "structural" and not puzzle["unique"]:
+        reasons.append("fill is not structurally unique")
+    if profile.uniqueness == "clue" and not clues_unique:
+        reasons.append("slot clues are not unique within the CSV")
+    if profile.require_connected and components != 1:
+        reasons.append(f"slot graph has {components} disconnected components")
+    if metrics["fillRate"] < profile.min_fill_rate:
+        reasons.append(
+            f"fill rate {metrics['fillRate']:.3f} is below {profile.min_fill_rate:.3f}"
+        )
+    if metrics["interlockRatio"] < profile.min_interlock_ratio:
+        reasons.append(
+            "interlock ratio "
+            f"{metrics['interlockRatio']:.3f} is below {profile.min_interlock_ratio:.3f}"
+        )
+    if metrics["slotCount"] < profile.min_slot_count:
+        reasons.append(f"slot count {metrics['slotCount']} is below {profile.min_slot_count}")
+    if short_word_ratio > profile.max_short_word_ratio:
+        reasons.append(
+            f"short-word ratio {short_word_ratio:.3f} is above {profile.max_short_word_ratio:.3f}"
+        )
+    if longest_clue > profile.max_clue_chars:
+        reasons.append(f"longest clue has {longest_clue} chars, above {profile.max_clue_chars}")
+
+    score = (
+        metrics["fillRate"] * 35
+        + metrics["interlockRatio"] * 35
+        + min(metrics["slotCount"] / max(profile.min_slot_count, 1), 1.0) * 15
+        + (1.0 - min(short_word_ratio, 1.0)) * 10
+        + (5 if puzzle["unique"] else 0)
+    )
+    if components > 1:
+        score -= (components - 1) * 10
+
+    return QualityReport(
+        passed=not reasons,
+        score=round(score, 3),
+        reasons=tuple(reasons),
+        values=values,
+    )
+
+
+def attach_quality(puzzle: dict, report: QualityReport, profile: QualityProfile) -> dict:
+    puzzle["quality"] = {
+        "profile": profile.name,
+        "passed": report.passed,
+        "score": report.score,
+        "reasons": list(report.reasons),
+        "values": report.values,
+    }
+    return puzzle
+
+
+def generate_best_candidate(
+    template: Template,
+    words: list[WordEntry],
+    profile: QualityProfile,
+    attempts: int,
+    seed: int,
+) -> tuple[dict | None, QualityReport | None, dict | None, QualityReport | None]:
+    best_puzzle: dict | None = None
+    best_report: QualityReport | None = None
+    best_passing_puzzle: dict | None = None
+    best_passing_report: QualityReport | None = None
+
+    for attempt in range(attempts):
+        attempt_seed = seed + attempt
+        solver = Solver(template, words, seed=attempt_seed)
+        assignment = solver.solve()
+        if assignment is None:
+            continue
+
+        solution_count = solver.count_solutions(limit=2)
+        puzzle = materialize(template, assignment, unique=solution_count == 1)
+        puzzle["generation"] = {"attempt": attempt + 1, "attempts": attempts, "seed": attempt_seed}
+        report = evaluate_quality(template, puzzle, profile, words)
+        attach_quality(puzzle, report, profile)
+
+        if best_report is None or report.score > best_report.score:
+            best_puzzle = puzzle
+            best_report = report
+
+        if report.passed and (
+            best_passing_report is None or report.score > best_passing_report.score
+        ):
+            best_passing_puzzle = puzzle
+            best_passing_report = report
+
+    return best_passing_puzzle, best_passing_report, best_puzzle, best_report
+
+
 def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -342,6 +569,7 @@ def write_json(path: Path, payload: dict) -> None:
 
 def main() -> None:
     templates = available_templates()
+    profiles = available_profiles()
     parser = argparse.ArgumentParser(description="Generate a Swedish-style crossword puzzle.")
     parser.add_argument("--words", type=Path, default=Path("generator/data/dutch_words.csv"))
     parser.add_argument("--out", type=Path, default=Path("generated/puzzle.json"))
@@ -354,23 +582,53 @@ def main() -> None:
         default="10x17",
         help="Puzzle template to generate.",
     )
+    parser.add_argument(
+        "--quality",
+        choices=sorted(profiles),
+        default="publisher",
+        help="Quality profile to enforce before writing output.",
+    )
+    parser.add_argument(
+        "--attempts",
+        type=int,
+        default=200,
+        help="Number of candidate fills to try before choosing the best passing puzzle.",
+    )
     parser.add_argument("--seed", type=int, default=7)
     args = parser.parse_args()
 
     words = load_words(args.words)
     template = templates[args.template]
-    solver = Solver(template, words, seed=args.seed)
-    assignment = solver.solve()
-    if assignment is None:
+    profile = profiles[args.quality]
+    passing_puzzle, passing_report, best_puzzle, best_report = generate_best_candidate(
+        template=template,
+        words=words,
+        profile=profile,
+        attempts=max(args.attempts, 1),
+        seed=args.seed,
+    )
+
+    if profile.name == "publisher" and passing_puzzle is None:
+        if best_report is None:
+            raise SystemExit("No puzzle could be generated for the current template and word list.")
+        reason_lines = "\n".join(f"- {reason}" for reason in best_report.reasons)
+        raise SystemExit(
+            "No publisher-grade puzzle found. Best rejected candidate:\n"
+            f"score: {best_report.score}\n"
+            f"{reason_lines}"
+        )
+
+    puzzle = passing_puzzle if passing_puzzle is not None else best_puzzle
+    report = passing_report if passing_report is not None else best_report
+    if puzzle is None or report is None:
         raise SystemExit("No puzzle could be generated for the current template and word list.")
 
-    solution_count = solver.count_solutions(limit=2)
-    puzzle = materialize(template, assignment, unique=solution_count == 1)
     write_json(args.out, puzzle)
     write_json(args.frontend_out, puzzle)
 
     print(f"Generated {puzzle['title']} with {len(puzzle['slots'])} slots.")
-    print(f"Unique: {puzzle['unique']}")
+    print(f"Quality: {profile.name}, passed: {report.passed}, score: {report.score}")
+    print(f"Structural unique: {puzzle['unique']}")
     print(f"Wrote {args.out} and {args.frontend_out}")
 
 

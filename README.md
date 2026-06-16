@@ -22,13 +22,16 @@ The Python generator currently uses only the standard library.
 - `frontend/public/puzzles/puzzle.json`: puzzle JSON served by the frontend
 - `deep-research-report.md`: research and algorithm notes
 
-## Generate A Puzzle
+## Generate A Publisher-Grade Puzzle
 
 From the repository root:
 
 ```sh
 python3 -m generator.generate
 ```
+
+The default quality profile is `publisher`. In this mode the generator only
+writes output when a candidate passes the hard quality gates.
 
 This reads:
 
@@ -43,8 +46,21 @@ generated/puzzle.json
 frontend/public/puzzles/puzzle.json
 ```
 
-The generator prints a short status line, including the selected grid and
-whether the fill is unique.
+The generator prints a short status line when a candidate passes, including the
+selected grid, quality profile, quality score, and structural uniqueness
+diagnostic.
+
+## Generate A Draft Preview
+
+Use draft mode while editing templates, testing the renderer, or checking CSV
+import behavior:
+
+```sh
+python3 -m generator.generate --quality draft
+```
+
+Draft mode still records quality metadata in the JSON, but it does not enforce
+publisher-grade acceptance gates.
 
 ## CSV Format
 
@@ -78,6 +94,8 @@ python3 -m generator.generate \
   --out generated/puzzle.json \
   --frontend-out frontend/public/puzzles/puzzle.json \
   --template 10x17 \
+  --quality publisher \
+  --attempts 200 \
   --seed 7
 ```
 
@@ -85,6 +103,15 @@ Available templates:
 
 - `10x17`: default larger display grid
 - `compact-6x6`: smaller smoke-test grid
+
+Available quality profiles:
+
+- `publisher`: strict mode; rejects non-unique, sparse, disconnected, or weakly
+  interlocked candidates. For normal clue-bearing puzzles, uniqueness is
+  clue-aware: selected clues must identify one answer in the CSV. Structural
+  uniqueness is still recorded as a diagnostic.
+- `draft`: preview mode; writes the best generated candidate even if it is not
+  publisher-grade
 
 ## Run The Display
 
@@ -121,7 +148,7 @@ Vite will serve the updated JSON.
 From the repository root:
 
 ```sh
-python3 -m generator.generate
+python3 -m generator.generate --quality draft
 python3 -m py_compile generator/generate.py
 ```
 
@@ -139,18 +166,26 @@ template-driven crossword-style CSP solver.
 Current implementation:
 
 - selectable Swedish-style templates, with `10x17` as the default
+- strict `publisher` quality profile
+- permissive `draft` preview profile
+- batch candidate generation via `--attempts`
+- connected dense 10x17 default template
 - right and down clue directions
 - slot domains filtered by word length
 - MRV slot selection
 - degree and length tie-breaks
 - least-constraining value ordering
 - forward checking
-- uniqueness check by searching for a second solution
+- structural uniqueness check by searching for a second solution
+- clue-aware uniqueness check against the CSV
+- quality gates for uniqueness, connectedness, fill rate, interlock ratio, slot
+  count, short-word ratio, and clue length
 
 ## Current Limitations
 
-- The 10x17 template is still an MVP layout with two clustered puzzle areas,
-  not a dense publisher-grade layout.
+- The 10x17 template is connected and passes the current publisher profile, but
+  the interlock threshold is still lower than the long-term target for dense
+  editorial puzzles.
 - The frontend is a display/preview, not a full solving UI.
 - There is no automated test suite yet.
 - The generator is suitable for MVP-sized grids, not large production batches.
