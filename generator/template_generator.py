@@ -335,12 +335,9 @@ def search_templates(
         target.sort(key=lambda item: item[0].score, reverse=True)
         del target[keep:]
 
-        if verbose:
-            status = "pass" if evaluation.passed else "reject"
-            if evaluation.passed:
-                detail = "passes all gates"
-            else:
-                detail = "; ".join(evaluation.reasons)
+        if verbose and evaluation.passed:
+            status = "pass" 
+            detail = "passes all gates"
             print(
                 f"attempt {attempt + 1}/{attempts} seed {attempt_seed}: "
                 f"{status}, score {evaluation.score}, {detail}"
