@@ -1,0 +1,1274 @@
+{
+  "title": "Zweedse puzzel 10x17",
+  "templateId": "10x17",
+  "algorithm": "template-driven CSP backtracking with MRV, degree tie-breaks, least-constraining values, and forward checking",
+  "width": 10,
+  "height": 17,
+  "unique": false,
+  "cells": [
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "leeswerk",
+            "slotId": "top_v1"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "kledingstuk",
+            "slotId": "top_v2"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "waterkant",
+            "slotId": "top_v3"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "hete kast",
+            "slotId": "top_v4"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "kleine plaats",
+            "slotId": "top_v5"
+          }
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "gebakken deeg",
+            "slotId": "top_h1"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "B",
+        "slotIds": [
+          "top_h1",
+          "top_v1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "top_v2",
+          "top_h1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "top_h1",
+          "top_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "top_h1",
+          "top_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "D",
+        "slotIds": [
+          "top_h1",
+          "top_v5"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "top_v1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "top_v2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "top_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "V",
+        "slotIds": [
+          "top_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "top_v5"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "top_v1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "top_v2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "V",
+        "slotIds": [
+          "top_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "top_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "top_v5"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "top_v1"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "top_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "top_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "P",
+        "slotIds": [
+          "top_v5"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "broodrand",
+            "slotId": "top_h2"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "top_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "top_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "top_v3",
+          "top_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "S",
+        "slotIds": [
+          "top_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "T",
+        "slotIds": [
+          "top_h2"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "gele lekkernij",
+            "slotId": "lower_v1"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "slimme primaat",
+            "slotId": "lower_v2"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "koopplek",
+            "slotId": "lower_v3"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "watervogel",
+            "slotId": "lower_v4"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "rode bloem",
+            "slotId": "lower_v5"
+          }
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "woonruimte",
+            "slotId": "lower_h1"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "lower_h1",
+          "lower_v1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "lower_v2",
+          "lower_h1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "M",
+        "slotIds": [
+          "lower_h1",
+          "lower_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "lower_h1",
+          "lower_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "lower_h1",
+          "lower_v5"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "lower_v1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "lower_v2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "lower_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "lower_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "lower_v5"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "lower_v1"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "P",
+        "slotIds": [
+          "lower_v2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "lower_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "lower_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "lower_v5"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "S",
+        "slotIds": [
+          "lower_v1"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "lower_v3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "D",
+        "slotIds": [
+          "lower_v4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "S",
+        "slotIds": [
+          "lower_v5"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "vloeibare stof",
+            "slotId": "lower_h2"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "W",
+        "slotIds": [
+          "lower_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "lower_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "T",
+        "slotIds": [
+          "lower_v3",
+          "lower_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "lower_h2"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "lower_h2"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ]
+  ],
+  "slots": [
+    {
+      "id": "top_h1",
+      "direction": "right",
+      "origin": [
+        1,
+        0
+      ],
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ]
+      ],
+      "answer": "BROOD",
+      "clue": "gebakken deeg"
+    },
+    {
+      "id": "top_h2",
+      "direction": "right",
+      "origin": [
+        5,
+        0
+      ],
+      "cells": [
+        [
+          5,
+          1
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "answer": "KORST",
+      "clue": "broodrand"
+    },
+    {
+      "id": "top_v1",
+      "direction": "down",
+      "origin": [
+        0,
+        1
+      ],
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "answer": "BOEK",
+      "clue": "leeswerk"
+    },
+    {
+      "id": "top_v2",
+      "direction": "down",
+      "origin": [
+        0,
+        2
+      ],
+      "cells": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "answer": "ROK",
+      "clue": "kledingstuk"
+    },
+    {
+      "id": "top_v3",
+      "direction": "down",
+      "origin": [
+        0,
+        3
+      ],
+      "cells": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "answer": "OEVER",
+      "clue": "waterkant"
+    },
+    {
+      "id": "top_v4",
+      "direction": "down",
+      "origin": [
+        0,
+        4
+      ],
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "answer": "OVEN",
+      "clue": "hete kast"
+    },
+    {
+      "id": "top_v5",
+      "direction": "down",
+      "origin": [
+        0,
+        5
+      ],
+      "cells": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "answer": "DORP",
+      "clue": "kleine plaats"
+    },
+    {
+      "id": "lower_h1",
+      "direction": "right",
+      "origin": [
+        11,
+        3
+      ],
+      "cells": [
+        [
+          11,
+          4
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          11,
+          8
+        ]
+      ],
+      "answer": "KAMER",
+      "clue": "woonruimte"
+    },
+    {
+      "id": "lower_h2",
+      "direction": "right",
+      "origin": [
+        15,
+        3
+      ],
+      "cells": [
+        [
+          15,
+          4
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
+        ]
+      ],
+      "answer": "WATER",
+      "clue": "vloeibare stof"
+    },
+    {
+      "id": "lower_v1",
+      "direction": "down",
+      "origin": [
+        10,
+        4
+      ],
+      "cells": [
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          14,
+          4
+        ]
+      ],
+      "answer": "KAAS",
+      "clue": "gele lekkernij"
+    },
+    {
+      "id": "lower_v2",
+      "direction": "down",
+      "origin": [
+        10,
+        5
+      ],
+      "cells": [
+        [
+          11,
+          5
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          13,
+          5
+        ]
+      ],
+      "answer": "AAP",
+      "clue": "slimme primaat"
+    },
+    {
+      "id": "lower_v3",
+      "direction": "down",
+      "origin": [
+        10,
+        6
+      ],
+      "cells": [
+        [
+          11,
+          6
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          15,
+          6
+        ]
+      ],
+      "answer": "MARKT",
+      "clue": "koopplek"
+    },
+    {
+      "id": "lower_v4",
+      "direction": "down",
+      "origin": [
+        10,
+        7
+      ],
+      "cells": [
+        [
+          11,
+          7
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          14,
+          7
+        ]
+      ],
+      "answer": "EEND",
+      "clue": "watervogel"
+    },
+    {
+      "id": "lower_v5",
+      "direction": "down",
+      "origin": [
+        10,
+        8
+      ],
+      "cells": [
+        [
+          11,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          14,
+          8
+        ]
+      ],
+      "answer": "ROOS",
+      "clue": "rode bloem"
+    }
+  ],
+  "metrics": {
+    "fillRate": 0.282,
+    "clueCellRatio": 0.082,
+    "interlockRatio": 0.25,
+    "letterCells": 48,
+    "clueCells": 14,
+    "slotCount": 14
+  }
+}
