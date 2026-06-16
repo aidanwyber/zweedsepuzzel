@@ -19,6 +19,14 @@ class Slot:
     def length(self) -> int:
         return len(self.cells)
 
+    def stop_cell(self) -> tuple[int, int] | None:
+        if not self.cells:
+            return None
+        row, col = self.cells[-1]
+        if self.direction == "right":
+            return row, col + 1
+        return row + 1, col
+
     def to_dict(self) -> dict:
         return {
             "id": self.id,
@@ -132,6 +140,31 @@ class Template:
                         seen.add(neighbor)
                         stack.append(neighbor)
         return components
+
+    def letter_cells(self) -> set[tuple[int, int]]:
+        return {cell for slot in self.slots for cell in slot.cells}
+
+    def clue_cells(self) -> set[tuple[int, int]]:
+        return {slot.origin for slot in self.slots}
+
+    def unterminated_slots(self) -> list[tuple[str, tuple[int, int]]]:
+        letter_cells = self.letter_cells()
+        clue_cells = self.clue_cells()
+        invalid = []
+
+        for slot in self.slots:
+            stop_cell = slot.stop_cell()
+            if stop_cell is None:
+                continue
+            row, col = stop_cell
+            if row < 0 or row >= self.height or col < 0 or col >= self.width:
+                continue
+            if stop_cell in clue_cells:
+                continue
+            if stop_cell in letter_cells:
+                invalid.append((slot.id, stop_cell))
+
+        return invalid
 
 
 def derive_overlaps(slots: tuple[Slot, ...]) -> list[Overlap]:

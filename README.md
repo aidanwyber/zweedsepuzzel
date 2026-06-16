@@ -153,27 +153,83 @@ The randomized template generator searches candidate 10x17 layouts from the CSV
 word shapes, evaluates them before solving, and stores the best passing
 templates as JSON.
 
+Basic usage:
+
 ```sh
 python3 -m generator.template_generator --attempts 200 --keep 3
 ```
 
-Saved templates are written to:
+By default this reads:
+
+```text
+generator/data/dutch_words.csv
+```
+
+and writes passing templates to:
 
 ```text
 generator/templates/
 ```
 
-The main generator automatically loads those files:
+The main puzzle generator automatically loads every `*.json` template in that
+directory. After a template is saved, check the available template IDs with:
+
+```sh
+python3 -m generator.generate --help
+```
+
+Then generate a puzzle from a saved template:
 
 ```sh
 python3 -m generator.generate --template random-10x17-3140
 ```
 
-Use this to inspect rejected candidates:
+Common options:
+
+```sh
+python3 -m generator.template_generator \
+  --words generator/data/dutch_words.csv \
+  --out-dir generator/templates \
+  --width 10 \
+  --height 17 \
+  --attempts 1000 \
+  --keep 5 \
+  --seed 1000 \
+  --max-word-length 9
+```
+
+Option meanings:
+
+- `--words`: CSV source with `answer,description` columns.
+- `--out-dir`: directory where passing template JSON files are saved.
+- `--width` and `--height`: template grid size.
+- `--attempts`: number of randomized layout candidates to try.
+- `--keep`: number of top candidates to report.
+- `--seed`: deterministic starting seed for reproducible searches.
+- `--max-word-length`: longest CSV answer shape used while searching layouts.
+- `--save-rejected`: also save rejected top candidates for inspection.
+- `--verbose`: print each attempt's pass/reject status and rejection reasons.
+
+The search keeps passing and rejected candidates in separate leaderboards.
+Passing templates are always reported first and saved. Rejected templates are
+reported as near-misses, even when they score higher than passing templates.
+
+By default, rejected candidates are printed but not saved. To save them for
+inspection:
 
 ```sh
 python3 -m generator.template_generator --attempts 50 --save-rejected
 ```
+
+To debug why a seed is not finding passing templates:
+
+```sh
+python3 -m generator.template_generator --attempts 20 --seed 100001 --verbose
+```
+
+The template generator does not fill the final puzzle with answers. It uses CSV
+word shapes to search plausible slot geometry, then the main generator performs
+the actual CSP fill against the chosen template.
 
 Template evaluation follows the research report's template-first approach:
 
@@ -185,6 +241,29 @@ Template evaluation follows the research report's template-first approach:
 - short-slot ratio
 - dual-clue-cell use
 - word-length coverage from the CSV
+
+Recommended workflow:
+
+1. Search templates:
+
+```sh
+python3 -m generator.template_generator --attempts 1000 --keep 5
+```
+
+2. Pick a saved template ID from `generator/templates/`.
+
+3. Generate and validate a puzzle from that template:
+
+```sh
+python3 -m generator.generate --template <template-id> --attempts 200
+```
+
+4. Preview it in the frontend:
+
+```sh
+cd frontend
+npm run dev
+```
 
 ## Build And Verify
 

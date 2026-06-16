@@ -372,6 +372,7 @@ def evaluate_quality(
     slots = puzzle["slots"]
     overlaps = derive_overlaps(template.slots)
     components = connected_components(template.slots, overlaps)
+    unterminated_slots = template.unterminated_slots()
     short_words = sum(1 for slot in slots if len(tokenize_answer(slot["answer"])) <= 3)
     short_word_ratio = short_words / len(slots) if slots else 1.0
     longest_clue = max((len(slot["clue"]) for slot in slots), default=0)
@@ -386,6 +387,7 @@ def evaluate_quality(
         "shortWordRatio": round(short_word_ratio, 3),
         "longestClue": longest_clue,
         "components": components,
+        "unterminatedSlotCount": len(unterminated_slots),
     }
 
     reasons: list[str] = []

@@ -36,6 +36,13 @@ class TemplateEvaluation:
     metrics: dict[str, float | int | bool]
 
 
+@dataclass(frozen=True)
+class SearchResults:
+    passing: tuple[tuple[TemplateEvaluation, Template], ...]
+    rejected: tuple[tuple[TemplateEvaluation, Template], ...]
+    attempted: int
+
+
 def tokenize(answer: str) -> tuple[str, ...]:
     normalized = re.sub(r"[^A-ZĲIJ]", "", answer.upper())
     letters: list[str] = []
@@ -212,6 +219,7 @@ def evaluate_template(template: Template, words: list[WordShape]) -> TemplateEva
     components = template.connected_components()
     short_slot_ratio = short_slots / slot_count if slot_count else 1.0
     dual_clue_cells = sum(1 for count in clue_cells.values() if count > 1)
+    unterminated_slots = template.unterminated_slots()
 
     reasons: list[str] = []
     if components != 1:
@@ -259,6 +267,7 @@ def evaluate_template(template: Template, words: list[WordShape]) -> TemplateEva
             "shortSlotRatio": round(short_slot_ratio, 3),
             "dualClueCells": dual_clue_cells,
             "uncoveredLengthCount": len(uncovered_lengths),
+            "unterminatedSlotCount": len(unterminated_slots),
         },
     )
 
@@ -270,13 +279,16 @@ def search_templates(
     attempts: int,
     seed: int,
     keep: int,
-) -> list[tuple[TemplateEvaluation, Template]]:
+    verbose: bool = False,
+) -> SearchResults:
     placements = all_placements(words, width, height)
     indexed = placement_index(placements)
-    best: list[tuple[TemplateEvaluation, Template]] = []
+    passing: list[tuple[TemplateEvaluation, Template]] = []
+    rejected: list[tuple[TemplateEvaluation, Template]] = []
 
     for attempt in range(attempts):
-        randomizer = random.Random(seed + attempt)
+        attempt_seed = seed + attempt
+        randomizer = random.Random(attempt_seed)
         board: dict[tuple[int, int], str] = {}
         clues: dict[tuple[int, int], set[Direction]] = {}
         used: set[str] = set()
@@ -285,7 +297,13 @@ def search_templates(
         for _ in range(90):
             ranked = []
             for placement in candidate_placements(board, placements, indexed):
-                if not can_place(board, clues, used, slots, placement):
+                if not can_place(
+                    board,
+                    clues,
+                    used,
+                    slots,
+                    placement,
+                ):
                     continue
                 intersections = sum(1 for cell in placement.cells if cell in board)
                 if slots and intersections == 0:
@@ -308,15 +326,56 @@ def search_templates(
             slots=slots,
             width=width,
             height=height,
-            template_id=f"random-{width}x{height}-{seed + attempt}",
-            title=f"Randomized {width}x{height} template {seed + attempt}",
+            template_id=f"random-{width}x{height}-{attempt_seed}",
+            title=f"Randomized {width}x{height} template {attempt_seed}",
         )
         evaluation = evaluate_template(template, words)
-        best.append((evaluation, template))
-        best.sort(key=lambda item: item[0].score, reverse=True)
-        best = best[:keep]
+        target = passing if evaluation.passed else rejected
+        target.append((evaluation, template))
+        target.sort(key=lambda item: item[0].score, reverse=True)
+        del target[keep:]
 
-    return best
+        if verbose:
+            status = "pass" if evaluation.passed else "reject"
+            if evaluation.passed:
+                detail = "passes all gates"
+            else:
+                detail = "; ".join(evaluation.reasons)
+            print(
+                f"attempt {attempt + 1}/{attempts} seed {attempt_seed}: "
+                f"{status}, score {evaluation.score}, {detail}"
+            )
+
+    return SearchResults(
+        passing=tuple(passing),
+        rejected=tuple(rejected),
+        attempted=attempts,
+    )
+
+
+def print_and_maybe_save(
+    label: str,
+    candidates: tuple[tuple[TemplateEvaluation, Template], ...],
+    out_dir: Path,
+    save: bool,
+) -> None:
+    if not candidates:
+        print(f"No {label} templates found.")
+        return
+
+    print(f"{label.capitalize()} templates:")
+    for rank, (evaluation, template) in enumerate(candidates, start=1):
+        path = out_dir / f"{template.id}.json"
+        status = "pass" if evaluation.passed else "reject"
+        if save:
+            template.save(path)
+            write_status = f"wrote {path}"
+        else:
+            write_status = "not saved"
+        print(f"{rank}. {template.id}: {status}, score {evaluation.score}, {write_status}")
+        print(f"   metrics: {evaluation.metrics}")
+        if evaluation.reasons:
+            print(f"   reasons: {', '.join(evaluation.reasons)}")
 
 
 def main() -> None:
@@ -334,30 +393,27 @@ def main() -> None:
         action="store_true",
         help="Also write the best rejected candidates for inspection.",
     )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Print each attempt's pass/reject status and rejection reasons.",
+    )
     args = parser.parse_args()
 
     words = load_word_shapes(args.words, max_length=args.max_word_length)
-    best = search_templates(
+    results = search_templates(
         words=words,
         width=args.width,
         height=args.height,
         attempts=max(args.attempts, 1),
         seed=args.seed,
         keep=max(args.keep, 1),
+        verbose=args.verbose,
     )
 
-    for rank, (evaluation, template) in enumerate(best, start=1):
-        path = args.out_dir / f"{template.id}.json"
-        status = "pass" if evaluation.passed else "reject"
-        if evaluation.passed or args.save_rejected:
-            template.save(path)
-            write_status = f"wrote {path}"
-        else:
-            write_status = "not saved"
-        print(f"{rank}. {template.id}: {status}, score {evaluation.score}, {write_status}")
-        print(f"   metrics: {evaluation.metrics}")
-        if evaluation.reasons:
-            print(f"   reasons: {', '.join(evaluation.reasons)}")
+    print(f"Attempted {results.attempted} templates.")
+    print_and_maybe_save("passing", results.passing, args.out_dir, save=True)
+    print_and_maybe_save("rejected", results.rejected, args.out_dir, save=args.save_rejected)
 
 
 if __name__ == "__main__":
