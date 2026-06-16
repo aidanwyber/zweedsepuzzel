@@ -16,6 +16,9 @@ The Python generator currently uses only the standard library.
 ## Project Layout
 
 - `generator/generate.py`: puzzle generator
+- `generator/template.py`: template model, graph utilities, and JSON storage
+- `generator/template_generator.py`: randomized template search and evaluator
+- `generator/templates/`: saved generated templates
 - `generator/data/dutch_words.csv`: Dutch word list with short descriptions
 - `generated/puzzle.json`: generated puzzle output, 10x17 by default
 - `frontend/`: Vite + TypeScript display app
@@ -103,6 +106,7 @@ Available templates:
 
 - `10x17`: default larger display grid
 - `compact-6x6`: smaller smoke-test grid
+- any JSON template saved in `generator/templates/`
 
 Available quality profiles:
 
@@ -143,6 +147,45 @@ The frontend fetches:
 To see a newly generated puzzle, run the generator again from the repo root.
 Vite will serve the updated JSON.
 
+## Search For Templates
+
+The randomized template generator searches candidate 10x17 layouts from the CSV
+word shapes, evaluates them before solving, and stores the best passing
+templates as JSON.
+
+```sh
+python3 -m generator.template_generator --attempts 200 --keep 3
+```
+
+Saved templates are written to:
+
+```text
+generator/templates/
+```
+
+The main generator automatically loads those files:
+
+```sh
+python3 -m generator.generate --template random-10x17-3140
+```
+
+Use this to inspect rejected candidates:
+
+```sh
+python3 -m generator.template_generator --attempts 50 --save-rejected
+```
+
+Template evaluation follows the research report's template-first approach:
+
+- fill rate
+- clue-cell ratio
+- interlock ratio
+- connected slot graph
+- slot count
+- short-slot ratio
+- dual-clue-cell use
+- word-length coverage from the CSV
+
 ## Build And Verify
 
 From the repository root:
@@ -150,6 +193,7 @@ From the repository root:
 ```sh
 python3 -m generator.generate --quality draft
 python3 -m py_compile generator/generate.py
+python3 -m py_compile generator/template.py generator/template_generator.py
 ```
 
 From `frontend/`:
@@ -170,6 +214,8 @@ Current implementation:
 - permissive `draft` preview profile
 - batch candidate generation via `--attempts`
 - connected dense 10x17 default template
+- template JSON load/save through `Template`
+- randomized template search and pre-solve evaluation
 - right and down clue directions
 - slot domains filtered by word length
 - MRV slot selection

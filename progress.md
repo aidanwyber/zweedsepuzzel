@@ -28,16 +28,24 @@ Zweedse puzzels. The word list remains CSV-based.
 - [x] Publisher-grade mode refuses to write weak candidates.
 - [x] Default 10x17 template is connected and dense enough to pass current gates.
 - [x] Publisher uniqueness is clue-aware while structural uniqueness is reported.
+- [x] Template model moved into `generator/template.py`.
+- [x] Templates can be saved to and loaded from JSON.
+- [x] Randomized template generator added.
+- [x] Template search evaluates fill, clue ratio, interlock, connectedness, slot
+  count, short slots, dual clue cells, and CSV length coverage.
 
 ## In Progress
 
 - [ ] Tune publisher-grade thresholds against real reviewed examples.
 - [ ] Increase CSV coverage for all template slot lengths.
 - [ ] Raise interlock targets with denser templates.
+- [ ] Curate saved generated templates and promote the strongest ones.
 
 ## To Do
 
 - [ ] Add at least 3 hand-authored dense 10x17 templates.
+- [ ] Add at least 3 generated dense 10x17 templates that pass template
+  evaluation and puzzle generation.
 - [ ] Support clue cells with two clue arrows in one cell.
 - [ ] Add grid connectivity tests.
 - [ ] Add uniqueness regression tests.

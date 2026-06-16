@@ -9,8 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
-Direction = Literal["right", "down"]
-CellType = Literal["letter", "clue", "block"]
+from generator.template import Slot, Template, connected_components, derive_overlaps
 
 IJ_TOKEN = "Ĳ"
 
@@ -25,35 +24,6 @@ class WordEntry:
     @property
     def length(self) -> int:
         return len(self.letters)
-
-
-@dataclass(frozen=True)
-class Slot:
-    id: str
-    direction: Direction
-    origin: tuple[int, int]
-    cells: tuple[tuple[int, int], ...]
-
-    @property
-    def length(self) -> int:
-        return len(self.cells)
-
-
-@dataclass(frozen=True)
-class Template:
-    id: str
-    title: str
-    width: int
-    height: int
-    slots: tuple[Slot, ...]
-
-
-@dataclass(frozen=True)
-class Overlap:
-    a_slot: str
-    a_index: int
-    b_slot: str
-    b_index: int
 
 
 @dataclass(frozen=True)
@@ -155,19 +125,6 @@ def compact_template() -> Template:
     )
 
 
-def offset_slot(slot: Slot, prefix: str, row_offset: int, col_offset: int) -> Slot:
-    return Slot(
-        id=f"{prefix}_{slot.id}",
-        direction=slot.direction,
-        origin=(slot.origin[0] + row_offset, slot.origin[1] + col_offset),
-        cells=tuple((row + row_offset, col + col_offset) for row, col in slot.cells),
-    )
-
-
-def offset_slots(slots: tuple[Slot, ...], prefix: str, row_offset: int, col_offset: int) -> tuple[Slot, ...]:
-    return tuple(offset_slot(slot, prefix, row_offset, col_offset) for slot in slots)
-
-
 def dense_10x17_template() -> Template:
     return Template(
         id="10x17",
@@ -205,7 +162,9 @@ def dense_10x17_template() -> Template:
 
 def available_templates() -> dict[str, Template]:
     templates = (compact_template(), dense_10x17_template())
-    return {template.id: template for template in templates}
+    available = {template.id: template for template in templates}
+    available.update(Template.load_many(Path("generator/templates")))
+    return available
 
 
 def available_profiles() -> dict[str, QualityProfile]:
@@ -213,52 +172,11 @@ def available_profiles() -> dict[str, QualityProfile]:
     return {profile.name: profile for profile in profiles}
 
 
-def derive_overlaps(slots: tuple[Slot, ...]) -> list[Overlap]:
-    by_cell: dict[tuple[int, int], list[tuple[str, int]]] = {}
-    for slot in slots:
-        for index, cell in enumerate(slot.cells):
-            by_cell.setdefault(cell, []).append((slot.id, index))
-
-    overlaps: list[Overlap] = []
-    for occupants in by_cell.values():
-        for left_index, left in enumerate(occupants):
-            for right in occupants[left_index + 1 :]:
-                overlaps.append(Overlap(left[0], left[1], right[0], right[1]))
-                overlaps.append(Overlap(right[0], right[1], left[0], left[1]))
-    return overlaps
-
-
 def build_domains(slots: tuple[Slot, ...], words: list[WordEntry]) -> dict[str, list[WordEntry]]:
     by_length: dict[int, list[WordEntry]] = {}
     for word in words:
         by_length.setdefault(word.length, []).append(word)
     return {slot.id: list(by_length.get(slot.length, [])) for slot in slots}
-
-
-def connected_components(slots: tuple[Slot, ...], overlaps: list[Overlap]) -> int:
-    slot_ids = {slot.id for slot in slots}
-    if not slot_ids:
-        return 0
-
-    adjacency: dict[str, set[str]] = {slot_id: set() for slot_id in slot_ids}
-    for overlap in overlaps:
-        adjacency[overlap.a_slot].add(overlap.b_slot)
-
-    components = 0
-    seen: set[str] = set()
-    for slot_id in slot_ids:
-        if slot_id in seen:
-            continue
-        components += 1
-        stack = [slot_id]
-        seen.add(slot_id)
-        while stack:
-            current = stack.pop()
-            for neighbor in adjacency[current]:
-                if neighbor not in seen:
-                    seen.add(neighbor)
-                    stack.append(neighbor)
-    return components
 
 
 def normalize_clue(clue: str) -> str:
