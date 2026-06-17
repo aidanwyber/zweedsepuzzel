@@ -275,6 +275,9 @@ Option meanings:
 The search keeps passing and rejected candidates in separate leaderboards.
 Passing templates are always reported first and saved. Rejected templates are
 reported as near-misses, even when they score higher than passing templates.
+If you press `Ctrl-C`, the current attempt is abandoned but previously collected
+passing and rejected candidates are still ranked, saved, and published according
+to the same options.
 
 By default, rejected candidates are printed but not saved. To save them for
 inspection:

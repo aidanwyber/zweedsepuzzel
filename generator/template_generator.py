@@ -1030,6 +1030,33 @@ def densify_state_by_score(
     return current_state, current_template, current_evaluation
 
 
+def finalize_search_results(
+    passing: list[tuple[TemplateEvaluation, Template]],
+    rejected: list[tuple[TemplateEvaluation, Template]],
+    puzzles: dict[str, dict],
+    keep: int,
+    attempted: int,
+    interrupted: bool = False,
+) -> SearchResults:
+    passing.sort(key=lambda item: item[0].score, reverse=True)
+    rejected.sort(key=lambda item: item[0].score, reverse=True)
+    best_passing = tuple(passing[:keep])
+    best_ids = {template.id for _, template in best_passing}
+    best_puzzles = {
+        template_id: puzzle
+        for template_id, puzzle in puzzles.items()
+        if template_id in best_ids
+    }
+
+    return SearchResults(
+        passing=best_passing,
+        rejected=tuple(rejected[:keep]),
+        puzzles=best_puzzles,
+        attempted=attempted,
+        interrupted=interrupted,
+    )
+
+
 def search_templates(
     words: list[WordShape],
     fill_words: list,
@@ -1061,86 +1088,88 @@ def search_templates(
     puzzles: dict[str, dict] = {}
     attempted = 0
 
-    for attempt in range(attempts):
-        attempted += 1
-        attempt_seed = seed + attempt
-        randomizer = random.Random(attempt_seed)
-        state = build_slots_with_beam(
-            placements=placements,
-            indexed=indexed,
-            width=width,
-            height=height,
-            max_clues_per_cell=max_clues_per_cell,
-            quality=quality,
-            heuristics=heuristics,
-            length_counts=length_counts,
-            randomizer=randomizer,
-        )
-        template_id = f"random-{width}x{height}-{attempt_seed}"
-        title = f"Randomized {width}x{height} template {attempt_seed}"
-        state, template, evaluation = densify_state_by_score(
-            state,
-            placements,
-            indexed,
-            width,
-            height,
-            template_id,
-            title,
-            max_clues_per_cell,
-            quality,
-            heuristics,
-            length_counts,
-            allowed_answers,
-            words,
-            randomizer,
-        )
-
-        puzzle = None
-        if evaluation.passed and require_fill:
-            puzzle, report, _, _ = generate_best_candidate(
-                template=template,
-                words=fill_words,
-                profile=DRAFT_PROFILE,
-                attempts=max(fill_attempts, 1),
-                seed=fill_seed + attempt,
+    try:
+        for attempt in range(attempts):
+            attempted += 1
+            attempt_seed = seed + attempt
+            randomizer = random.Random(attempt_seed)
+            state = build_slots_with_beam(
+                placements=placements,
+                indexed=indexed,
+                width=width,
+                height=height,
+                max_clues_per_cell=max_clues_per_cell,
+                quality=quality,
+                heuristics=heuristics,
+                length_counts=length_counts,
+                randomizer=randomizer,
             )
-            if puzzle is None or report is None or not report.passed:
-                evaluation = reject_with_reason(
-                    evaluation,
-                    "no valid fill found",
-                    "fillable",
+            template_id = f"random-{width}x{height}-{attempt_seed}"
+            title = f"Randomized {width}x{height} template {attempt_seed}"
+            state, template, evaluation = densify_state_by_score(
+                state,
+                placements,
+                indexed,
+                width,
+                height,
+                template_id,
+                title,
+                max_clues_per_cell,
+                quality,
+                heuristics,
+                length_counts,
+                allowed_answers,
+                words,
+                randomizer,
+            )
+
+            puzzle = None
+            if evaluation.passed and require_fill:
+                puzzle, report, _, _ = generate_best_candidate(
+                    template=template,
+                    words=fill_words,
+                    profile=DRAFT_PROFILE,
+                    attempts=max(fill_attempts, 1),
+                    seed=fill_seed + attempt,
+                )
+                if puzzle is None or report is None or not report.passed:
+                    evaluation = reject_with_reason(
+                        evaluation,
+                        "no valid fill found",
+                        "fillable",
+                    )
+
+            target = passing if evaluation.passed else rejected
+            target.append((evaluation, template))
+            target.sort(key=lambda item: item[0].score, reverse=True)
+            if not evaluation.passed or stop_when_enough_passing:
+                del target[keep:]
+            if evaluation.passed and puzzle is not None:
+                puzzles[template.id] = puzzle
+
+            if verbose and evaluation.passed:
+                print(
+                    f"attempt {attempt + 1}/{attempts} seed {attempt_seed}: "
+                    f"pass, score {evaluation.score}, passes all gates"
                 )
 
-        target = passing if evaluation.passed else rejected
-        target.append((evaluation, template))
-        target.sort(key=lambda item: item[0].score, reverse=True)
-        if not evaluation.passed or stop_when_enough_passing:
-            del target[keep:]
-        if evaluation.passed and puzzle is not None:
-            puzzles[template.id] = puzzle
+            if stop_when_enough_passing and len(passing) >= keep:
+                break
+    except KeyboardInterrupt:
+        return finalize_search_results(
+            passing=passing,
+            rejected=rejected,
+            puzzles=puzzles,
+            keep=keep,
+            attempted=attempted,
+            interrupted=True,
+        )
 
-        if verbose and evaluation.passed:
-            print(
-                f"attempt {attempt + 1}/{attempts} seed {attempt_seed}: "
-                f"pass, score {evaluation.score}, passes all gates"
-            )
-
-        if stop_when_enough_passing and len(passing) >= keep:
-            break
-
-    passing.sort(key=lambda item: item[0].score, reverse=True)
-    best_passing = tuple(passing[:keep])
-    best_ids = {template.id for _, template in best_passing}
-    best_puzzles = {
-        template_id: puzzle
-        for template_id, puzzle in puzzles.items()
-        if template_id in best_ids
-    }
-
-    return SearchResults(
-        passing=best_passing,
-        rejected=tuple(rejected),
-        puzzles=best_puzzles,
+    return finalize_search_results(
+        passing=passing,
+        rejected=rejected,
+        puzzles=puzzles,
+        keep=keep,
         attempted=attempted,
     )
 
@@ -1415,6 +1444,10 @@ def main() -> None:
         verbose=args.verbose,
     )
 
+    if results.interrupted:
+        print(
+            "Interrupted; using the best templates collected before the current attempt."
+        )
     print(f"Attempted {results.attempted} templates.")
     print_and_maybe_save(
         "passing",
