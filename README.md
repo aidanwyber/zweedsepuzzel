@@ -16,12 +16,11 @@ The Python generator currently uses only the standard library.
 ## Project Layout
 
 - `generator/generate.py`: puzzle generator
-- `generator/generate-config.json`: default puzzle generation settings
 - `generator/template.py`: template model, graph utilities, and JSON storage
 - `generator/template_generator.py`: randomized template search and evaluator
-- `generator/template-config.json`: default template search settings
+- `generator/config.json`: shared generation and template-search settings
 - `generator/templates/`: saved generated templates
-- `generator/data/dutch_words.csv`: Dutch word list with short descriptions
+- `generator/data/peter_words.csv`: configured word list with short descriptions
 - `generated/puzzle.json`: generated puzzle output, 10x17 by default
 - `frontend/`: Vite + TypeScript display app
 - `frontend/public/puzzles/puzzle.json`: puzzle JSON served by the frontend
@@ -41,7 +40,7 @@ writes output when a candidate passes the hard quality gates.
 This reads:
 
 ```text
-generator/data/dutch_words.csv
+generator/data/peter_words.csv
 ```
 
 and writes:
@@ -69,10 +68,17 @@ publisher-grade acceptance gates.
 
 ## CSV Format
 
-The input CSV uses two columns:
+The input CSV uses two columns. A header is optional:
 
 ```csv
 answer,description
+water,vloeibare stof
+wind,bewegende lucht
+```
+
+Headerless CSV files are also accepted:
+
+```csv
 water,vloeibare stof
 wind,bewegende lucht
 ```
@@ -82,8 +88,8 @@ limited space.
 
 Dutch `IJ` is handled as one puzzle letter internally.
 
-The included CSV contains more than 50 Dutch entries so the 10x17 template has
-enough length-matched candidates.
+The active CSV path is configured once in `generator/config.json` with the
+top-level `words` setting.
 
 ## Generator Options
 
@@ -95,8 +101,8 @@ Useful options:
 
 ```sh
 python3 -m generator.generate \
-  --config generator/generate-config.json \
-  --words generator/data/dutch_words.csv \
+  --config generator/config.json \
+  --words generator/data/peter_words.csv \
   --out generated/puzzle.json \
   --frontend-out frontend/public/puzzles/puzzle.json \
   --template 10x17 \
@@ -105,8 +111,8 @@ python3 -m generator.generate \
   --seed 7
 ```
 
-Every option above has a default in `generator/generate-config.json`. Command
-line flags override the config file.
+Every option above has a default in `generator/config.json`. Command line flags
+override the config file.
 
 Available templates:
 
@@ -165,7 +171,8 @@ Basic usage:
 python3 -m generator.template_generator --attempts 200 --keep 3
 ```
 
-By default, `generator/template-config.json` is used. It is currently set to a
+By default, `generator/config.json` is used. Its `templateSearch` section is
+currently set to a
 `5x5` grid so template-generation changes can be tested against a smaller
 search space. Override `--width 10 --height 17` or use another config when
 searching production-sized templates. The config also contains the template
@@ -175,7 +182,7 @@ creation settings.
 By default this reads:
 
 ```text
-generator/data/dutch_words.csv
+generator/data/peter_words.csv
 ```
 
 and writes passing templates to:
@@ -211,8 +218,8 @@ Common options:
 
 ```sh
 python3 -m generator.template_generator \
-  --config generator/template-config.json \
-  --words generator/data/dutch_words.csv \
+  --config generator/config.json \
+  --words generator/data/peter_words.csv \
   --out-dir generator/templates \
   --width 5 \
   --height 5 \
@@ -226,7 +233,8 @@ python3 -m generator.template_generator \
 
 Option meanings:
 
-- `--words`: CSV source with `answer,description` columns.
+- `--words`: CSV source with two columns, with or without an
+  `answer,description` header.
 - `--out-dir`: directory where passing template JSON files are saved.
 - `--width` and `--height`: template grid size.
 - `--attempts`: number of randomized layout candidates to try.
@@ -241,7 +249,8 @@ Option meanings:
 - `--verbose`: print passing attempts as they are found.
 - `--stop-when-enough-passing` / `--no-stop-when-enough-passing`: stop after
   `--keep` passing templates have been found, or keep searching for better
-  scores until `--attempts` is exhausted.
+  scores until `--attempts` is exhausted. When disabled, all passing templates
+  are ranked after the full run and only the best `--keep` are saved.
 - `--require-fill` / `--no-require-fill`: only accept templates that can also
   generate at least one valid filled puzzle.
 - `--fill-attempts` and `--fill-seed`: control the CSP fill check used by

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import random
 import re
@@ -11,6 +10,7 @@ from typing import Literal
 
 from generator.config import config_value, load_config
 from generator.template import Slot, Template, connected_components, derive_overlaps
+from generator.word_csv import read_word_rows
 
 IJ_TOKEN = "Ĳ"
 
@@ -62,8 +62,8 @@ DRAFT_PROFILE = QualityProfile(
     name="draft",
     uniqueness="none",
     require_connected=False,
-    min_fill_rate=0.0,
-    min_interlock_ratio=0.0,
+    min_fill_rate=0.4,
+    min_interlock_ratio=0.2,
     min_slot_count=1,
     max_short_word_ratio=1.0,
     max_clue_chars=80,
@@ -89,22 +89,18 @@ def display_letter(letter: str) -> str:
 
 
 def load_words(path: Path) -> list[WordEntry]:
-    with path.open(newline="", encoding="utf-8") as source:
-        rows = csv.DictReader(source)
-        entries = []
-        for index, row in enumerate(rows, start=1):
-            answer = row["answer"].strip()
-            clue = row.get("description", row.get("clue", "")).strip()
-            letters = tokenize_answer(answer)
-            if answer and clue and letters:
-                entries.append(
-                    WordEntry(
-                        id=f"w{index}",
-                        answer=answer.upper(),
-                        clue=clue,
-                        letters=letters,
-                    )
+    entries = []
+    for index, (answer, clue) in enumerate(read_word_rows(path), start=1):
+        letters = tokenize_answer(answer)
+        if answer and clue and letters:
+            entries.append(
+                WordEntry(
+                    id=f"w{index}",
+                    answer=answer.upper(),
+                    clue=clue,
+                    letters=letters,
                 )
+            )
     return entries
 
 
@@ -567,11 +563,12 @@ def write_json(path: Path, payload: dict) -> None:
 def main() -> None:
     templates = available_templates()
     profiles = available_profiles()
-    default_config_path = Path("generator/generate-config.json")
+    default_config_path = Path("generator/config.json")
     config_parser = argparse.ArgumentParser(add_help=False)
     config_parser.add_argument("--config", type=Path, default=default_config_path)
     config_args, _ = config_parser.parse_known_args()
-    config = load_config(config_args.config)
+    root_config = load_config(config_args.config)
+    config = config_value(root_config, "generate", {})
 
     parser = argparse.ArgumentParser(
         description="Generate a Swedish-style crossword puzzle.",
@@ -580,7 +577,7 @@ def main() -> None:
     parser.add_argument(
         "--words",
         type=Path,
-        default=Path(config_value(config, "words", "generator/data/dutch_words.csv")),
+        default=Path(config_value(root_config, "words", "generator/data/peter_words.csv")),
     )
     parser.add_argument(
         "--out",

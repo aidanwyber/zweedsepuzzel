@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import random
 import re
 from dataclasses import dataclass
@@ -10,6 +9,7 @@ from pathlib import Path
 from generator.config import config_value, load_config
 from generator.generate import DRAFT_PROFILE, generate_best_candidate, load_words, write_json
 from generator.template import Direction, Slot, Template
+from generator.word_csv import read_word_rows
 
 
 @dataclass(frozen=True)
@@ -111,13 +111,12 @@ def display_answer(letters: tuple[str, ...]) -> str:
 def load_word_shapes(path: Path, max_length: int) -> list[WordShape]:
     seen: set[str] = set()
     words: list[WordShape] = []
-    with path.open(newline="", encoding="utf-8") as source:
-        for row in csv.DictReader(source):
-            answer = row["answer"].strip().upper()
-            letters = tokenize(answer)
-            if 3 <= len(letters) <= max_length and answer not in seen:
-                seen.add(answer)
-                words.append(WordShape(answer=answer, letters=letters))
+    for answer, _ in read_word_rows(path):
+        normalized_answer = answer.upper()
+        letters = tokenize(answer)
+        if 3 <= len(letters) <= max_length and normalized_answer not in seen:
+            seen.add(normalized_answer)
+            words.append(WordShape(answer=normalized_answer, letters=letters))
     return words
 
 
@@ -744,7 +743,8 @@ def search_templates(
         target = passing if evaluation.passed else rejected
         target.append((evaluation, template))
         target.sort(key=lambda item: item[0].score, reverse=True)
-        del target[keep:]
+        if not evaluation.passed or stop_when_enough_passing:
+            del target[keep:]
         if evaluation.passed and puzzle is not None:
             puzzles[template.id] = puzzle
 
@@ -757,10 +757,19 @@ def search_templates(
         if stop_when_enough_passing and len(passing) >= keep:
             break
 
+    passing.sort(key=lambda item: item[0].score, reverse=True)
+    best_passing = tuple(passing[:keep])
+    best_ids = {template.id for _, template in best_passing}
+    best_puzzles = {
+        template_id: puzzle
+        for template_id, puzzle in puzzles.items()
+        if template_id in best_ids
+    }
+
     return SearchResults(
-        passing=tuple(passing),
+        passing=best_passing,
         rejected=tuple(rejected),
-        puzzles=puzzles,
+        puzzles=best_puzzles,
         attempted=attempted,
     )
 
@@ -806,11 +815,12 @@ def print_and_maybe_save(
 
 
 def main() -> None:
-    default_config_path = Path("generator/template-config.json")
+    default_config_path = Path("generator/config.json")
     config_parser = argparse.ArgumentParser(add_help=False)
     config_parser.add_argument("--config", type=Path, default=default_config_path)
     config_args, _ = config_parser.parse_known_args()
-    config = load_config(config_args.config)
+    root_config = load_config(config_args.config)
+    config = config_value(root_config, "templateSearch", {})
 
     parser = argparse.ArgumentParser(
         description="Search randomized Swedish puzzle templates.",
@@ -819,7 +829,7 @@ def main() -> None:
     parser.add_argument(
         "--words",
         type=Path,
-        default=Path(config_value(config, "words", "generator/data/dutch_words.csv")),
+        default=Path(config_value(root_config, "words", "generator/data/peter_words.csv")),
     )
     parser.add_argument(
         "--out-dir",

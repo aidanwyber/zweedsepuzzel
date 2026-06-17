@@ -41,7 +41,8 @@ Zweedse puzzels. The word list remains CSV-based.
 - [x] Support clue cells with two clue arrows in one cell.
 - [x] Template generation can stop once the requested number of passing
       templates has been found.
-- [x] Template and puzzle generation defaults are stored in JSON config files.
+- [x] Template and puzzle generation defaults are stored in one shared JSON
+      config file.
 - [x] Template generation config includes a 5x5 grid for smaller search-space
       testing.
 - [x] Template generation can require at least one valid CSP fill before saving.
