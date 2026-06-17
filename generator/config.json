@@ -30,7 +30,7 @@
 			"slotWeight": 16.0,
 			"clueWeight": 8.0,
 			"domainWeight": 8.0,
-			"shortSlotPenalty": 6.0,
+			"shortSlotPenalty": 0.4,
 			"lengthWeight": 0.2,
 			"densifyPasses": 6,
 			"densifyCandidatePool": 60,
@@ -41,7 +41,7 @@
 			"workers": 14
 		},
 		"quality": {
-			"minFillRate": 0.45,
+			"minFillRate": 0.5,
 			"minInterlockRatio": 0.2,
 			"minSlotCount": 15,
 			"maxShortSlotRatio": 0.15,
