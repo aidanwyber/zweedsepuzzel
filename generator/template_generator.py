@@ -9,6 +9,7 @@ from pathlib import Path
 
 from generator.config import config_value, load_config, resolve_seed
 from generator.generate import DRAFT_PROFILE, generate_best_candidate, load_words, write_json
+from generator.pdf_generator import pdf_path_for_template, write_puzzle_pdf
 from generator.template import READABLE_RUN_MIN_LENGTH, Direction, Slot, Template
 from generator.word_csv import read_word_rows
 
@@ -1870,8 +1871,11 @@ def print_and_maybe_save(
     save: bool,
     puzzles: dict[str, dict] | None = None,
     emit_puzzle: bool = False,
+    emit_pdf: bool = False,
     puzzle_out: Path | None = None,
     frontend_out: Path | None = None,
+    pdf_out: Path | None = None,
+    name_by_template: bool = True,
 ) -> None:
     if not candidates:
         print(f"No {label} templates found.")
@@ -1889,12 +1893,25 @@ def print_and_maybe_save(
                 and emit_puzzle
                 and puzzles is not None
                 and template.id in puzzles
-                and puzzle_out is not None
-                and frontend_out is not None
             ):
-                write_json(puzzle_out, puzzles[template.id])
-                write_json(frontend_out, puzzles[template.id])
-                write_status += f", wrote {puzzle_out} and {frontend_out}"
+                puzzle = puzzles[template.id]
+                written_paths: list[Path] = []
+                if emit_puzzle and puzzle_out is not None and frontend_out is not None:
+                    write_json(puzzle_out, puzzle)
+                    write_json(frontend_out, puzzle)
+                    written_paths.extend((puzzle_out, frontend_out))
+                if emit_pdf and pdf_out is not None:
+                    named_pdf_out = (
+                        pdf_path_for_template(pdf_out, template.id)
+                        if name_by_template
+                        else pdf_out
+                    )
+                    write_puzzle_pdf(puzzle, named_pdf_out)
+                    written_paths.append(named_pdf_out)
+                if written_paths:
+                    write_status += ", wrote " + " and ".join(
+                        str(path) for path in written_paths
+                    )
         else:
             write_status = "not saved"
         print(f"{rank}. {template.id}: {status}, score {evaluation.score}, {write_status}")
@@ -1993,6 +2010,12 @@ def main() -> None:
         help="Write the best passing filled puzzle to the generator and frontend outputs.",
     )
     parser.add_argument(
+        "--emit-pdf",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "emitPdf", False)),
+        help="When --emit-puzzle writes a filled puzzle, also write an A5 grayscale PDF.",
+    )
+    parser.add_argument(
         "--puzzle-out",
         type=Path,
         default=Path(config_value(config, "puzzleOut", "generated/puzzle.json")),
@@ -2003,6 +2026,17 @@ def main() -> None:
         default=Path(
             config_value(config, "frontendOut", "frontend/public/puzzles/puzzle.json")
         ),
+    )
+    parser.add_argument(
+        "--pdf-out",
+        type=Path,
+        default=Path(config_value(config, "pdfOut", "output/pdf/puzzle.pdf")),
+    )
+    parser.add_argument(
+        "--name-by-template",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "nameByTemplate", True)),
+        help="Append the template id to emitted PDF filenames.",
     )
     heuristic_config = config_value(config, "heuristics", {})
     parser.add_argument(
@@ -2198,8 +2232,11 @@ def main() -> None:
         save=True,
         puzzles=results.puzzles,
         emit_puzzle=args.emit_puzzle,
+        emit_pdf=args.emit_pdf,
         puzzle_out=args.puzzle_out,
         frontend_out=args.frontend_out,
+        pdf_out=args.pdf_out,
+        name_by_template=args.name_by_template,
     )
     print_and_maybe_save("rejected", results.rejected, args.out_dir, save=args.save_rejected)
 

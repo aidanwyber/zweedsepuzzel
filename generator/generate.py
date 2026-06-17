@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Literal
 
 from generator.config import config_value, load_config, resolve_seed
+from generator.pdf_generator import pdf_path_for_template, write_puzzle_pdf
 from generator.template import (
     READABLE_RUN_MIN_LENGTH,
     Slot,
@@ -629,6 +630,23 @@ def main() -> None:
         ),
     )
     parser.add_argument(
+        "--emit-pdf",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "emitPdf", False)),
+        help="Also render the generated puzzle as an A5 grayscale PDF.",
+    )
+    parser.add_argument(
+        "--pdf-out",
+        type=Path,
+        default=Path(config_value(config, "pdfOut", "output/pdf/puzzle.pdf")),
+    )
+    parser.add_argument(
+        "--name-by-template",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "nameByTemplate", True)),
+        help="Append the template id to the PDF filename.",
+    )
+    parser.add_argument(
         "--template",
         choices=sorted(templates),
         default=config_value(config, "template", "10x17"),
@@ -680,11 +698,21 @@ def main() -> None:
 
     write_json(args.out, puzzle)
     write_json(args.frontend_out, puzzle)
+    pdf_out = (
+        pdf_path_for_template(args.pdf_out, puzzle.get("templateId"))
+        if args.name_by_template
+        else args.pdf_out
+    )
+    if args.emit_pdf:
+        write_puzzle_pdf(puzzle, pdf_out)
 
     print(f"Generated {puzzle['title']} with {len(puzzle['slots'])} slots.")
     print(f"Quality: {profile.name}, passed: {report.passed}, score: {report.score}")
     print(f"Structural unique: {puzzle['unique']}")
-    print(f"Wrote {args.out} and {args.frontend_out}")
+    write_targets = f"{args.out} and {args.frontend_out}"
+    if args.emit_pdf:
+        write_targets += f", and {pdf_out}"
+    print(f"Wrote {write_targets}")
 
 
 if __name__ == "__main__":

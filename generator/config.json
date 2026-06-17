@@ -17,8 +17,11 @@
 		"fillAttempts": 100,
 		"fillSeed": 7,
 		"emitPuzzle": true,
+		"emitPdf": true,
 		"puzzleOut": "generated/puzzle.json",
 		"frontendOut": "frontend/public/puzzles/puzzle.json",
+		"pdfOut": "output/pdf/puzzle.pdf",
+		"nameByTemplate": true,
 		"heuristics": {
 			"beamWidth": 5,
 			"branchingFactor": 4,
@@ -54,6 +57,9 @@
 	"generate": {
 		"out": "generated/puzzle.json",
 		"frontendOut": "frontend/public/puzzles/puzzle.json",
+		"emitPdf": true,
+		"pdfOut": "output/pdf/puzzle.pdf",
+		"nameByTemplate": true,
 		"template": "10x17",
 		"quality": "publisher",
 		"attempts": 2000,

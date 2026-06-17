@@ -105,6 +105,9 @@ python3 -m generator.generate \
   --words generator/data/peter_words.csv \
   --out generated/puzzle.json \
   --frontend-out frontend/public/puzzles/puzzle.json \
+  --emit-pdf \
+  --pdf-out output/pdf/puzzle.pdf \
+  --name-by-template \
   --template 10x17 \
   --quality publisher \
   --attempts 200 \
@@ -261,6 +264,11 @@ Option meanings:
 - `--emit-puzzle` / `--no-emit-puzzle`: write the best filled passing template
   to `generated/puzzle.json` and `frontend/public/puzzles/puzzle.json`.
 - `--puzzle-out` and `--frontend-out`: output paths used by `--emit-puzzle`.
+- `--emit-pdf` / `--no-emit-pdf`: when `--emit-puzzle` writes the best filled
+  passing puzzle, also render it as an A5 grayscale PDF.
+- `--pdf-out`: output path used by `--emit-puzzle --emit-pdf`.
+- `--name-by-template` / `--no-name-by-template`: append the template id to PDF
+  filenames, for example `puzzle-10x17.pdf`.
 - `--beam-width`: number of partial template states kept during construction.
 - `--branching-factor`: number of candidate placements expanded from each beam
   state.
