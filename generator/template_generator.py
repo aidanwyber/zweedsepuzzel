@@ -7,6 +7,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from generator.config import config_value, load_config
 from generator.template import Direction, Slot, Template
 
 
@@ -41,6 +42,43 @@ class TemplateEvaluation:
     passed: bool
     reasons: tuple[str, ...]
     metrics: dict[str, float | int | bool]
+
+
+@dataclass(frozen=True)
+class TemplateQualitySettings:
+    min_fill_rate: float = 0.56
+    min_interlock_ratio: float = 0.19
+    min_slot_count: int = 21
+    max_short_slot_ratio: float = 0.12
+    max_clue_cell_ratio: float = 0.30
+    min_clue_cell_ratio: float = 0.12
+    target_slot_count: int = 30
+    dual_clue_bonus_cap: int = 8
+
+    @classmethod
+    def from_config(cls, config: dict) -> TemplateQualitySettings:
+        return cls(
+            min_fill_rate=float(config_value(config, "minFillRate", cls.min_fill_rate)),
+            min_interlock_ratio=float(
+                config_value(config, "minInterlockRatio", cls.min_interlock_ratio)
+            ),
+            min_slot_count=int(config_value(config, "minSlotCount", cls.min_slot_count)),
+            max_short_slot_ratio=float(
+                config_value(config, "maxShortSlotRatio", cls.max_short_slot_ratio)
+            ),
+            max_clue_cell_ratio=float(
+                config_value(config, "maxClueCellRatio", cls.max_clue_cell_ratio)
+            ),
+            min_clue_cell_ratio=float(
+                config_value(config, "minClueCellRatio", cls.min_clue_cell_ratio)
+            ),
+            target_slot_count=int(
+                config_value(config, "targetSlotCount", cls.target_slot_count)
+            ),
+            dual_clue_bonus_cap=int(
+                config_value(config, "dualClueBonusCap", cls.dual_clue_bonus_cap)
+            ),
+        )
 
 
 @dataclass(frozen=True)
@@ -457,7 +495,10 @@ def promote_readable_runs(
 
 
 def evaluate_template(
-    template: Template, words: list[WordShape], max_clues_per_cell: int = 2
+    template: Template,
+    words: list[WordShape],
+    max_clues_per_cell: int = 2,
+    quality: TemplateQualitySettings = TemplateQualitySettings(),
 ) -> TemplateEvaluation:
     total_cells = template.width * template.height
     letter_cells: dict[tuple[int, int], int] = {}
@@ -510,16 +551,22 @@ def evaluate_template(
         reasons.append(f"{len(unterminated_slots)} unterminated slots ({examples})")
     if components != 1:
         reasons.append(f"slot graph has {components} components")
-    if fill_rate < 0.56:
-        reasons.append(f"fill rate {fill_rate:.3f} below 0.560")
-    if interlock_ratio < 0.19:
-        reasons.append(f"interlock ratio {interlock_ratio:.3f} below 0.190")
-    if slot_count < 21:
-        reasons.append(f"slot count {slot_count} below 21")
-    if short_slot_ratio > 0.12:
-        reasons.append(f"short slot ratio {short_slot_ratio:.3f} above 0.120")
-    if clue_cell_ratio > 0.30:
-        reasons.append(f"clue cell ratio {clue_cell_ratio:.3f} above 0.300")
+    if fill_rate < quality.min_fill_rate:
+        reasons.append(f"fill rate {fill_rate:.3f} below {quality.min_fill_rate:.3f}")
+    if interlock_ratio < quality.min_interlock_ratio:
+        reasons.append(
+            f"interlock ratio {interlock_ratio:.3f} below {quality.min_interlock_ratio:.3f}"
+        )
+    if slot_count < quality.min_slot_count:
+        reasons.append(f"slot count {slot_count} below {quality.min_slot_count}")
+    if short_slot_ratio > quality.max_short_slot_ratio:
+        reasons.append(
+            f"short slot ratio {short_slot_ratio:.3f} above {quality.max_short_slot_ratio:.3f}"
+        )
+    if clue_cell_ratio > quality.max_clue_cell_ratio:
+        reasons.append(
+            f"clue cell ratio {clue_cell_ratio:.3f} above {quality.max_clue_cell_ratio:.3f}"
+        )
     if uncovered_lengths:
         reasons.append(f"uncovered slot lengths: {sorted(uncovered_lengths)}")
 
@@ -529,15 +576,15 @@ def evaluate_template(
     score = (
         fill_rate * 35
         + interlock_ratio * 35
-        + min(slot_count / 30, 1.0) * 15
+        + min(slot_count / max(quality.target_slot_count, 1), 1.0) * 15
         + max(0.0, 1.0 - short_slot_ratio) * 5
-        + min(dual_clue_cells / 8, 1.0) * 5
+        + min(dual_clue_cells / max(quality.dual_clue_bonus_cap, 1), 1.0) * 5
         + (5 if components == 1 else -10 * max(components - 1, 1))
     )
-    if clue_cell_ratio < 0.12:
-        score -= (0.12 - clue_cell_ratio) * 20
-    if clue_cell_ratio > 0.30:
-        score -= (clue_cell_ratio - 0.30) * 20
+    if clue_cell_ratio < quality.min_clue_cell_ratio:
+        score -= (quality.min_clue_cell_ratio - clue_cell_ratio) * 20
+    if clue_cell_ratio > quality.max_clue_cell_ratio:
+        score -= (clue_cell_ratio - quality.max_clue_cell_ratio) * 20
     score -= len(uncovered_lengths) * 5
 
     return TemplateEvaluation(
@@ -570,6 +617,8 @@ def search_templates(
     keep: int,
     allowed_directions: set[Direction],
     max_clues_per_cell: int,
+    quality: TemplateQualitySettings,
+    stop_when_enough_passing: bool,
     verbose: bool = False,
 ) -> SearchResults:
     placements = filter_placements_by_direction(
@@ -579,8 +628,10 @@ def search_templates(
     indexed = placement_index(placements)
     passing: list[tuple[TemplateEvaluation, Template]] = []
     rejected: list[tuple[TemplateEvaluation, Template]] = []
+    attempted = 0
 
     for attempt in range(attempts):
+        attempted += 1
         attempt_seed = seed + attempt
         randomizer = random.Random(attempt_seed)
         board: dict[tuple[int, int], str] = {}
@@ -648,7 +699,10 @@ def search_templates(
             used_answers=used,
         )
         evaluation = evaluate_template(
-            template, words, max_clues_per_cell=max_clues_per_cell
+            template,
+            words,
+            max_clues_per_cell=max_clues_per_cell,
+            quality=quality,
         )
         target = passing if evaluation.passed else rejected
         target.append((evaluation, template))
@@ -661,10 +715,13 @@ def search_templates(
                 f"pass, score {evaluation.score}, passes all gates"
             )
 
+        if stop_when_enough_passing and len(passing) >= keep:
+            break
+
     return SearchResults(
         passing=tuple(passing),
         rejected=tuple(rejected),
-        attempted=attempts,
+        attempted=attempted,
     )
 
 
@@ -694,39 +751,71 @@ def print_and_maybe_save(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Search randomized Swedish puzzle templates.")
-    parser.add_argument("--words", type=Path, default=Path("generator/data/dutch_words.csv"))
-    parser.add_argument("--out-dir", type=Path, default=Path("generator/templates"))
-    parser.add_argument("--width", type=int, default=10)
-    parser.add_argument("--height", type=int, default=17)
-    parser.add_argument("--attempts", type=int, default=200)
-    parser.add_argument("--seed", type=int, default=1000)
-    parser.add_argument("--keep", type=int, default=3)
-    parser.add_argument("--max-word-length", type=int, default=9)
+    default_config_path = Path("generator/template-config.json")
+    config_parser = argparse.ArgumentParser(add_help=False)
+    config_parser.add_argument("--config", type=Path, default=default_config_path)
+    config_args, _ = config_parser.parse_known_args()
+    config = load_config(config_args.config)
+
+    parser = argparse.ArgumentParser(
+        description="Search randomized Swedish puzzle templates.",
+        parents=[config_parser],
+    )
+    parser.add_argument(
+        "--words",
+        type=Path,
+        default=Path(config_value(config, "words", "generator/data/dutch_words.csv")),
+    )
+    parser.add_argument(
+        "--out-dir",
+        type=Path,
+        default=Path(config_value(config, "outDir", "generator/templates")),
+    )
+    parser.add_argument("--width", type=int, default=int(config_value(config, "width", 10)))
+    parser.add_argument("--height", type=int, default=int(config_value(config, "height", 17)))
+    parser.add_argument(
+        "--attempts", type=int, default=int(config_value(config, "attempts", 200))
+    )
+    parser.add_argument("--seed", type=int, default=int(config_value(config, "seed", 1000)))
+    parser.add_argument("--keep", type=int, default=int(config_value(config, "keep", 3)))
+    parser.add_argument(
+        "--max-word-length",
+        type=int,
+        default=int(config_value(config, "maxWordLength", 9)),
+    )
     parser.add_argument(
         "--clue-directions",
         choices=("right", "down", "both"),
-        default="both",
-        help="Allowed clue arrows. Answers always run right or down.",
+        default=config_value(config, "clueDirections", "both"),
+        help="Allowed clue arrows. Answers always read right or down.",
     )
     parser.add_argument(
         "--max-clues-per-cell",
         type=int,
         choices=(1, 2),
-        default=2,
+        default=int(config_value(config, "maxCluesPerCell", 2)),
         help="Maximum clues in one clue cell. Two means one right and one down arrow.",
     )
     parser.add_argument(
         "--save-rejected",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "saveRejected", False)),
         help="Also write the best rejected candidates for inspection.",
     )
     parser.add_argument(
         "--verbose",
-        action="store_true",
-        help="Print each attempt's pass/reject status and rejection reasons.",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "verbose", False)),
+        help="Print passing attempts as they are found.",
+    )
+    parser.add_argument(
+        "--stop-when-enough-passing",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "stopWhenEnoughPassing", False)),
+        help="Stop searching after --keep passing templates have been found.",
     )
     args = parser.parse_args()
+    quality = TemplateQualitySettings.from_config(config_value(config, "quality", {}))
 
     words = load_word_shapes(args.words, max_length=args.max_word_length)
     allowed_directions: set[Direction]
@@ -744,6 +833,8 @@ def main() -> None:
         keep=max(args.keep, 1),
         allowed_directions=allowed_directions,
         max_clues_per_cell=args.max_clues_per_cell,
+        quality=quality,
+        stop_when_enough_passing=args.stop_when_enough_passing,
         verbose=args.verbose,
     )
 

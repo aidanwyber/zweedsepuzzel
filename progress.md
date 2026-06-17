@@ -39,6 +39,11 @@ Zweedse puzzels. The word list remains CSV-based.
 - [x] Template search can place cross-oriented clue arrows when the entry cell
       is otherwise isolated by clue cells, block cells, or the grid edge.
 - [x] Support clue cells with two clue arrows in one cell.
+- [x] Template generation can stop once the requested number of passing
+      templates has been found.
+- [x] Template and puzzle generation defaults are stored in JSON config files.
+- [x] Template generation config includes a 5x5 grid for smaller search-space
+      testing.
 
 ## In Progress
 
@@ -50,7 +55,6 @@ Zweedse puzzels. The word list remains CSV-based.
 
 ## To Do
 
-- [ ] Stop template generation process whenever the desired number of templates to save has been reached.
 - [ ] Add at least 3 hand-authored dense 10x17 templates.
 - [ ] Add at least 3 generated dense 10x17 templates that pass template
       evaluation and puzzle generation.

@@ -16,8 +16,10 @@ The Python generator currently uses only the standard library.
 ## Project Layout
 
 - `generator/generate.py`: puzzle generator
+- `generator/generate-config.json`: default puzzle generation settings
 - `generator/template.py`: template model, graph utilities, and JSON storage
 - `generator/template_generator.py`: randomized template search and evaluator
+- `generator/template-config.json`: default template search settings
 - `generator/templates/`: saved generated templates
 - `generator/data/dutch_words.csv`: Dutch word list with short descriptions
 - `generated/puzzle.json`: generated puzzle output, 10x17 by default
@@ -93,6 +95,7 @@ Useful options:
 
 ```sh
 python3 -m generator.generate \
+  --config generator/generate-config.json \
   --words generator/data/dutch_words.csv \
   --out generated/puzzle.json \
   --frontend-out frontend/public/puzzles/puzzle.json \
@@ -101,6 +104,9 @@ python3 -m generator.generate \
   --attempts 200 \
   --seed 7
 ```
+
+Every option above has a default in `generator/generate-config.json`. Command
+line flags override the config file.
 
 Available templates:
 
@@ -159,6 +165,13 @@ Basic usage:
 python3 -m generator.template_generator --attempts 200 --keep 3
 ```
 
+By default, `generator/template-config.json` is used. It is currently set to a
+`5x5` grid so template-generation changes can be tested against a smaller
+search space. Override `--width 10 --height 17` or use another config when
+searching production-sized templates. The config also contains the template
+evaluation thresholds used during search; CLI flags still override the top-level
+creation settings.
+
 By default this reads:
 
 ```text
@@ -188,10 +201,11 @@ Common options:
 
 ```sh
 python3 -m generator.template_generator \
+  --config generator/template-config.json \
   --words generator/data/dutch_words.csv \
   --out-dir generator/templates \
-  --width 10 \
-  --height 17 \
+  --width 5 \
+  --height 5 \
   --attempts 1000 \
   --keep 5 \
   --seed 1000 \
@@ -215,6 +229,9 @@ Option meanings:
   right-arrow clue and one down-arrow clue, but never overlapping arrows.
 - `--save-rejected`: also save rejected top candidates for inspection.
 - `--verbose`: print passing attempts as they are found.
+- `--stop-when-enough-passing` / `--no-stop-when-enough-passing`: stop after
+  `--keep` passing templates have been found, or keep searching for better
+  scores until `--attempts` is exhausted.
 
 The search keeps passing and rejected candidates in separate leaderboards.
 Passing templates are always reported first and saved. Rejected templates are
@@ -294,7 +311,7 @@ From the repository root:
 
 ```sh
 python3 -m generator.generate --quality draft
-python3 -m py_compile generator/generate.py
+python3 -m py_compile generator/config.py generator/generate.py
 python3 -m py_compile generator/template.py generator/template_generator.py
 ```
 

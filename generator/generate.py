@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
+from generator.config import config_value, load_config
 from generator.template import Slot, Template, connected_components, derive_overlaps
 
 IJ_TOKEN = "Ĳ"
@@ -566,31 +567,52 @@ def write_json(path: Path, payload: dict) -> None:
 def main() -> None:
     templates = available_templates()
     profiles = available_profiles()
-    parser = argparse.ArgumentParser(description="Generate a Swedish-style crossword puzzle.")
-    parser.add_argument("--words", type=Path, default=Path("generator/data/dutch_words.csv"))
-    parser.add_argument("--out", type=Path, default=Path("generated/puzzle.json"))
+    default_config_path = Path("generator/generate-config.json")
+    config_parser = argparse.ArgumentParser(add_help=False)
+    config_parser.add_argument("--config", type=Path, default=default_config_path)
+    config_args, _ = config_parser.parse_known_args()
+    config = load_config(config_args.config)
+
+    parser = argparse.ArgumentParser(
+        description="Generate a Swedish-style crossword puzzle.",
+        parents=[config_parser],
+    )
     parser.add_argument(
-        "--frontend-out", type=Path, default=Path("frontend/public/puzzles/puzzle.json")
+        "--words",
+        type=Path,
+        default=Path(config_value(config, "words", "generator/data/dutch_words.csv")),
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=Path(config_value(config, "out", "generated/puzzle.json")),
+    )
+    parser.add_argument(
+        "--frontend-out",
+        type=Path,
+        default=Path(
+            config_value(config, "frontendOut", "frontend/public/puzzles/puzzle.json")
+        ),
     )
     parser.add_argument(
         "--template",
         choices=sorted(templates),
-        default="10x17",
+        default=config_value(config, "template", "10x17"),
         help="Puzzle template to generate.",
     )
     parser.add_argument(
         "--quality",
         choices=sorted(profiles),
-        default="publisher",
+        default=config_value(config, "quality", "publisher"),
         help="Quality profile to enforce before writing output.",
     )
     parser.add_argument(
         "--attempts",
         type=int,
-        default=200,
+        default=int(config_value(config, "attempts", 200)),
         help="Number of candidate fills to try before choosing the best passing puzzle.",
     )
-    parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--seed", type=int, default=int(config_value(config, "seed", 7)))
     args = parser.parse_args()
 
     words = load_words(args.words)

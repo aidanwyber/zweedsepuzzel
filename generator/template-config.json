@@ -1,0 +1,25 @@
+{
+	"words": "generator/data/dutch_words.csv",
+	"outDir": "generator/templates",
+	"width": 5,
+	"height": 5,
+	"attempts": 200,
+	"seed": 1000,
+	"keep": 2,
+	"maxWordLength": 5,
+	"clueDirections": "both",
+	"maxCluesPerCell": 2,
+	"saveRejected": false,
+	"verbose": false,
+	"stopWhenEnoughPassing": true,
+	"quality": {
+		"minFillRate": 0.32,
+		"minInterlockRatio": 0.08,
+		"minSlotCount": 3,
+		"maxShortSlotRatio": 1.0,
+		"maxClueCellRatio": 0.48,
+		"minClueCellRatio": 0.04,
+		"targetSlotCount": 8,
+		"dualClueBonusCap": 4
+	}
+}
