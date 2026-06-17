@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import random
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 from generator.config import config_value, load_config
@@ -83,11 +83,76 @@ class TemplateQualitySettings:
 
 
 @dataclass(frozen=True)
+class SearchHeuristicSettings:
+    beam_width: int = 1
+    branching_factor: int = 1
+    placement_steps: int = 90
+    candidate_pool: int = 60
+    randomness: float = 0.08
+    interlock_weight: float = 36.0
+    fill_weight: float = 28.0
+    slot_weight: float = 16.0
+    clue_weight: float = 8.0
+    domain_weight: float = 8.0
+    short_slot_penalty: float = 6.0
+    length_weight: float = 0.2
+    densify_passes: int = 0
+    densify_candidate_pool: int = 80
+    densify_min_gain: float = 0.001
+
+    @classmethod
+    def from_config(cls, config: dict) -> SearchHeuristicSettings:
+        return cls(
+            beam_width=max(1, int(config_value(config, "beamWidth", cls.beam_width))),
+            branching_factor=max(
+                1, int(config_value(config, "branchingFactor", cls.branching_factor))
+            ),
+            placement_steps=max(
+                1, int(config_value(config, "placementSteps", cls.placement_steps))
+            ),
+            candidate_pool=max(1, int(config_value(config, "candidatePool", cls.candidate_pool))),
+            randomness=max(0.0, float(config_value(config, "randomness", cls.randomness))),
+            interlock_weight=float(
+                config_value(config, "interlockWeight", cls.interlock_weight)
+            ),
+            fill_weight=float(config_value(config, "fillWeight", cls.fill_weight)),
+            slot_weight=float(config_value(config, "slotWeight", cls.slot_weight)),
+            clue_weight=float(config_value(config, "clueWeight", cls.clue_weight)),
+            domain_weight=float(config_value(config, "domainWeight", cls.domain_weight)),
+            short_slot_penalty=float(
+                config_value(config, "shortSlotPenalty", cls.short_slot_penalty)
+            ),
+            length_weight=float(config_value(config, "lengthWeight", cls.length_weight)),
+            densify_passes=max(0, int(config_value(config, "densifyPasses", cls.densify_passes))),
+            densify_candidate_pool=max(
+                1,
+                int(config_value(config, "densifyCandidatePool", cls.densify_candidate_pool)),
+            ),
+            densify_min_gain=max(
+                0.0,
+                float(config_value(config, "densifyMinGain", cls.densify_min_gain)),
+            ),
+        )
+
+
+@dataclass(frozen=True)
 class SearchResults:
     passing: tuple[tuple[TemplateEvaluation, Template], ...]
     rejected: tuple[tuple[TemplateEvaluation, Template], ...]
     puzzles: dict[str, dict]
     attempted: int
+    interrupted: bool = False
+
+
+@dataclass(frozen=True)
+class PartialTemplateState:
+    board: dict[tuple[int, int], str]
+    clues: dict[tuple[int, int], set[Direction]]
+    reserved_stops: set[tuple[int, int]]
+    reserved_blocks: set[tuple[int, int]]
+    used: set[str]
+    slots: list[Placement]
+    score: float = 0.0
 
 
 def tokenize(answer: str) -> tuple[str, ...]:
@@ -303,6 +368,131 @@ def place(
     return next_board, next_clues, next_reserved, next_reserved_blocks, next_used, next_slots
 
 
+def empty_state() -> PartialTemplateState:
+    return PartialTemplateState(
+        board={},
+        clues={},
+        reserved_stops=set(),
+        reserved_blocks=set(),
+        used=set(),
+        slots=[],
+    )
+
+
+def place_in_state(
+    state: PartialTemplateState,
+    placement: Placement,
+    width: int,
+    height: int,
+    score: float = 0.0,
+) -> PartialTemplateState:
+    board, clues, reserved_stops, reserved_blocks, used, slots = place(
+        state.board,
+        state.clues,
+        state.reserved_stops,
+        state.reserved_blocks,
+        state.used,
+        state.slots,
+        placement,
+        width,
+        height,
+    )
+    return PartialTemplateState(
+        board=board,
+        clues=clues,
+        reserved_stops=reserved_stops,
+        reserved_blocks=reserved_blocks,
+        used=used,
+        slots=slots,
+        score=score,
+    )
+
+
+def cell_occupancy(slots: list[Placement]) -> dict[tuple[int, int], int]:
+    occupancy: dict[tuple[int, int], int] = {}
+    for slot in slots:
+        for cell in slot.cells:
+            occupancy[cell] = occupancy.get(cell, 0) + 1
+    return occupancy
+
+
+def clue_score(clue_cell_ratio: float, quality: TemplateQualitySettings) -> float:
+    if quality.min_clue_cell_ratio <= clue_cell_ratio <= quality.max_clue_cell_ratio:
+        return 1.0
+    if clue_cell_ratio < quality.min_clue_cell_ratio:
+        distance = quality.min_clue_cell_ratio - clue_cell_ratio
+    else:
+        distance = clue_cell_ratio - quality.max_clue_cell_ratio
+    return max(0.0, 1.0 - distance / max(quality.max_clue_cell_ratio, 0.01))
+
+
+def score_partial_state(
+    state: PartialTemplateState,
+    width: int,
+    height: int,
+    quality: TemplateQualitySettings,
+    heuristics: SearchHeuristicSettings,
+    length_counts: dict[int, int],
+) -> float:
+    total_cells = width * height
+    if not state.board or total_cells == 0:
+        return 0.0
+
+    occupancy = cell_occupancy(state.slots)
+    fill_rate = len(state.board) / total_cells
+    interlock_ratio = (
+        sum(1 for count in occupancy.values() if count > 1) / len(state.board)
+        if state.board
+        else 0.0
+    )
+    slot_ratio = min(len(state.slots) / max(quality.target_slot_count, 1), 1.0)
+    clue_cell_ratio = len(state.clues) / total_cells
+    short_slot_ratio = (
+        sum(1 for slot in state.slots if len(slot.cells) <= 3) / len(state.slots)
+        if state.slots
+        else 0.0
+    )
+    domain_score = (
+        sum(min(length_counts.get(len(slot.cells), 0) / 6, 1.0) for slot in state.slots)
+        / len(state.slots)
+        if state.slots
+        else 0.0
+    )
+
+    return (
+        fill_rate * heuristics.fill_weight
+        + interlock_ratio * heuristics.interlock_weight
+        + slot_ratio * heuristics.slot_weight
+        + clue_score(clue_cell_ratio, quality) * heuristics.clue_weight
+        + domain_score * heuristics.domain_weight
+        - short_slot_ratio * heuristics.short_slot_penalty
+    )
+
+
+def score_candidate_placement(
+    state: PartialTemplateState,
+    placement: Placement,
+    width: int,
+    height: int,
+    quality: TemplateQualitySettings,
+    heuristics: SearchHeuristicSettings,
+    length_counts: dict[int, int],
+) -> float:
+    next_state = place_in_state(state, placement, width, height)
+    intersections = sum(1 for cell in placement.cells if cell in state.board)
+    new_cells = sum(1 for cell in placement.cells if cell not in state.board)
+    dual_clue_bonus = 1 if placement.origin in state.clues else 0
+    domain_support = min(length_counts.get(placement.word.length, 0) / 6, 1.0)
+    return (
+        score_partial_state(next_state, width, height, quality, heuristics, length_counts)
+        + intersections * 4.0
+        + new_cells * 0.4
+        + dual_clue_bonus * 2.0
+        + domain_support * heuristics.domain_weight
+        + placement.word.length * heuristics.length_weight
+    )
+
+
 def candidate_placements(
     board: dict[tuple[int, int], str],
     placements: list[Placement],
@@ -320,6 +510,103 @@ def candidate_placements(
                 seen.add(identity)
                 candidates.append(placement)
     return candidates
+
+
+def ranked_placements_for_state(
+    state: PartialTemplateState,
+    placements: list[Placement],
+    indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    width: int,
+    height: int,
+    max_clues_per_cell: int,
+    quality: TemplateQualitySettings,
+    heuristics: SearchHeuristicSettings,
+    length_counts: dict[int, int],
+    randomizer: random.Random,
+) -> list[tuple[float, Placement]]:
+    ranked = []
+    for placement in candidate_placements(state.board, placements, indexed):
+        if not can_place(
+            state.board,
+            state.clues,
+            state.reserved_stops,
+            state.reserved_blocks,
+            state.used,
+            state.slots,
+            placement,
+            width,
+            height,
+            max_clues_per_cell,
+        ):
+            continue
+        intersections = sum(1 for cell in placement.cells if cell in state.board)
+        if state.slots and intersections == 0:
+            continue
+        score = score_candidate_placement(
+            state,
+            placement,
+            width,
+            height,
+            quality,
+            heuristics,
+            length_counts,
+        )
+        if heuristics.randomness:
+            score += randomizer.uniform(-heuristics.randomness, heuristics.randomness)
+        ranked.append((score, placement))
+
+    ranked.sort(key=lambda item: item[0], reverse=True)
+    return ranked[: heuristics.candidate_pool]
+
+
+def build_slots_with_beam(
+    placements: list[Placement],
+    indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    width: int,
+    height: int,
+    max_clues_per_cell: int,
+    quality: TemplateQualitySettings,
+    heuristics: SearchHeuristicSettings,
+    length_counts: dict[int, int],
+    randomizer: random.Random,
+) -> PartialTemplateState:
+    beam = [empty_state()]
+    best_state = beam[0]
+
+    for _ in range(heuristics.placement_steps):
+        expanded: list[PartialTemplateState] = []
+        for state in beam:
+            ranked = ranked_placements_for_state(
+                state,
+                placements,
+                indexed,
+                width,
+                height,
+                max_clues_per_cell,
+                quality,
+                heuristics,
+                length_counts,
+                randomizer,
+            )
+            for candidate_score, placement in ranked[: heuristics.branching_factor]:
+                next_state = place_in_state(
+                    state,
+                    placement,
+                    width,
+                    height,
+                    score=candidate_score,
+                )
+                expanded.append(next_state)
+
+        if not expanded:
+            break
+
+        expanded.sort(key=lambda state: state.score, reverse=True)
+        beam = expanded[: heuristics.beam_width]
+        if beam[0].score >= best_state.score:
+            best_state = beam[0]
+
+    return best_state
 
 
 def slots_to_template(
@@ -343,6 +630,31 @@ def slots_to_template(
         width=width,
         height=height,
         slots=tuple(template_slots),
+    )
+
+
+def promoted_template_from_state(
+    state: PartialTemplateState,
+    width: int,
+    height: int,
+    template_id: str,
+    title: str,
+    max_clues_per_cell: int,
+    allowed_answers: set[str],
+) -> Template:
+    template = slots_to_template(
+        slots=state.slots,
+        width=width,
+        height=height,
+        template_id=template_id,
+        title=title,
+    )
+    return promote_readable_runs(
+        template,
+        max_clues_per_cell=max_clues_per_cell,
+        board=state.board,
+        allowed_answers=allowed_answers,
+        used_answers=state.used,
     )
 
 
@@ -622,6 +934,102 @@ def reject_with_reason(
     )
 
 
+def should_accept_densified(
+    current: TemplateEvaluation, candidate: TemplateEvaluation, min_gain: float
+) -> bool:
+    if candidate.passed and not current.passed:
+        return True
+    if current.passed and not candidate.passed:
+        return False
+    return candidate.score > current.score + min_gain
+
+
+def densify_state_by_score(
+    state: PartialTemplateState,
+    placements: list[Placement],
+    indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    width: int,
+    height: int,
+    template_id: str,
+    title: str,
+    max_clues_per_cell: int,
+    quality: TemplateQualitySettings,
+    heuristics: SearchHeuristicSettings,
+    length_counts: dict[int, int],
+    allowed_answers: set[str],
+    words: list[WordShape],
+    randomizer: random.Random,
+) -> tuple[PartialTemplateState, Template, TemplateEvaluation]:
+    current_state = state
+    current_template = promoted_template_from_state(
+        current_state,
+        width,
+        height,
+        template_id,
+        title,
+        max_clues_per_cell,
+        allowed_answers,
+    )
+    current_evaluation = evaluate_template(
+        current_template,
+        words,
+        max_clues_per_cell=max_clues_per_cell,
+        quality=quality,
+    )
+
+    for _ in range(heuristics.densify_passes):
+        ranked = ranked_placements_for_state(
+            current_state,
+            placements,
+            indexed,
+            width,
+            height,
+            max_clues_per_cell,
+            quality,
+            heuristics,
+            length_counts,
+            randomizer,
+        )
+
+        best_candidate: tuple[PartialTemplateState, Template, TemplateEvaluation] | None = None
+        for _, placement in ranked[: heuristics.densify_candidate_pool]:
+            candidate_state = place_in_state(current_state, placement, width, height)
+            candidate_template = promoted_template_from_state(
+                candidate_state,
+                width,
+                height,
+                template_id,
+                title,
+                max_clues_per_cell,
+                allowed_answers,
+            )
+            candidate_evaluation = evaluate_template(
+                candidate_template,
+                words,
+                max_clues_per_cell=max_clues_per_cell,
+                quality=quality,
+            )
+            if not should_accept_densified(
+                current_evaluation,
+                candidate_evaluation,
+                heuristics.densify_min_gain,
+            ):
+                continue
+            if (
+                best_candidate is None
+                or candidate_evaluation.score > best_candidate[2].score
+                or (candidate_evaluation.passed and not best_candidate[2].passed)
+            ):
+                best_candidate = (candidate_state, candidate_template, candidate_evaluation)
+
+        if best_candidate is None:
+            break
+
+        current_state, current_template, current_evaluation = best_candidate
+
+    return current_state, current_template, current_evaluation
+
+
 def search_templates(
     words: list[WordShape],
     fill_words: list,
@@ -633,6 +1041,7 @@ def search_templates(
     allowed_directions: set[Direction],
     max_clues_per_cell: int,
     quality: TemplateQualitySettings,
+    heuristics: SearchHeuristicSettings,
     stop_when_enough_passing: bool,
     require_fill: bool,
     fill_attempts: int,
@@ -643,6 +1052,9 @@ def search_templates(
         all_placements(words, width, height), allowed_directions
     )
     allowed_answers = {word.answer for word in words}
+    length_counts: dict[int, int] = {}
+    for word in words:
+        length_counts[word.length] = length_counts.get(word.length, 0) + 1
     indexed = placement_index(placements)
     passing: list[tuple[TemplateEvaluation, Template]] = []
     rejected: list[tuple[TemplateEvaluation, Template]] = []
@@ -653,75 +1065,34 @@ def search_templates(
         attempted += 1
         attempt_seed = seed + attempt
         randomizer = random.Random(attempt_seed)
-        board: dict[tuple[int, int], str] = {}
-        clues: dict[tuple[int, int], set[Direction]] = {}
-        reserved_stops: set[tuple[int, int]] = set()
-        reserved_blocks: set[tuple[int, int]] = set()
-        used: set[str] = set()
-        slots: list[Placement] = []
-
-        for _ in range(90):
-            ranked = []
-            for placement in candidate_placements(board, placements, indexed):
-                if not can_place(
-                    board,
-                    clues,
-                    reserved_stops,
-                    reserved_blocks,
-                    used,
-                    slots,
-                    placement,
-                    width,
-                    height,
-                    max_clues_per_cell,
-                ):
-                    continue
-                intersections = sum(1 for cell in placement.cells if cell in board)
-                if slots and intersections == 0:
-                    continue
-                new_cells = sum(1 for cell in placement.cells if cell not in board)
-                dual_clue_bonus = 1 if placement.origin in clues else 0
-                weight = intersections * 22 + new_cells * 1.2 + placement.word.length * 0.1
-                weight += dual_clue_bonus * 3
-                ranked.append((weight, placement))
-
-            if not ranked:
-                break
-
-            ranked.sort(key=lambda item: item[0], reverse=True)
-            pool = ranked[: min(60, len(ranked))]
-            placement = randomizer.choice(pool)[1]
-            board, clues, reserved_stops, reserved_blocks, used, slots = place(
-                board,
-                clues,
-                reserved_stops,
-                reserved_blocks,
-                used,
-                slots,
-                placement,
-                width,
-                height,
-            )
-
-        template = slots_to_template(
-            slots=slots,
+        state = build_slots_with_beam(
+            placements=placements,
+            indexed=indexed,
             width=width,
             height=height,
-            template_id=f"random-{width}x{height}-{attempt_seed}",
-            title=f"Randomized {width}x{height} template {attempt_seed}",
-        )
-        template = promote_readable_runs(
-            template,
-            max_clues_per_cell=max_clues_per_cell,
-            board=board,
-            allowed_answers=allowed_answers,
-            used_answers=used,
-        )
-        evaluation = evaluate_template(
-            template,
-            words,
             max_clues_per_cell=max_clues_per_cell,
             quality=quality,
+            heuristics=heuristics,
+            length_counts=length_counts,
+            randomizer=randomizer,
+        )
+        template_id = f"random-{width}x{height}-{attempt_seed}"
+        title = f"Randomized {width}x{height} template {attempt_seed}"
+        state, template, evaluation = densify_state_by_score(
+            state,
+            placements,
+            indexed,
+            width,
+            height,
+            template_id,
+            title,
+            max_clues_per_cell,
+            quality,
+            heuristics,
+            length_counts,
+            allowed_answers,
+            words,
+            randomizer,
         )
 
         puzzle = None
@@ -915,8 +1286,107 @@ def main() -> None:
             config_value(config, "frontendOut", "frontend/public/puzzles/puzzle.json")
         ),
     )
+    heuristic_config = config_value(config, "heuristics", {})
+    parser.add_argument(
+        "--beam-width",
+        type=int,
+        default=int(config_value(heuristic_config, "beamWidth", SearchHeuristicSettings.beam_width)),
+        help="Number of partial template states kept at each construction step.",
+    )
+    parser.add_argument(
+        "--branching-factor",
+        type=int,
+        default=int(
+            config_value(
+                heuristic_config,
+                "branchingFactor",
+                SearchHeuristicSettings.branching_factor,
+            )
+        ),
+        help="Number of candidate placements expanded per beam state.",
+    )
+    parser.add_argument(
+        "--placement-steps",
+        type=int,
+        default=int(
+            config_value(
+                heuristic_config,
+                "placementSteps",
+                SearchHeuristicSettings.placement_steps,
+            )
+        ),
+        help="Maximum placement steps per template attempt.",
+    )
+    parser.add_argument(
+        "--candidate-pool",
+        type=int,
+        default=int(
+            config_value(
+                heuristic_config,
+                "candidatePool",
+                SearchHeuristicSettings.candidate_pool,
+            )
+        ),
+        help="Maximum ranked candidate placements considered per beam state.",
+    )
+    parser.add_argument(
+        "--randomness",
+        type=float,
+        default=float(
+            config_value(heuristic_config, "randomness", SearchHeuristicSettings.randomness)
+        ),
+        help="Small score jitter used to diversify repeated attempts.",
+    )
+    parser.add_argument(
+        "--densify-passes",
+        type=int,
+        default=int(
+            config_value(
+                heuristic_config,
+                "densifyPasses",
+                SearchHeuristicSettings.densify_passes,
+            )
+        ),
+        help="Greedy post-construction passes that only accept exact score improvements.",
+    )
+    parser.add_argument(
+        "--densify-candidate-pool",
+        type=int,
+        default=int(
+            config_value(
+                heuristic_config,
+                "densifyCandidatePool",
+                SearchHeuristicSettings.densify_candidate_pool,
+            )
+        ),
+        help="Number of ranked placements checked during each densification pass.",
+    )
+    parser.add_argument(
+        "--densify-min-gain",
+        type=float,
+        default=float(
+            config_value(
+                heuristic_config,
+                "densifyMinGain",
+                SearchHeuristicSettings.densify_min_gain,
+            )
+        ),
+        help="Minimum exact template score gain required to accept a densification move.",
+    )
     args = parser.parse_args()
     quality = TemplateQualitySettings.from_config(config_value(config, "quality", {}))
+    base_heuristics = SearchHeuristicSettings.from_config(heuristic_config)
+    heuristics = replace(
+        base_heuristics,
+        beam_width=max(args.beam_width, 1),
+        branching_factor=max(args.branching_factor, 1),
+        placement_steps=max(args.placement_steps, 1),
+        candidate_pool=max(args.candidate_pool, 1),
+        randomness=max(args.randomness, 0.0),
+        densify_passes=max(args.densify_passes, 0),
+        densify_candidate_pool=max(args.densify_candidate_pool, 1),
+        densify_min_gain=max(args.densify_min_gain, 0.0),
+    )
 
     words = load_word_shapes(args.words, max_length=args.max_word_length)
     fill_words = load_words(args.words)
@@ -937,6 +1407,7 @@ def main() -> None:
         allowed_directions=allowed_directions,
         max_clues_per_cell=args.max_clues_per_cell,
         quality=quality,
+        heuristics=heuristics,
         stop_when_enough_passing=args.stop_when_enough_passing,
         require_fill=args.require_fill,
         fill_attempts=args.fill_attempts,

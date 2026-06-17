@@ -48,6 +48,11 @@ Zweedse puzzels. The word list remains CSV-based.
 - [x] Template generation can require at least one valid CSP fill before saving.
 - [x] Template generation can publish the best filled passing template to the
       frontend puzzle JSON.
+- [x] Template generation uses heuristic beam search over partial layouts,
+      guided by fill, interlock, slot progress, clue-cell economy, and length
+      support.
+- [x] Template generation has score-monotonic densification passes that only
+      accept exact template-score improvements.
 
 ## In Progress
 
@@ -59,15 +64,12 @@ Zweedse puzzels. The word list remains CSV-based.
 
 ## To Do
 
-- [ ] Add at least 3 hand-authored dense 10x17 templates.
-- [ ] Add at least 3 generated dense 10x17 templates that pass template
-      evaluation and puzzle generation.
 - [ ] Add grid connectivity tests.
 - [ ] Add uniqueness regression tests.
 - [ ] Add `IJ` normalization tests.
 - [ ] Add impossible-input tests.
 - [ ] Add quality-gate tests.
-- [ ] Add CSV validation for duplicate answers and overlong clues.
+- [ ] Add CSV validation for duplicate answers and overlong clues -> print any rejects.
 - [ ] Add answer metadata columns while keeping CSV as the source format.
 - [ ] Add clue metadata columns while keeping CSV as the source format.
 - [ ] Add batch reports for rejected candidates.
@@ -76,6 +78,8 @@ Zweedse puzzels. The word list remains CSV-based.
 - [ ] Add an interactive solving UI.
 - [ ] Add an editor workflow for locking words and rerunning partial fills.
 - [ ] Evaluate OR-Tools CP-SAT or exact-cover solving for dense templates.
+- [ ] Add at least 3 hand-authored dense 10x17 templates.
+- [ ] Add at least 3 generated dense 10x17 templates that pass template evaluation and puzzle generation.
 
 ## Current Blockers
 

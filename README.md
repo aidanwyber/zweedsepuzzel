@@ -258,6 +258,19 @@ Option meanings:
 - `--emit-puzzle` / `--no-emit-puzzle`: write the best filled passing template
   to `generated/puzzle.json` and `frontend/public/puzzles/puzzle.json`.
 - `--puzzle-out` and `--frontend-out`: output paths used by `--emit-puzzle`.
+- `--beam-width`: number of partial template states kept during construction.
+- `--branching-factor`: number of candidate placements expanded from each beam
+  state.
+- `--placement-steps`: maximum word-placement steps per template attempt.
+- `--candidate-pool`: number of high-scoring candidate placements considered
+  before beam expansion.
+- `--randomness`: small score jitter used to diversify repeated attempts.
+- `--densify-passes`: post-construction passes that try adding legal placements
+  and accept only exact `evaluate_template` score improvements.
+- `--densify-candidate-pool`: number of ranked placements checked per
+  densification pass.
+- `--densify-min-gain`: minimum exact score increase needed to accept a
+  densification move.
 
 The search keeps passing and rejected candidates in separate leaderboards.
 Passing templates are always reported first and saved. Rejected templates are
@@ -361,6 +374,8 @@ Current implementation:
 - connected dense 10x17 default template
 - template JSON load/save through `Template`
 - randomized template search and pre-solve evaluation
+- heuristic beam search for template construction, scored on projected fill,
+  interlock, slot progress, clue-cell economy, and word-length support
 - hard template constraint preventing words from visually continuing past their
   final cell
 - right and down clue directions

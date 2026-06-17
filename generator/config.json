@@ -4,9 +4,9 @@
 		"outDir": "generator/templates",
 		"width": 10,
 		"height": 17,
-		"attempts": 200,
-		"seed": 10000,
-		"keep": 2,
+		"attempts": 2000,
+		"seed": 1,
+		"keep": 1,
 		"maxWordLength": 10,
 		"clueDirections": "both",
 		"maxCluesPerCell": 2,
@@ -19,15 +19,32 @@
 		"emitPuzzle": true,
 		"puzzleOut": "generated/puzzle.json",
 		"frontendOut": "frontend/public/puzzles/puzzle.json",
+		"heuristics": {
+			"beamWidth": 6,
+			"branchingFactor": 5,
+			"placementSteps": 200,
+			"candidatePool": 100,
+			"randomness": 0.08,
+			"interlockWeight": 42.0,
+			"fillWeight": 28.0,
+			"slotWeight": 16.0,
+			"clueWeight": 8.0,
+			"domainWeight": 8.0,
+			"shortSlotPenalty": 6.0,
+			"lengthWeight": 0.2,
+			"densifyPasses": 8,
+			"densifyCandidatePool": 80,
+			"densifyMinGain": 0.001
+		},
 		"quality": {
 			"minFillRate": 0.4,
-			"minInterlockRatio": 0.08,
+			"minInterlockRatio": 0.2,
 			"minSlotCount": 3,
 			"maxShortSlotRatio": 1.0,
 			"maxClueCellRatio": 0.48,
 			"minClueCellRatio": 0.04,
-			"targetSlotCount": 8,
-			"dualClueBonusCap": 4
+			"targetSlotCount": 20,
+			"dualClueBonusCap": 10
 		}
 	},
 	"generate": {
