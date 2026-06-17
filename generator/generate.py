@@ -386,7 +386,12 @@ def materialize(template: Template, assignment: dict[str, WordEntry], unique: bo
     for slot_id, word in assignment.items():
         slot = slots_by_id[slot_id]
         clue_cells.setdefault(slot.origin, []).append(
-            {"direction": slot.arrow_direction(), "text": word.clue, "slotId": slot.id}
+            {
+                "direction": slot.arrow_direction(),
+                "answerDirection": slot.direction,
+                "text": word.clue,
+                "slotId": slot.id,
+            }
         )
         for index, cell in enumerate(slot.cells):
             letter_cells.setdefault(cell, (display_letter(word.letters[index]), []))[1].append(

@@ -5,6 +5,7 @@ type CellType = 'letter' | 'clue' | 'block'
 
 interface ClueItem {
   direction: Direction
+  answerDirection?: Direction
   text: string
   slotId: string
 }
@@ -19,6 +20,7 @@ interface PuzzleCell {
 interface PuzzleSlot {
   id: string
   direction: Direction
+  clueDirection?: Direction
   answer: string
   clue: string
 }
@@ -61,8 +63,24 @@ const root = app
 let showSolution = false
 
 const directionLabel: Record<Direction, string> = {
-  right: '>',
-  down: 'v',
+  right: '→',
+  down: '↓',
+}
+
+function clueArrowLabel(clue: ClueItem, slotsById: Map<string, PuzzleSlot>): string {
+  const answerDirection = clue.answerDirection ?? slotsById.get(clue.slotId)?.direction ?? clue.direction
+  if (clue.direction === answerDirection) {
+    return directionLabel[clue.direction]
+  }
+  return clue.direction === 'right' && answerDirection === 'down' ? '↴' : '↳'
+}
+
+function clueArrowAria(clue: ClueItem, slotsById: Map<string, PuzzleSlot>): string {
+  const answerDirection = clue.answerDirection ?? slotsById.get(clue.slotId)?.direction ?? clue.direction
+  if (clue.direction === answerDirection) {
+    return clue.direction
+  }
+  return `${clue.direction} then ${answerDirection}`
 }
 
 function clueOrder(direction: Direction): number {
@@ -90,14 +108,14 @@ function cellClass(cell: PuzzleCell): string {
   return ['cell', `cell-${cell.type}`, showSolution ? 'show-solution' : ''].join(' ')
 }
 
-function renderClues(clues: ClueItem[] = []): string {
+function renderClues(clues: ClueItem[] = [], slotsById = new Map<string, PuzzleSlot>()): string {
   return [...clues]
     .sort((left, right) => clueOrder(left.direction) - clueOrder(right.direction))
     .map(
       (clue) => `
         <div class="clue-line clue-${clue.direction}">
           <span class="clue-text">${escapeHtml(clue.text)}</span>
-          <span class="clue-arrow" aria-label="${clue.direction}">${directionLabel[clue.direction]}</span>
+          <span class="clue-arrow" aria-label="${clueArrowAria(clue, slotsById)}">${clueArrowLabel(clue, slotsById)}</span>
         </div>
       `,
     )
@@ -105,11 +123,12 @@ function renderClues(clues: ClueItem[] = []): string {
 }
 
 function renderGrid(puzzle: Puzzle): string {
+  const slotsById = new Map(puzzle.slots.map((slot) => [slot.id, slot]))
   const rows = puzzle.cells
     .flatMap((row) =>
       row.map((cell) => {
         if (cell.type === 'clue') {
-          return `<div class="${cellClass(cell)}">${renderClues(cell.clues)}</div>`
+          return `<div class="${cellClass(cell)}">${renderClues(cell.clues, slotsById)}</div>`
         }
 
         if (cell.type === 'letter') {
