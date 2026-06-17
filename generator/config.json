@@ -4,7 +4,7 @@
 		"outDir": "generator/templates",
 		"width": 10,
 		"height": 17,
-		"attempts": 1500,
+		"attempts": 1800,
 		"seed": -1,
 		"keep": 1,
 		"maxWordLength": 17,
@@ -45,7 +45,7 @@
 			"minInterlockRatio": 0.12,
 			"minSlotCount": 8,
 			"maxShortSlotRatio": 0.15,
-			"maxClueCellRatio": 0.3,
+			"maxClueCellRatio": 0.5,
 			"minClueCellRatio": 0.04,
 			"targetSlotCount": 18,
 			"dualClueBonusCap": 6

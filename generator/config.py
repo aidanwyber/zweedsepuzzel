@@ -5,8 +5,8 @@ import random
 from pathlib import Path
 from typing import Any
 
-RANDOM_SEED_MAX = 10_000_000
-RANDOM_SEED_MIN = 10_000
+RANDOM_SEED_MAX = 100_000_000
+RANDOM_SEED_MIN = 100_000
 
 
 def load_config(path: Path) -> dict[str, Any]:
