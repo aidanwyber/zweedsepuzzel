@@ -114,6 +114,9 @@ python3 -m generator.generate \
 Every option above has a default in `generator/config.json`. Command line flags
 override the config file.
 
+Set `--seed -1` to choose a random seed between `10000` and `10000000` for that
+run. The resolved seed is printed and recorded in generated puzzle metadata.
+
 Available templates:
 
 - `10x17`: default larger display grid
@@ -161,9 +164,9 @@ Vite will serve the updated JSON.
 
 ## Search For Templates
 
-The randomized template generator searches candidate 10x17 layouts from the CSV
-word shapes, evaluates them before solving, and stores the best passing
-templates as JSON.
+The randomized template generator searches candidate layouts from the CSV word
+shapes, evaluates them before solving, and stores the best passing templates as
+JSON.
 
 Basic usage:
 
@@ -171,13 +174,11 @@ Basic usage:
 python3 -m generator.template_generator --attempts 200 --keep 3
 ```
 
-By default, `generator/config.json` is used. Its `templateSearch` section is
-currently set to a
-`5x5` grid so template-generation changes can be tested against a smaller
-search space. Override `--width 10 --height 17` or use another config when
-searching production-sized templates. The config also contains the template
-evaluation thresholds used during search; CLI flags still override the top-level
-creation settings.
+By default, `generator/config.json` is used. Its `templateSearch` section
+defines the default search size, heuristic weights, and template evaluation
+thresholds. CLI flags override those values. Use `--width 5 --height 5` when
+you want a smaller search space for quick experiments, and `--width 10 --height
+17` for production-sized templates.
 
 By default this reads:
 
@@ -204,8 +205,8 @@ Then generate a puzzle from a saved template:
 python3 -m generator.generate --template random-10x17-3140
 ```
 
-For the configured 5x5 test templates, use draft quality if you call the main
-generator directly:
+For saved 5x5 test templates, use draft quality if you call the main generator
+directly:
 
 ```sh
 python3 -m generator.generate --template random-5x5-1010 --quality draft
@@ -239,7 +240,8 @@ Option meanings:
 - `--width` and `--height`: template grid size.
 - `--attempts`: number of randomized layout candidates to try.
 - `--keep`: number of top candidates to report.
-- `--seed`: deterministic starting seed for reproducible searches.
+- `--seed`: deterministic starting seed for reproducible searches. Use `-1` to
+  choose a random seed between `10000` and `10000000` for that run.
 - `--max-word-length`: longest CSV answer shape used while searching layouts.
 - `--clue-directions`: allowed clue arrows: `right`, `down`, or `both`.
   Answers always read horizontally right or vertically down.
@@ -254,7 +256,8 @@ Option meanings:
 - `--require-fill` / `--no-require-fill`: only accept templates that can also
   generate at least one valid filled puzzle.
 - `--fill-attempts` and `--fill-seed`: control the CSP fill check used by
-  `--require-fill`.
+  `--require-fill`. Use `--fill-seed -1` to choose a random fill seed for that
+  run.
 - `--emit-puzzle` / `--no-emit-puzzle`: write the best filled passing template
   to `generated/puzzle.json` and `frontend/public/puzzles/puzzle.json`.
 - `--puzzle-out` and `--frontend-out`: output paths used by `--emit-puzzle`.
@@ -271,6 +274,13 @@ Option meanings:
   densification pass.
 - `--densify-min-gain`: minimum exact score increase needed to accept a
   densification move.
+- `--repair-passes`: local mutation passes that remove or replace weak slots
+  only when the exact template score improves.
+- `--repair-candidate-pool`: number of removals/replacements checked per repair
+  pass.
+- `--repair-min-gain`: minimum exact score increase needed to accept a repair
+  move.
+- `--workers`: number of worker processes for independent geometry attempts.
 
 The search keeps passing and rejected candidates in separate leaderboards.
 Passing templates are always reported first and saved. Rejected templates are
@@ -292,9 +302,11 @@ To see passing templates as they are found:
 python3 -m generator.template_generator --attempts 20 --seed 100001 --verbose
 ```
 
-The template generator does not fill the final puzzle with answers. It uses CSV
-word shapes to search plausible slot geometry, then the main generator performs
-the actual CSP fill against the chosen template.
+The search is geometry-first. It uses CSV word shapes to find plausible slot
+layouts, ranks geometrically passing candidates, and then, when `--require-fill`
+is enabled, calls the main CSP generator from the best geometry score downward
+until enough fillable templates have been found. With `--emit-puzzle`, the best
+filled passing template is also written to the normal generated puzzle outputs.
 
 Template slots store both:
 
@@ -321,7 +333,7 @@ Template evaluation follows the research report's template-first approach:
 - hard word termination: the cell after a slot must be grid edge, clue cell, or
   block, never another letter cell
 - hard readable-run validation: every contiguous horizontal or vertical run of
-  at least 3 letters must be an explicit slot, and every such filled run must
+  at least 2 letters must be an explicit slot, and every such filled run must
   be an answer from the CSV
 
 Recommended workflow:
@@ -379,6 +391,14 @@ Current implementation:
 - randomized template search and pre-solve evaluation
 - heuristic beam search for template construction, scored on projected fill,
   interlock, slot progress, clue-cell economy, and word-length support
+- pattern-domain scoring that estimates how many CSV words can fit known slot
+  letters during template construction
+- delayed fillability checks: geometry candidates are ranked first, then the
+  CSP fill check runs from the best-scoring geometry downward until enough
+  fillable templates are found
+- optional local repair passes that remove or replace weak slots on exact score
+  improvement
+- optional multiprocessing over independent geometry attempts
 - hard template constraint preventing words from visually continuing past their
   final cell
 - right and down clue directions

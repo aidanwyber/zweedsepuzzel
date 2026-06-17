@@ -43,8 +43,7 @@ Zweedse puzzels. The word list remains CSV-based.
       templates has been found.
 - [x] Template and puzzle generation defaults are stored in one shared JSON
       config file.
-- [x] Template generation config includes a 5x5 grid for smaller search-space
-      testing.
+- [x] Template generation can run 5x5 grids for smaller search-space testing.
 - [x] Template generation can require at least one valid CSP fill before saving.
 - [x] Template generation can publish the best filled passing template to the
       frontend puzzle JSON.
@@ -53,6 +52,14 @@ Zweedse puzzels. The word list remains CSV-based.
       support.
 - [x] Template generation has score-monotonic densification passes that only
       accept exact template-score improvements.
+- [x] Template generation uses MRV-style pattern-domain scoring during layout
+      construction.
+- [x] Template generation delays expensive CSP fill checks until geometry
+      candidates are ranked, then checks from best score downward.
+- [x] Template generation has local repair passes that remove or replace weak
+      slots on exact score improvement.
+- [x] Template generation can parallelize independent geometry attempts with
+      worker processes.
 
 ## In Progress
 

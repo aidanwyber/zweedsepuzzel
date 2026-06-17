@@ -8,8 +8,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
-from generator.config import config_value, load_config
-from generator.template import Slot, Template, connected_components, derive_overlaps
+from generator.config import config_value, load_config, resolve_seed
+from generator.template import (
+    READABLE_RUN_MIN_LENGTH,
+    Slot,
+    Template,
+    connected_components,
+    derive_overlaps,
+)
 from generator.word_csv import read_word_rows
 
 IJ_TOKEN = "Ĳ"
@@ -197,7 +203,7 @@ def allowed_answer_strings(words: list[WordEntry]) -> set[str]:
 
 
 def invalid_readable_words(
-    puzzle: dict, words: list[WordEntry], min_length: int = 3
+    puzzle: dict, words: list[WordEntry], min_length: int = READABLE_RUN_MIN_LENGTH
 ) -> list[tuple[str, str, tuple[int, int]]]:
     allowed = allowed_answer_strings(words)
     cells = puzzle["cells"]
@@ -611,6 +617,9 @@ def main() -> None:
     )
     parser.add_argument("--seed", type=int, default=int(config_value(config, "seed", 7)))
     args = parser.parse_args()
+    seed = resolve_seed(args.seed)
+    if seed != args.seed:
+        print(f"Using random seed {seed}.")
 
     words = load_words(args.words)
     template = templates[args.template]
@@ -620,7 +629,7 @@ def main() -> None:
         words=words,
         profile=profile,
         attempts=max(args.attempts, 1),
-        seed=args.seed,
+        seed=seed,
     )
 
     if profile.name == "publisher" and passing_puzzle is None:

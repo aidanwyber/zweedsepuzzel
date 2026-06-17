@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import random
 import re
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-from generator.config import config_value, load_config
+from generator.config import config_value, load_config, resolve_seed
 from generator.generate import DRAFT_PROFILE, generate_best_candidate, load_words, write_json
 from generator.template import Direction, Slot, Template
 from generator.word_csv import read_word_rows
@@ -99,6 +100,10 @@ class SearchHeuristicSettings:
     densify_passes: int = 0
     densify_candidate_pool: int = 80
     densify_min_gain: float = 0.001
+    repair_passes: int = 0
+    repair_candidate_pool: int = 60
+    repair_min_gain: float = 0.001
+    workers: int = 1
 
     @classmethod
     def from_config(cls, config: dict) -> SearchHeuristicSettings:
@@ -132,6 +137,16 @@ class SearchHeuristicSettings:
                 0.0,
                 float(config_value(config, "densifyMinGain", cls.densify_min_gain)),
             ),
+            repair_passes=max(0, int(config_value(config, "repairPasses", cls.repair_passes))),
+            repair_candidate_pool=max(
+                1,
+                int(config_value(config, "repairCandidatePool", cls.repair_candidate_pool)),
+            ),
+            repair_min_gain=max(
+                0.0,
+                float(config_value(config, "repairMinGain", cls.repair_min_gain)),
+            ),
+            workers=max(1, int(config_value(config, "workers", cls.workers))),
         )
 
 
@@ -153,6 +168,29 @@ class PartialTemplateState:
     used: set[str]
     slots: list[Placement]
     score: float = 0.0
+
+
+@dataclass(frozen=True)
+class GeometrySearchContext:
+    placements: list[Placement]
+    indexed: dict[tuple[tuple[int, int], str], list[Placement]]
+    width: int
+    height: int
+    max_clues_per_cell: int
+    quality: TemplateQualitySettings
+    heuristics: SearchHeuristicSettings
+    length_counts: dict[int, int]
+    words_by_length: dict[int, tuple[WordShape, ...]]
+    allowed_answers: set[str]
+    words: list[WordShape]
+    seed: int
+
+
+@dataclass(frozen=True)
+class GeometryAttemptResult:
+    attempt: int
+    evaluation: TemplateEvaluation
+    template: Template
 
 
 def tokenize(answer: str) -> tuple[str, ...]:
@@ -183,6 +221,57 @@ def load_word_shapes(path: Path, max_length: int) -> list[WordShape]:
             seen.add(normalized_answer)
             words.append(WordShape(answer=normalized_answer, letters=letters))
     return words
+
+
+def words_by_length(words: list[WordShape]) -> dict[int, tuple[WordShape, ...]]:
+    by_length: dict[int, list[WordShape]] = {}
+    for word in words:
+        by_length.setdefault(word.length, []).append(word)
+    return {length: tuple(length_words) for length, length_words in by_length.items()}
+
+
+def pattern_key(
+    cells: tuple[tuple[int, int], ...], board: dict[tuple[int, int], str]
+) -> tuple[int, tuple[tuple[int, str], ...]]:
+    fixed = tuple(
+        (index, board[cell])
+        for index, cell in enumerate(cells)
+        if cell in board
+    )
+    return len(cells), fixed
+
+
+def pattern_domain_count(
+    cells: tuple[tuple[int, int], ...],
+    board: dict[tuple[int, int], str],
+    by_length: dict[int, tuple[WordShape, ...]],
+    cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
+) -> int:
+    key = pattern_key(cells, board)
+    if key in cache:
+        return cache[key]
+
+    _, fixed = key
+    candidates = by_length.get(len(cells), ())
+    count = sum(
+        1
+        for word in candidates
+        if all(word.letters[index] == letter for index, letter in fixed)
+    )
+    cache[key] = count
+    return count
+
+
+def domain_support_score(count: int) -> float:
+    if count <= 0:
+        return -2.0
+    if count == 1:
+        return 0.15
+    if count <= 3:
+        return 0.45
+    if count <= 8:
+        return 0.75
+    return 1.0
 
 
 def all_placements(words: list[WordShape], width: int, height: int) -> list[Placement]:
@@ -408,6 +497,13 @@ def place_in_state(
     )
 
 
+def state_from_slots(slots: list[Placement], width: int, height: int) -> PartialTemplateState:
+    state = empty_state()
+    for placement in slots:
+        state = place_in_state(state, placement, width, height, score=state.score)
+    return state
+
+
 def cell_occupancy(slots: list[Placement]) -> dict[tuple[int, int], int]:
     occupancy: dict[tuple[int, int], int] = {}
     for slot in slots:
@@ -433,6 +529,8 @@ def score_partial_state(
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
+    by_length: dict[int, tuple[WordShape, ...]],
+    domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
 ) -> float:
     total_cells = width * height
     if not state.board or total_cells == 0:
@@ -452,8 +550,18 @@ def score_partial_state(
         if state.slots
         else 0.0
     )
+    crossing_board = {
+        cell: state.board[cell]
+        for cell, count in occupancy.items()
+        if count > 1
+    }
     domain_score = (
-        sum(min(length_counts.get(len(slot.cells), 0) / 6, 1.0) for slot in state.slots)
+        sum(
+            domain_support_score(
+                pattern_domain_count(slot.cells, crossing_board, by_length, domain_cache)
+            )
+            for slot in state.slots
+        )
         / len(state.slots)
         if state.slots
         else 0.0
@@ -477,18 +585,31 @@ def score_candidate_placement(
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
+    by_length: dict[int, tuple[WordShape, ...]],
+    domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
 ) -> float:
     next_state = place_in_state(state, placement, width, height)
     intersections = sum(1 for cell in placement.cells if cell in state.board)
     new_cells = sum(1 for cell in placement.cells if cell not in state.board)
     dual_clue_bonus = 1 if placement.origin in state.clues else 0
-    domain_support = min(length_counts.get(placement.word.length, 0) / 6, 1.0)
+    placement_support = domain_support_score(
+        pattern_domain_count(placement.cells, state.board, by_length, domain_cache)
+    )
     return (
-        score_partial_state(next_state, width, height, quality, heuristics, length_counts)
+        score_partial_state(
+            next_state,
+            width,
+            height,
+            quality,
+            heuristics,
+            length_counts,
+            by_length,
+            domain_cache,
+        )
         + intersections * 4.0
         + new_cells * 0.4
         + dual_clue_bonus * 2.0
-        + domain_support * heuristics.domain_weight
+        + placement_support * heuristics.domain_weight
         + placement.word.length * heuristics.length_weight
     )
 
@@ -522,6 +643,8 @@ def ranked_placements_for_state(
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
+    by_length: dict[int, tuple[WordShape, ...]],
+    domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
     randomizer: random.Random,
 ) -> list[tuple[float, Placement]]:
     ranked = []
@@ -550,6 +673,8 @@ def ranked_placements_for_state(
             quality,
             heuristics,
             length_counts,
+            by_length,
+            domain_cache,
         )
         if heuristics.randomness:
             score += randomizer.uniform(-heuristics.randomness, heuristics.randomness)
@@ -568,6 +693,8 @@ def build_slots_with_beam(
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
+    by_length: dict[int, tuple[WordShape, ...]],
+    domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
     randomizer: random.Random,
 ) -> PartialTemplateState:
     beam = [empty_state()]
@@ -586,6 +713,8 @@ def build_slots_with_beam(
                 quality,
                 heuristics,
                 length_counts,
+                by_length,
+                domain_cache,
                 randomizer,
             )
             for candidate_score, placement in ranked[: heuristics.branching_factor]:
@@ -956,6 +1085,8 @@ def densify_state_by_score(
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
+    by_length: dict[int, tuple[WordShape, ...]],
+    domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
     allowed_answers: set[str],
     words: list[WordShape],
     randomizer: random.Random,
@@ -988,6 +1119,8 @@ def densify_state_by_score(
             quality,
             heuristics,
             length_counts,
+            by_length,
+            domain_cache,
             randomizer,
         )
 
@@ -1030,6 +1163,197 @@ def densify_state_by_score(
     return current_state, current_template, current_evaluation
 
 
+def repair_state_by_score(
+    state: PartialTemplateState,
+    template: Template,
+    evaluation: TemplateEvaluation,
+    placements: list[Placement],
+    indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    width: int,
+    height: int,
+    template_id: str,
+    title: str,
+    max_clues_per_cell: int,
+    quality: TemplateQualitySettings,
+    heuristics: SearchHeuristicSettings,
+    length_counts: dict[int, int],
+    by_length: dict[int, tuple[WordShape, ...]],
+    domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
+    allowed_answers: set[str],
+    words: list[WordShape],
+    randomizer: random.Random,
+) -> tuple[PartialTemplateState, Template, TemplateEvaluation]:
+    current_state = state
+    current_template = template
+    current_evaluation = evaluation
+
+    for _ in range(heuristics.repair_passes):
+        best_candidate: tuple[PartialTemplateState, Template, TemplateEvaluation] | None = None
+        occupancy = cell_occupancy(current_state.slots)
+        removable = sorted(
+            current_state.slots,
+            key=lambda slot: (
+                sum(1 for cell in slot.cells if occupancy.get(cell, 0) > 1),
+                -len(slot.cells),
+            ),
+        )
+
+        for remove_slot in removable[: heuristics.repair_candidate_pool]:
+            base_slots = [slot for slot in current_state.slots if slot is not remove_slot]
+            base_state = state_from_slots(base_slots, width, height)
+            base_template = promoted_template_from_state(
+                base_state,
+                width,
+                height,
+                template_id,
+                title,
+                max_clues_per_cell,
+                allowed_answers,
+            )
+            base_evaluation = evaluate_template(
+                base_template,
+                words,
+                max_clues_per_cell=max_clues_per_cell,
+                quality=quality,
+            )
+
+            candidates_to_check: list[tuple[PartialTemplateState, Template, TemplateEvaluation]] = [
+                (base_state, base_template, base_evaluation)
+            ]
+            ranked = ranked_placements_for_state(
+                base_state,
+                placements,
+                indexed,
+                width,
+                height,
+                max_clues_per_cell,
+                quality,
+                heuristics,
+                length_counts,
+                by_length,
+                domain_cache,
+                randomizer,
+            )
+            for _, placement in ranked[: heuristics.repair_candidate_pool]:
+                candidate_state = place_in_state(base_state, placement, width, height)
+                candidate_template = promoted_template_from_state(
+                    candidate_state,
+                    width,
+                    height,
+                    template_id,
+                    title,
+                    max_clues_per_cell,
+                    allowed_answers,
+                )
+                candidate_evaluation = evaluate_template(
+                    candidate_template,
+                    words,
+                    max_clues_per_cell=max_clues_per_cell,
+                    quality=quality,
+                )
+                candidates_to_check.append(
+                    (candidate_state, candidate_template, candidate_evaluation)
+                )
+
+            for candidate in candidates_to_check:
+                candidate_evaluation = candidate[2]
+                if not should_accept_densified(
+                    current_evaluation,
+                    candidate_evaluation,
+                    heuristics.repair_min_gain,
+                ):
+                    continue
+                if (
+                    best_candidate is None
+                    or candidate_evaluation.score > best_candidate[2].score
+                    or (candidate_evaluation.passed and not best_candidate[2].passed)
+                ):
+                    best_candidate = candidate
+
+        if best_candidate is None:
+            break
+
+        current_state, current_template, current_evaluation = best_candidate
+
+    return current_state, current_template, current_evaluation
+
+
+_WORKER_CONTEXT: GeometrySearchContext | None = None
+
+
+def init_geometry_worker(context: GeometrySearchContext) -> None:
+    global _WORKER_CONTEXT
+    _WORKER_CONTEXT = context
+
+
+def run_geometry_attempt_from_worker(attempt: int) -> GeometryAttemptResult:
+    if _WORKER_CONTEXT is None:
+        raise RuntimeError("geometry worker context has not been initialized")
+    return run_geometry_attempt(attempt, _WORKER_CONTEXT)
+
+
+def run_geometry_attempt(
+    attempt: int, context: GeometrySearchContext
+) -> GeometryAttemptResult:
+    attempt_seed = context.seed + attempt
+    randomizer = random.Random(attempt_seed)
+    domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int] = {}
+    state = build_slots_with_beam(
+        placements=context.placements,
+        indexed=context.indexed,
+        width=context.width,
+        height=context.height,
+        max_clues_per_cell=context.max_clues_per_cell,
+        quality=context.quality,
+        heuristics=context.heuristics,
+        length_counts=context.length_counts,
+        by_length=context.words_by_length,
+        domain_cache=domain_cache,
+        randomizer=randomizer,
+    )
+    template_id = f"random-{context.width}x{context.height}-{attempt_seed}"
+    title = f"Randomized {context.width}x{context.height} template {attempt_seed}"
+    state, template, evaluation = densify_state_by_score(
+        state,
+        context.placements,
+        context.indexed,
+        context.width,
+        context.height,
+        template_id,
+        title,
+        context.max_clues_per_cell,
+        context.quality,
+        context.heuristics,
+        context.length_counts,
+        context.words_by_length,
+        domain_cache,
+        context.allowed_answers,
+        context.words,
+        randomizer,
+    )
+    state, template, evaluation = repair_state_by_score(
+        state,
+        template,
+        evaluation,
+        context.placements,
+        context.indexed,
+        context.width,
+        context.height,
+        template_id,
+        title,
+        context.max_clues_per_cell,
+        context.quality,
+        context.heuristics,
+        context.length_counts,
+        context.words_by_length,
+        domain_cache,
+        context.allowed_answers,
+        context.words,
+        randomizer,
+    )
+    return GeometryAttemptResult(attempt=attempt, evaluation=evaluation, template=template)
+
+
 def finalize_search_results(
     passing: list[tuple[TemplateEvaluation, Template]],
     rejected: list[tuple[TemplateEvaluation, Template]],
@@ -1057,6 +1381,90 @@ def finalize_search_results(
     )
 
 
+def finalize_with_fill_checks(
+    passing: list[tuple[TemplateEvaluation, Template]],
+    rejected: list[tuple[TemplateEvaluation, Template]],
+    keep: int,
+    attempted: int,
+    interrupted: bool,
+    require_fill: bool,
+    fill_words: list,
+    fill_attempts: int,
+    fill_seed: int,
+) -> SearchResults:
+    if not require_fill:
+        return finalize_search_results(
+            passing=passing,
+            rejected=rejected,
+            puzzles={},
+            keep=keep,
+            attempted=attempted,
+            interrupted=interrupted,
+        )
+
+    passing.sort(key=lambda item: item[0].score, reverse=True)
+    fillable: list[tuple[TemplateEvaluation, Template]] = []
+    puzzles: dict[str, dict] = {}
+
+    try:
+        for index, (evaluation, template) in enumerate(passing):
+            puzzle, report, _, _ = generate_best_candidate(
+                template=template,
+                words=fill_words,
+                profile=DRAFT_PROFILE,
+                attempts=max(fill_attempts, 1),
+                seed=fill_seed + index,
+            )
+            if puzzle is not None and report is not None and report.passed:
+                fillable.append((evaluation, template))
+                puzzles[template.id] = puzzle
+                if len(fillable) >= keep:
+                    break
+
+            rejected_evaluation = reject_with_reason(
+                evaluation,
+                "no valid fill found",
+                "fillable",
+            )
+            rejected.append((rejected_evaluation, template))
+    except KeyboardInterrupt:
+        interrupted = True
+
+    return finalize_search_results(
+        passing=fillable,
+        rejected=rejected,
+        puzzles=puzzles,
+        keep=keep,
+        attempted=attempted,
+        interrupted=interrupted,
+    )
+
+
+def record_geometry_result(
+    result: GeometryAttemptResult,
+    passing: list[tuple[TemplateEvaluation, Template]],
+    rejected: list[tuple[TemplateEvaluation, Template]],
+    keep: int,
+    stop_when_enough_passing: bool,
+    verbose: bool,
+    attempts: int,
+) -> None:
+    evaluation = result.evaluation
+    template = result.template
+    target = passing if evaluation.passed else rejected
+    target.append((evaluation, template))
+    target.sort(key=lambda item: item[0].score, reverse=True)
+    if not evaluation.passed or stop_when_enough_passing:
+        del target[keep:]
+
+    if verbose and evaluation.passed:
+        print(
+            f"attempt {result.attempt + 1}/{attempts} "
+            f"seed {template.id.rsplit('-', 1)[-1]}: "
+            f"pass, score {evaluation.score}, passes geometry gates"
+        )
+
+
 def search_templates(
     words: list[WordShape],
     fill_words: list,
@@ -1082,95 +1490,99 @@ def search_templates(
     length_counts: dict[int, int] = {}
     for word in words:
         length_counts[word.length] = length_counts.get(word.length, 0) + 1
+    by_length = words_by_length(words)
     indexed = placement_index(placements)
+    context = GeometrySearchContext(
+        placements=placements,
+        indexed=indexed,
+        width=width,
+        height=height,
+        max_clues_per_cell=max_clues_per_cell,
+        quality=quality,
+        heuristics=heuristics,
+        length_counts=length_counts,
+        words_by_length=by_length,
+        allowed_answers=allowed_answers,
+        words=words,
+        seed=seed,
+    )
     passing: list[tuple[TemplateEvaluation, Template]] = []
     rejected: list[tuple[TemplateEvaluation, Template]] = []
-    puzzles: dict[str, dict] = {}
     attempted = 0
 
     try:
-        for attempt in range(attempts):
-            attempted += 1
-            attempt_seed = seed + attempt
-            randomizer = random.Random(attempt_seed)
-            state = build_slots_with_beam(
-                placements=placements,
-                indexed=indexed,
-                width=width,
-                height=height,
-                max_clues_per_cell=max_clues_per_cell,
-                quality=quality,
-                heuristics=heuristics,
-                length_counts=length_counts,
-                randomizer=randomizer,
-            )
-            template_id = f"random-{width}x{height}-{attempt_seed}"
-            title = f"Randomized {width}x{height} template {attempt_seed}"
-            state, template, evaluation = densify_state_by_score(
-                state,
-                placements,
-                indexed,
-                width,
-                height,
-                template_id,
-                title,
-                max_clues_per_cell,
-                quality,
-                heuristics,
-                length_counts,
-                allowed_answers,
-                words,
-                randomizer,
-            )
-
-            puzzle = None
-            if evaluation.passed and require_fill:
-                puzzle, report, _, _ = generate_best_candidate(
-                    template=template,
-                    words=fill_words,
-                    profile=DRAFT_PROFILE,
-                    attempts=max(fill_attempts, 1),
-                    seed=fill_seed + attempt,
+        if heuristics.workers <= 1:
+            for attempt in range(attempts):
+                result = run_geometry_attempt(attempt, context)
+                attempted += 1
+                record_geometry_result(
+                    result,
+                    passing,
+                    rejected,
+                    keep,
+                    stop_when_enough_passing and not require_fill,
+                    verbose,
+                    attempts,
                 )
-                if puzzle is None or report is None or not report.passed:
-                    evaluation = reject_with_reason(
-                        evaluation,
-                        "no valid fill found",
-                        "fillable",
+                if (
+                    stop_when_enough_passing
+                    and not require_fill
+                    and len(passing) >= keep
+                ):
+                    break
+        else:
+            with ProcessPoolExecutor(
+                max_workers=heuristics.workers,
+                initializer=init_geometry_worker,
+                initargs=(context,),
+            ) as executor:
+                futures = {
+                    executor.submit(run_geometry_attempt_from_worker, attempt): attempt
+                    for attempt in range(attempts)
+                }
+                for future in as_completed(futures):
+                    result = future.result()
+                    attempted += 1
+                    record_geometry_result(
+                        result,
+                        passing,
+                        rejected,
+                        keep,
+                        stop_when_enough_passing and not require_fill,
+                        verbose,
+                        attempts,
                     )
-
-            target = passing if evaluation.passed else rejected
-            target.append((evaluation, template))
-            target.sort(key=lambda item: item[0].score, reverse=True)
-            if not evaluation.passed or stop_when_enough_passing:
-                del target[keep:]
-            if evaluation.passed and puzzle is not None:
-                puzzles[template.id] = puzzle
-
-            if verbose and evaluation.passed:
-                print(
-                    f"attempt {attempt + 1}/{attempts} seed {attempt_seed}: "
-                    f"pass, score {evaluation.score}, passes all gates"
-                )
-
-            if stop_when_enough_passing and len(passing) >= keep:
-                break
+                    if (
+                        stop_when_enough_passing
+                        and not require_fill
+                        and len(passing) >= keep
+                    ):
+                        for pending in futures:
+                            pending.cancel()
+                        break
     except KeyboardInterrupt:
-        return finalize_search_results(
+        return finalize_with_fill_checks(
             passing=passing,
             rejected=rejected,
-            puzzles=puzzles,
             keep=keep,
             attempted=attempted,
             interrupted=True,
+            require_fill=require_fill,
+            fill_words=fill_words,
+            fill_attempts=fill_attempts,
+            fill_seed=fill_seed,
         )
 
-    return finalize_search_results(
+    return finalize_with_fill_checks(
         passing=passing,
         rejected=rejected,
-        puzzles=puzzles,
         keep=keep,
         attempted=attempted,
+        interrupted=False,
+        require_fill=require_fill,
+        fill_words=fill_words,
+        fill_attempts=fill_attempts,
+        fill_seed=fill_seed,
     )
 
 
@@ -1402,7 +1814,56 @@ def main() -> None:
         ),
         help="Minimum exact template score gain required to accept a densification move.",
     )
+    parser.add_argument(
+        "--repair-passes",
+        type=int,
+        default=int(
+            config_value(
+                heuristic_config,
+                "repairPasses",
+                SearchHeuristicSettings.repair_passes,
+            )
+        ),
+        help="Local mutation passes that remove or replace weak slots on exact score gain.",
+    )
+    parser.add_argument(
+        "--repair-candidate-pool",
+        type=int,
+        default=int(
+            config_value(
+                heuristic_config,
+                "repairCandidatePool",
+                SearchHeuristicSettings.repair_candidate_pool,
+            )
+        ),
+        help="Number of removals/replacements checked during each repair pass.",
+    )
+    parser.add_argument(
+        "--repair-min-gain",
+        type=float,
+        default=float(
+            config_value(
+                heuristic_config,
+                "repairMinGain",
+                SearchHeuristicSettings.repair_min_gain,
+            )
+        ),
+        help="Minimum exact template score gain required to accept a repair move.",
+    )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=int(config_value(heuristic_config, "workers", SearchHeuristicSettings.workers)),
+        help="Number of worker processes for independent geometry attempts.",
+    )
     args = parser.parse_args()
+    seed = resolve_seed(args.seed)
+    fill_seed = resolve_seed(args.fill_seed) if args.require_fill else args.fill_seed
+    if seed != args.seed:
+        print(f"Using random seed {seed}.")
+    if args.require_fill and fill_seed != args.fill_seed:
+        print(f"Using random fill seed {fill_seed}.")
+
     quality = TemplateQualitySettings.from_config(config_value(config, "quality", {}))
     base_heuristics = SearchHeuristicSettings.from_config(heuristic_config)
     heuristics = replace(
@@ -1415,6 +1876,10 @@ def main() -> None:
         densify_passes=max(args.densify_passes, 0),
         densify_candidate_pool=max(args.densify_candidate_pool, 1),
         densify_min_gain=max(args.densify_min_gain, 0.0),
+        repair_passes=max(args.repair_passes, 0),
+        repair_candidate_pool=max(args.repair_candidate_pool, 1),
+        repair_min_gain=max(args.repair_min_gain, 0.0),
+        workers=max(args.workers, 1),
     )
 
     words = load_word_shapes(args.words, max_length=args.max_word_length)
@@ -1431,7 +1896,7 @@ def main() -> None:
         width=args.width,
         height=args.height,
         attempts=max(args.attempts, 1),
-        seed=args.seed,
+        seed=seed,
         keep=max(args.keep, 1),
         allowed_directions=allowed_directions,
         max_clues_per_cell=args.max_clues_per_cell,
@@ -1440,7 +1905,7 @@ def main() -> None:
         stop_when_enough_passing=args.stop_when_enough_passing,
         require_fill=args.require_fill,
         fill_attempts=args.fill_attempts,
-        fill_seed=args.fill_seed,
+        fill_seed=fill_seed,
         verbose=args.verbose,
     )
 

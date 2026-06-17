@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Literal
 
 Direction = Literal["right", "down"]
+READABLE_RUN_MIN_LENGTH = 2
 
 
 @dataclass(frozen=True)
@@ -250,7 +251,7 @@ class Template:
         return invalid
 
     def readable_runs(
-        self, min_length: int = 3
+        self, min_length: int = READABLE_RUN_MIN_LENGTH
     ) -> list[tuple[Direction, tuple[tuple[int, int], ...]]]:
         letter_cells = self.letter_cells()
         runs: list[tuple[Direction, tuple[tuple[int, int], ...]]] = []
@@ -277,7 +278,7 @@ class Template:
         return runs
 
     def unclued_readable_runs(
-        self, min_length: int = 3
+        self, min_length: int = READABLE_RUN_MIN_LENGTH
     ) -> list[tuple[Direction, tuple[tuple[int, int], ...]]]:
         explicit_slots = {(slot.direction, slot.cells) for slot in self.slots}
         return [
