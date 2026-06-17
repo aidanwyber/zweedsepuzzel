@@ -60,9 +60,9 @@ ROV,Remotely Operated Vehicle
 LiDAR,met lichtgolven
 Sonar,met geluidsgolven
 Sonde,prikkie
-Bed,Bodem
+Bodem,bed
 Zee,nat lichaam
-Knik,knak
+Knik,druk op een stokkie
 SSS,Side Scan Sonar
 GIS,Geographic Information System
 IMU,Inertial Measurement Unit
@@ -81,3 +81,17 @@ Lijst,Chinese rijst
 Kip cashew,Thais gerecht
 Sate,pindakip
 Sauna,heet en bloot
+Ajax,aardig voetbal
+Ajax,alarmsysteem
+Havik,zelfde ogen
+Helical buckling,boorprobleem
+Algoritme,instructie
+Bovenfrees,elektrisch gereedschap
+Cirkelzaag,elektrisch gereedschap
+Kapzaag,elektrisch gereedschap
+Hamerboor,elektrisch gereedschap
+Soldeerbout,elektrisch gereedschap
+Blokschaaf,handgereedschap
+Schraper,handgereedschap
+Verzinkboor,gereedschap
+Sikkens,verf
