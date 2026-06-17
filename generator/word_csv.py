@@ -37,6 +37,8 @@ def read_word_rows(path: Path) -> list[tuple[str, str]]:
             continue
         answer = row[answer_index].strip()
         clue = row[clue_index].strip() if len(row) > clue_index else ""
+        if answer.casefold() == "answer" and clue.casefold() in {"description", "clue"}:
+            continue
         if answer and clue:
             parsed.append((answer, clue))
     return parsed

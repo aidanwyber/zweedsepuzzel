@@ -4,7 +4,7 @@
 		"outDir": "generator/templates",
 		"width": 10,
 		"height": 17,
-		"attempts": 1800,
+		"attempts": 800,
 		"seed": -1,
 		"keep": 1,
 		"maxWordLength": 17,

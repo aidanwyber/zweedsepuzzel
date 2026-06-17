@@ -215,9 +215,9 @@ def load_word_shapes(path: Path, max_length: int) -> list[WordShape]:
     seen: set[str] = set()
     words: list[WordShape] = []
     for answer, _ in read_word_rows(path):
-        normalized_answer = answer.upper()
         letters = tokenize(answer)
-        if 3 <= len(letters) <= max_length and normalized_answer not in seen:
+        normalized_answer = display_answer(letters)
+        if 2 <= len(letters) <= max_length and normalized_answer not in seen:
             seen.add(normalized_answer)
             words.append(WordShape(answer=normalized_answer, letters=letters))
     return words
