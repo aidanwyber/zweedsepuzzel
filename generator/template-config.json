@@ -1,5 +1,5 @@
 {
-	"words": "generator/data/dutch_words.csv",
+	"words": "generator/data/peter_words.csv",
 	"outDir": "generator/templates",
 	"width": 5,
 	"height": 5,
@@ -12,6 +12,12 @@
 	"saveRejected": false,
 	"verbose": false,
 	"stopWhenEnoughPassing": true,
+	"requireFill": true,
+	"fillAttempts": 100,
+	"fillSeed": 7,
+	"emitPuzzle": true,
+	"puzzleOut": "generated/puzzle.json",
+	"frontendOut": "frontend/public/puzzles/puzzle.json",
 	"quality": {
 		"minFillRate": 0.32,
 		"minInterlockRatio": 0.08,

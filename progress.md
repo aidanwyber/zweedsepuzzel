@@ -44,6 +44,9 @@ Zweedse puzzels. The word list remains CSV-based.
 - [x] Template and puzzle generation defaults are stored in JSON config files.
 - [x] Template generation config includes a 5x5 grid for smaller search-space
       testing.
+- [x] Template generation can require at least one valid CSP fill before saving.
+- [x] Template generation can publish the best filled passing template to the
+      frontend puzzle JSON.
 
 ## In Progress
 

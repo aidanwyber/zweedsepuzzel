@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from generator.config import config_value, load_config
+from generator.generate import DRAFT_PROFILE, generate_best_candidate, load_words, write_json
 from generator.template import Direction, Slot, Template
 
 
@@ -85,6 +86,7 @@ class TemplateQualitySettings:
 class SearchResults:
     passing: tuple[tuple[TemplateEvaluation, Template], ...]
     rejected: tuple[tuple[TemplateEvaluation, Template], ...]
+    puzzles: dict[str, dict]
     attempted: int
 
 
@@ -608,8 +610,22 @@ def evaluate_template(
     )
 
 
+def reject_with_reason(
+    evaluation: TemplateEvaluation, reason: str, metric_key: str
+) -> TemplateEvaluation:
+    metrics = dict(evaluation.metrics)
+    metrics[metric_key] = False
+    return TemplateEvaluation(
+        score=evaluation.score,
+        passed=False,
+        reasons=(*evaluation.reasons, reason),
+        metrics=metrics,
+    )
+
+
 def search_templates(
     words: list[WordShape],
+    fill_words: list,
     width: int,
     height: int,
     attempts: int,
@@ -619,6 +635,9 @@ def search_templates(
     max_clues_per_cell: int,
     quality: TemplateQualitySettings,
     stop_when_enough_passing: bool,
+    require_fill: bool,
+    fill_attempts: int,
+    fill_seed: int,
     verbose: bool = False,
 ) -> SearchResults:
     placements = filter_placements_by_direction(
@@ -628,6 +647,7 @@ def search_templates(
     indexed = placement_index(placements)
     passing: list[tuple[TemplateEvaluation, Template]] = []
     rejected: list[tuple[TemplateEvaluation, Template]] = []
+    puzzles: dict[str, dict] = {}
     attempted = 0
 
     for attempt in range(attempts):
@@ -704,10 +724,29 @@ def search_templates(
             max_clues_per_cell=max_clues_per_cell,
             quality=quality,
         )
+
+        puzzle = None
+        if evaluation.passed and require_fill:
+            puzzle, report, _, _ = generate_best_candidate(
+                template=template,
+                words=fill_words,
+                profile=DRAFT_PROFILE,
+                attempts=max(fill_attempts, 1),
+                seed=fill_seed + attempt,
+            )
+            if puzzle is None or report is None or not report.passed:
+                evaluation = reject_with_reason(
+                    evaluation,
+                    "no valid fill found",
+                    "fillable",
+                )
+
         target = passing if evaluation.passed else rejected
         target.append((evaluation, template))
         target.sort(key=lambda item: item[0].score, reverse=True)
         del target[keep:]
+        if evaluation.passed and puzzle is not None:
+            puzzles[template.id] = puzzle
 
         if verbose and evaluation.passed:
             print(
@@ -721,6 +760,7 @@ def search_templates(
     return SearchResults(
         passing=tuple(passing),
         rejected=tuple(rejected),
+        puzzles=puzzles,
         attempted=attempted,
     )
 
@@ -730,6 +770,10 @@ def print_and_maybe_save(
     candidates: tuple[tuple[TemplateEvaluation, Template], ...],
     out_dir: Path,
     save: bool,
+    puzzles: dict[str, dict] | None = None,
+    emit_puzzle: bool = False,
+    puzzle_out: Path | None = None,
+    frontend_out: Path | None = None,
 ) -> None:
     if not candidates:
         print(f"No {label} templates found.")
@@ -742,6 +786,17 @@ def print_and_maybe_save(
         if save:
             template.save(path)
             write_status = f"wrote {path}"
+            if (
+                rank == 1
+                and emit_puzzle
+                and puzzles is not None
+                and template.id in puzzles
+                and puzzle_out is not None
+                and frontend_out is not None
+            ):
+                write_json(puzzle_out, puzzles[template.id])
+                write_json(frontend_out, puzzles[template.id])
+                write_status += f", wrote {puzzle_out} and {frontend_out}"
         else:
             write_status = "not saved"
         print(f"{rank}. {template.id}: {status}, score {evaluation.score}, {write_status}")
@@ -814,10 +869,47 @@ def main() -> None:
         default=bool(config_value(config, "stopWhenEnoughPassing", False)),
         help="Stop searching after --keep passing templates have been found.",
     )
+    parser.add_argument(
+        "--require-fill",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "requireFill", False)),
+        help="Only accept templates that can generate at least one valid filled puzzle.",
+    )
+    parser.add_argument(
+        "--fill-attempts",
+        type=int,
+        default=int(config_value(config, "fillAttempts", 25)),
+        help="Number of fill attempts per geometrically passing template.",
+    )
+    parser.add_argument(
+        "--fill-seed",
+        type=int,
+        default=int(config_value(config, "fillSeed", 7)),
+        help="Base seed for fill checks.",
+    )
+    parser.add_argument(
+        "--emit-puzzle",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "emitPuzzle", False)),
+        help="Write the best passing filled puzzle to the generator and frontend outputs.",
+    )
+    parser.add_argument(
+        "--puzzle-out",
+        type=Path,
+        default=Path(config_value(config, "puzzleOut", "generated/puzzle.json")),
+    )
+    parser.add_argument(
+        "--frontend-out",
+        type=Path,
+        default=Path(
+            config_value(config, "frontendOut", "frontend/public/puzzles/puzzle.json")
+        ),
+    )
     args = parser.parse_args()
     quality = TemplateQualitySettings.from_config(config_value(config, "quality", {}))
 
     words = load_word_shapes(args.words, max_length=args.max_word_length)
+    fill_words = load_words(args.words)
     allowed_directions: set[Direction]
     if args.clue_directions == "both":
         allowed_directions = {"right", "down"}
@@ -826,6 +918,7 @@ def main() -> None:
 
     results = search_templates(
         words=words,
+        fill_words=fill_words,
         width=args.width,
         height=args.height,
         attempts=max(args.attempts, 1),
@@ -835,11 +928,23 @@ def main() -> None:
         max_clues_per_cell=args.max_clues_per_cell,
         quality=quality,
         stop_when_enough_passing=args.stop_when_enough_passing,
+        require_fill=args.require_fill,
+        fill_attempts=args.fill_attempts,
+        fill_seed=args.fill_seed,
         verbose=args.verbose,
     )
 
     print(f"Attempted {results.attempted} templates.")
-    print_and_maybe_save("passing", results.passing, args.out_dir, save=True)
+    print_and_maybe_save(
+        "passing",
+        results.passing,
+        args.out_dir,
+        save=True,
+        puzzles=results.puzzles,
+        emit_puzzle=args.emit_puzzle,
+        puzzle_out=args.puzzle_out,
+        frontend_out=args.frontend_out,
+    )
     print_and_maybe_save("rejected", results.rejected, args.out_dir, save=args.save_rejected)
 
 

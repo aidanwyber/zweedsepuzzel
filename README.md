@@ -197,6 +197,16 @@ Then generate a puzzle from a saved template:
 python3 -m generator.generate --template random-10x17-3140
 ```
 
+For the configured 5x5 test templates, use draft quality if you call the main
+generator directly:
+
+```sh
+python3 -m generator.generate --template random-5x5-1010 --quality draft
+```
+
+The default `publisher` profile is sized for larger grids and will reject 5x5
+test templates for having too few slots.
+
 Common options:
 
 ```sh
@@ -232,6 +242,13 @@ Option meanings:
 - `--stop-when-enough-passing` / `--no-stop-when-enough-passing`: stop after
   `--keep` passing templates have been found, or keep searching for better
   scores until `--attempts` is exhausted.
+- `--require-fill` / `--no-require-fill`: only accept templates that can also
+  generate at least one valid filled puzzle.
+- `--fill-attempts` and `--fill-seed`: control the CSP fill check used by
+  `--require-fill`.
+- `--emit-puzzle` / `--no-emit-puzzle`: write the best filled passing template
+  to `generated/puzzle.json` and `frontend/public/puzzles/puzzle.json`.
+- `--puzzle-out` and `--frontend-out`: output paths used by `--emit-puzzle`.
 
 The search keeps passing and rejected candidates in separate leaderboards.
 Passing templates are always reported first and saved. Rejected templates are
