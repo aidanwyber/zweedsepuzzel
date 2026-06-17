@@ -83,8 +83,8 @@ function clueArrowAria(clue: ClueItem, slotsById: Map<string, PuzzleSlot>): stri
   return `${clue.direction} then ${answerDirection}`
 }
 
-function clueOrder(direction: Direction): number {
-  return direction === 'down' ? 0 : 1
+function clueOrder(clue: ClueItem): number {
+  return clue.direction === 'right' ? 0 : 1
 }
 
 function pct(value: number): string {
@@ -110,7 +110,7 @@ function cellClass(cell: PuzzleCell): string {
 
 function renderClues(clues: ClueItem[] = [], slotsById = new Map<string, PuzzleSlot>()): string {
   return [...clues]
-    .sort((left, right) => clueOrder(left.direction) - clueOrder(right.direction))
+    .sort((left, right) => clueOrder(left) - clueOrder(right))
     .map(
       (clue) => `
         <div class="clue-line clue-${clue.direction}">

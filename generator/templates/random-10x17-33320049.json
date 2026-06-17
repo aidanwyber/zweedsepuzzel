@@ -1,0 +1,637 @@
+{
+  "id": "random-10x17-33320049",
+  "title": "Randomized 10x17 template 33320049",
+  "width": 10,
+  "height": 17,
+  "slots": [
+    {
+      "id": "v_001_len17",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        7
+      ],
+      "cells": [
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          11,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          14,
+          8
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          16,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "h_002_len6",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        4,
+        3
+      ],
+      "cells": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          4,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "v_003_len17",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        4
+      ],
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          14,
+          5
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          16,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "h_004_len6",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        8,
+        3
+      ],
+      "cells": [
+        [
+          8,
+          4
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "v_005_len12",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        1
+      ],
+      "cells": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          11,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "h_006_len4",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        14,
+        2
+      ],
+      "cells": [
+        [
+          14,
+          3
+        ],
+        [
+          14,
+          4
+        ],
+        [
+          14,
+          5
+        ],
+        [
+          14,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "h_007_len4",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        8,
+        0
+      ],
+      "cells": [
+        [
+          9,
+          0
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          9,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "h_008_len4",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        6,
+        0
+      ],
+      "cells": [
+        [
+          7,
+          0
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          7,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v_009_len4",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        11,
+        3
+      ],
+      "cells": [
+        [
+          12,
+          3
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          14,
+          3
+        ],
+        [
+          15,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "h_010_len3",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        11,
+        3
+      ],
+      "cells": [
+        [
+          11,
+          4
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          11,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "h_011_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        3,
+        0
+      ],
+      "cells": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "h_012_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        9,
+        7
+      ],
+      "cells": [
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "h_013_len2",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        14,
+        2
+      ],
+      "cells": [
+        [
+          15,
+          2
+        ],
+        [
+          15,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "h_014_len2",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        11,
+        0
+      ],
+      "cells": [
+        [
+          11,
+          1
+        ],
+        [
+          11,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v_015_len3",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        10,
+        1
+      ],
+      "cells": [
+        [
+          11,
+          1
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          13,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "h_016_len2",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        6,
+        7
+      ],
+      "cells": [
+        [
+          6,
+          8
+        ],
+        [
+          6,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "h_017_len2",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        12,
+        7
+      ],
+      "cells": [
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "h_018_len2",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        11,
+        0
+      ],
+      "cells": [
+        [
+          12,
+          0
+        ],
+        [
+          12,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "h_019_len9",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        0,
+        1
+      ],
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    }
+  ]
+}
