@@ -175,13 +175,6 @@ def available_profiles() -> dict[str, QualityProfile]:
     return {profile.name: profile for profile in profiles}
 
 
-def build_domains(slots: tuple[Slot, ...], words: list[WordEntry]) -> dict[str, list[WordEntry]]:
-    by_length: dict[int, list[WordEntry]] = {}
-    for word in words:
-        by_length.setdefault(word.length, []).append(word)
-    return {slot.id: list(by_length.get(slot.length, [])) for slot in slots}
-
-
 def normalize_clue(clue: str) -> str:
     return re.sub(r"\s+", " ", clue.strip().casefold())
 
@@ -250,7 +243,22 @@ class Solver:
     def __init__(self, template: Template, words: list[WordEntry], seed: int = 7) -> None:
         self.template = template
         self.slots = {slot.id: slot for slot in template.slots}
-        self.domains = build_domains(template.slots, words)
+        self.words = words
+        self.word_by_id = {index: word for index, word in enumerate(words)}
+        self.word_bits_by_length: dict[int, int] = {}
+        self.position_letter_bits: dict[tuple[int, int, str], int] = {}
+        for index, word in enumerate(words):
+            bit = 1 << index
+            self.word_bits_by_length[word.length] = (
+                self.word_bits_by_length.get(word.length, 0) | bit
+            )
+            for position, letter in enumerate(word.letters):
+                key = (word.length, position, letter)
+                self.position_letter_bits[key] = self.position_letter_bits.get(key, 0) | bit
+        self.domains = {
+            slot.id: self.word_bits_by_length.get(slot.length, 0)
+            for slot in template.slots
+        }
         self.overlaps = derive_overlaps(template.slots)
         self.neighbors: dict[str, list[Overlap]] = {slot.id: [] for slot in template.slots}
         for overlap in self.overlaps:
@@ -258,95 +266,113 @@ class Solver:
         self.random = random.Random(seed)
 
     def solve(self) -> dict[str, WordEntry] | None:
-        return self._search({})
+        solution = self._search({}, 0)
+        if solution is None:
+            return None
+        return {
+            slot_id: self.word_by_id[word_index]
+            for slot_id, word_index in solution.items()
+        }
 
     def count_solutions(self, limit: int = 2) -> int:
-        return self._count({}, limit)
+        return self._count({}, 0, limit)
+
+    @staticmethod
+    def _iter_bits(bits: int):
+        while bits:
+            bit = bits & -bits
+            yield bit.bit_length() - 1
+            bits ^= bit
 
     def _candidate_words(
-        self, slot_id: str, assignment: dict[str, WordEntry]
-    ) -> list[WordEntry]:
-        candidates = []
-        used_ids = {word.id for word in assignment.values()}
-        for word in self.domains[slot_id]:
-            if word.id in used_ids:
+        self, slot_id: str, assignment: dict[str, int], used_bits: int
+    ) -> int:
+        candidates = self.domains[slot_id] & ~used_bits
+        slot = self.slots[slot_id]
+        for overlap in self.neighbors[slot_id]:
+            other_index = assignment.get(overlap.b_slot)
+            if other_index is None:
                 continue
-            if self._fits(slot_id, word, assignment):
-                candidates.append(word)
+            letter = self.word_by_id[other_index].letters[overlap.b_index]
+            candidates &= self.position_letter_bits.get(
+                (slot.length, overlap.a_index, letter),
+                0,
+            )
+            if not candidates:
+                break
         return candidates
 
-    def _fits(
-        self, slot_id: str, word: WordEntry, assignment: dict[str, WordEntry]
-    ) -> bool:
-        for overlap in self.neighbors[slot_id]:
-            other = assignment.get(overlap.b_slot)
-            if other is None:
-                continue
-            if word.letters[overlap.a_index] != other.letters[overlap.b_index]:
-                return False
-        return True
-
-    def _select_slot(self, assignment: dict[str, WordEntry]) -> str:
+    def _select_slot(self, assignment: dict[str, int], used_bits: int) -> str:
         open_slot_ids = [slot_id for slot_id in self.slots if slot_id not in assignment]
         scored = []
         for slot_id in open_slot_ids:
-            candidates = self._candidate_words(slot_id, assignment)
+            candidates = self._candidate_words(slot_id, assignment, used_bits)
             degree = len(self.neighbors[slot_id])
             length = self.slots[slot_id].length
-            scored.append((len(candidates), -degree, -length, slot_id))
+            scored.append((candidates.bit_count(), -degree, -length, slot_id))
         scored.sort()
         return scored[0][3]
 
     def _ordered_candidates(
-        self, slot_id: str, assignment: dict[str, WordEntry]
-    ) -> list[WordEntry]:
-        candidates = self._candidate_words(slot_id, assignment)
+        self, slot_id: str, assignment: dict[str, int], used_bits: int
+    ) -> list[int]:
+        candidates = list(
+            self._iter_bits(self._candidate_words(slot_id, assignment, used_bits))
+        )
         self.random.shuffle(candidates)
 
-        def constraining_score(word: WordEntry) -> int:
-            test_assignment = {**assignment, slot_id: word}
+        def constraining_score(word_index: int) -> int:
+            next_assignment = {**assignment, slot_id: word_index}
+            next_used_bits = used_bits | (1 << word_index)
             remaining = 0
             for other_id in self.slots:
-                if other_id not in test_assignment:
-                    remaining += len(self._candidate_words(other_id, test_assignment))
+                if other_id not in next_assignment:
+                    remaining += self._candidate_words(
+                        other_id,
+                        next_assignment,
+                        next_used_bits,
+                    ).bit_count()
             return -remaining
 
         return sorted(candidates, key=constraining_score)
 
-    def _has_forward_support(self, assignment: dict[str, WordEntry]) -> bool:
+    def _has_forward_support(self, assignment: dict[str, int], used_bits: int) -> bool:
         return all(
-            self._candidate_words(slot_id, assignment)
+            self._candidate_words(slot_id, assignment, used_bits)
             for slot_id in self.slots
             if slot_id not in assignment
         )
 
-    def _search(self, assignment: dict[str, WordEntry]) -> dict[str, WordEntry] | None:
+    def _search(self, assignment: dict[str, int], used_bits: int) -> dict[str, int] | None:
         if len(assignment) == len(self.slots):
             return assignment
 
-        slot_id = self._select_slot(assignment)
-        for word in self._ordered_candidates(slot_id, assignment):
-            next_assignment = {**assignment, slot_id: word}
-            if self._has_forward_support(next_assignment):
-                solved = self._search(next_assignment)
+        slot_id = self._select_slot(assignment, used_bits)
+        for word_index in self._ordered_candidates(slot_id, assignment, used_bits):
+            next_assignment = {**assignment, slot_id: word_index}
+            next_used_bits = used_bits | (1 << word_index)
+            if self._has_forward_support(next_assignment, next_used_bits):
+                solved = self._search(next_assignment, next_used_bits)
                 if solved is not None:
                     return solved
             elif len(next_assignment) == len(self.slots):
                 return next_assignment
         return None
 
-    def _count(self, assignment: dict[str, WordEntry], limit: int) -> int:
+    def _count(self, assignment: dict[str, int], used_bits: int, limit: int) -> int:
         if len(assignment) == len(self.slots):
             return 1
 
         total = 0
-        slot_id = self._select_slot(assignment)
-        for word in self._ordered_candidates(slot_id, assignment):
-            next_assignment = {**assignment, slot_id: word}
-            if self._has_forward_support(next_assignment) or len(next_assignment) == len(
-                self.slots
+        slot_id = self._select_slot(assignment, used_bits)
+        for word_index in self._ordered_candidates(slot_id, assignment, used_bits):
+            next_assignment = {**assignment, slot_id: word_index}
+            next_used_bits = used_bits | (1 << word_index)
+            if (
+                self._has_forward_support(next_assignment, next_used_bits)
+                or len(next_assignment) == len(self.slots)
             ):
-                total += self._count(next_assignment, limit - total)
+                total += self._count(next_assignment, next_used_bits, limit - total)
                 if total >= limit:
                     break
         return total

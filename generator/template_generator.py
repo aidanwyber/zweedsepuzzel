@@ -9,7 +9,7 @@ from pathlib import Path
 
 from generator.config import config_value, load_config, resolve_seed
 from generator.generate import DRAFT_PROFILE, generate_best_candidate, load_words, write_json
-from generator.template import Direction, Slot, Template
+from generator.template import READABLE_RUN_MIN_LENGTH, Direction, Slot, Template
 from generator.word_csv import read_word_rows
 
 
@@ -36,6 +36,40 @@ class Placement:
         if self.direction == "right":
             return row, col + 1
         return row + 1, col
+
+
+@dataclass(frozen=True)
+class PlacementMeta:
+    cells: frozenset[tuple[int, int]]
+    cells_mask: int
+    origin_mask: int
+    stop_cell: tuple[int, int]
+    stop_mask: int
+    cross_block_cells: frozenset[tuple[int, int]]
+    cross_block_mask: int
+
+
+@dataclass(frozen=True)
+class WordSearchIndex:
+    allowed_answers: frozenset[str]
+    words_by_length: dict[int, tuple[WordShape, ...]]
+    substring_support: dict[str, tuple[tuple[str, int], ...]]
+
+    def can_support_run(
+        self,
+        answer: str,
+        open_before: int,
+        open_after: int,
+        used_answers: set[str],
+    ) -> bool:
+        if answer in self.allowed_answers and answer not in used_answers:
+            return True
+        for candidate, offset in self.substring_support.get(answer, ()):
+            if candidate in used_answers:
+                continue
+            if offset <= open_before and len(candidate) - offset - len(answer) <= open_after:
+                return True
+        return False
 
 
 @dataclass(frozen=True)
@@ -167,6 +201,13 @@ class PartialTemplateState:
     reserved_blocks: set[tuple[int, int]]
     used: set[str]
     slots: list[Placement]
+    occupancy: dict[tuple[int, int], int]
+    interlocked_cells: int
+    short_slot_count: int
+    board_mask: int = 0
+    clue_mask: int = 0
+    reserved_stop_mask: int = 0
+    reserved_block_mask: int = 0
     score: float = 0.0
 
 
@@ -174,14 +215,14 @@ class PartialTemplateState:
 class GeometrySearchContext:
     placements: list[Placement]
     indexed: dict[tuple[tuple[int, int], str], list[Placement]]
+    placement_meta: dict[Placement, PlacementMeta]
     width: int
     height: int
     max_clues_per_cell: int
     quality: TemplateQualitySettings
     heuristics: SearchHeuristicSettings
     length_counts: dict[int, int]
-    words_by_length: dict[int, tuple[WordShape, ...]]
-    allowed_answers: set[str]
+    word_index: WordSearchIndex
     words: list[WordShape]
     seed: int
 
@@ -228,6 +269,40 @@ def words_by_length(words: list[WordShape]) -> dict[int, tuple[WordShape, ...]]:
     for word in words:
         by_length.setdefault(word.length, []).append(word)
     return {length: tuple(length_words) for length, length_words in by_length.items()}
+
+
+def build_word_search_index(words: list[WordShape]) -> WordSearchIndex:
+    support: dict[str, set[tuple[str, int]]] = {}
+    for word in words:
+        answer = word.answer
+        for start in range(len(answer)):
+            for end in range(start + READABLE_RUN_MIN_LENGTH, len(answer) + 1):
+                support.setdefault(answer[start:end], set()).add((answer, start))
+    return WordSearchIndex(
+        allowed_answers=frozenset(word.answer for word in words),
+        words_by_length=words_by_length(words),
+        substring_support={
+            fragment: tuple(sorted(candidates))
+            for fragment, candidates in support.items()
+        },
+    )
+
+
+def cell_bit(cell: tuple[int, int], width: int) -> int:
+    row, col = cell
+    return 1 << (row * width + col)
+
+
+def cells_mask(cells: tuple[tuple[int, int], ...] | set[tuple[int, int]], width: int) -> int:
+    mask = 0
+    for cell in cells:
+        mask |= cell_bit(cell, width)
+    return mask
+
+
+def in_bounds(cell: tuple[int, int], width: int, height: int) -> bool:
+    row, col = cell
+    return 0 <= row < height and 0 <= col < width
 
 
 def pattern_key(
@@ -370,21 +445,181 @@ def cross_entry_block_cells(
     return blocked
 
 
-def can_place(
+def build_placement_meta(
+    placements: list[Placement], width: int, height: int
+) -> dict[Placement, PlacementMeta]:
+    meta: dict[Placement, PlacementMeta] = {}
+    for placement in placements:
+        stop_cell = placement.stop_cell()
+        cross_blocks = frozenset(cross_entry_block_cells(placement, width, height))
+        meta[placement] = PlacementMeta(
+            cells=frozenset(placement.cells),
+            cells_mask=cells_mask(placement.cells, width),
+            origin_mask=cell_bit(placement.origin, width),
+            stop_cell=stop_cell,
+            stop_mask=cell_bit(stop_cell, width) if in_bounds(stop_cell, width, height) else 0,
+            cross_block_cells=cross_blocks,
+            cross_block_mask=cells_mask(set(cross_blocks), width),
+        )
+    return meta
+
+
+def line_runs(
     board: dict[tuple[int, int], str],
-    clue_directions: dict[tuple[int, int], set[Direction]],
+    width: int,
+    height: int,
+    direction: Direction,
+    line_index: int,
+) -> list[tuple[tuple[tuple[int, int], ...], str]]:
+    runs = []
+    if direction == "right":
+        row = line_index
+        col = 0
+        while col < width:
+            cells = []
+            letters = []
+            while col < width and (row, col) in board:
+                cell = (row, col)
+                cells.append(cell)
+                letters.append(board[cell])
+                col += 1
+            if len(cells) >= READABLE_RUN_MIN_LENGTH:
+                runs.append((tuple(cells), display_answer(tuple(letters))))
+            col += 1
+    else:
+        col = line_index
+        row = 0
+        while row < height:
+            cells = []
+            letters = []
+            while row < height and (row, col) in board:
+                cell = (row, col)
+                cells.append(cell)
+                letters.append(board[cell])
+                row += 1
+            if len(cells) >= READABLE_RUN_MIN_LENGTH:
+                runs.append((tuple(cells), display_answer(tuple(letters))))
+            row += 1
+    return runs
+
+
+def open_capacity(
+    cells: tuple[tuple[int, int], ...],
+    direction: Direction,
+    width: int,
+    height: int,
+    board: dict[tuple[int, int], str],
+    clue_cells: set[tuple[int, int]],
     reserved_stops: set[tuple[int, int]],
     reserved_blocks: set[tuple[int, int]],
-    used_words: set[str],
+) -> tuple[int, int]:
+    if direction == "right":
+        before_delta = (0, -1)
+        after_delta = (0, 1)
+    else:
+        before_delta = (-1, 0)
+        after_delta = (1, 0)
+
+    def blocked(cell: tuple[int, int]) -> bool:
+        return (
+            not in_bounds(cell, width, height)
+            or cell in clue_cells
+            or cell in reserved_stops
+            or cell in reserved_blocks
+            or cell in board
+        )
+
+    before = 0
+    row, col = cells[0]
+    delta_row, delta_col = before_delta
+    cursor = (row + delta_row, col + delta_col)
+    while not blocked(cursor):
+        before += 1
+        cursor = (cursor[0] + delta_row, cursor[1] + delta_col)
+
+    after = 0
+    row, col = cells[-1]
+    delta_row, delta_col = after_delta
+    cursor = (row + delta_row, col + delta_col)
+    while not blocked(cursor):
+        after += 1
+        cursor = (cursor[0] + delta_row, cursor[1] + delta_col)
+
+    return before, after
+
+
+def readable_runs_are_supported(
+    board: dict[tuple[int, int], str],
+    clue_cells: set[tuple[int, int]],
+    reserved_stops: set[tuple[int, int]],
+    reserved_blocks: set[tuple[int, int]],
     slots: list[Placement],
     placement: Placement,
+    affected_cells: set[tuple[int, int]],
+    used_words: set[str],
+    word_index: WordSearchIndex,
+    width: int,
+    height: int,
+) -> bool:
+    explicit_slots = {
+        (slot.direction, slot.cells)
+        for slot in (*slots, placement)
+    }
+    same_direction_slots = {
+        "right": [slot.cells for slot in (*slots, placement) if slot.direction == "right"],
+        "down": [slot.cells for slot in (*slots, placement) if slot.direction == "down"],
+    }
+    affected_rows = {row for row, _ in affected_cells if 0 <= row < height}
+    affected_cols = {col for _, col in affected_cells if 0 <= col < width}
+
+    for direction, line_indices in (
+        ("right", affected_rows),
+        ("down", affected_cols),
+    ):
+        for line_index in line_indices:
+            for cells, answer in line_runs(board, width, height, direction, line_index):
+                explicit_key = (direction, cells)
+                if explicit_key in explicit_slots:
+                    continue
+
+                cell_set = set(cells)
+                if any(cell_set.intersection(slot_cells) for slot_cells in same_direction_slots[direction]):
+                    return False
+
+                before, after = open_capacity(
+                    cells,
+                    direction,
+                    width,
+                    height,
+                    board,
+                    clue_cells,
+                    reserved_stops,
+                    reserved_blocks,
+                )
+                if not word_index.can_support_run(answer, before, after, used_words):
+                    return False
+    return True
+
+
+def can_place(
+    state: PartialTemplateState,
+    placement: Placement,
+    meta: PlacementMeta,
+    word_index: WordSearchIndex,
     width: int,
     height: int,
     max_clues_per_cell: int,
 ) -> bool:
+    board = state.board
+    clue_directions = state.clues
+    reserved_stops = state.reserved_stops
+    reserved_blocks = state.reserved_blocks
+    used_words = state.used
+    slots = state.slots
+
     if placement.word.answer in used_words:
         return False
-    if placement.origin in board:
+    if meta.origin_mask & state.board_mask:
         return False
     existing_clue_directions = clue_directions.get(placement.origin, set())
     if len(existing_clue_directions) >= max_clues_per_cell:
@@ -392,29 +627,56 @@ def can_place(
     if placement.clue_direction in existing_clue_directions:
         return False
 
-    placement_cells = set(placement.cells)
     for existing in slots:
-        if existing.direction == placement.direction and placement_cells.intersection(
-            existing.cells
-        ):
+        if existing.direction == placement.direction and meta.cells.intersection(existing.cells):
             return False
 
+    if meta.cells_mask & (
+        state.reserved_stop_mask | state.reserved_block_mask | state.clue_mask
+    ):
+        return False
+
     for cell, letter in zip(placement.cells, placement.word.letters):
-        if cell in reserved_stops or cell in reserved_blocks:
-            return False
-        if cell in clue_directions:
-            return False
         current = board.get(cell)
         if current is not None and current != letter:
             return False
 
-    for cell in cross_entry_block_cells(placement, width, height):
-        if cell in board:
-            return False
+    if meta.cross_block_mask & state.board_mask:
+        return False
 
-    stop_cell = placement.stop_cell()
-    row, col = stop_cell
-    if 0 <= row < height and 0 <= col < width and stop_cell in board:
+    if meta.stop_mask & state.board_mask:
+        return False
+
+    next_board = board.copy()
+    for cell, letter in zip(placement.cells, placement.word.letters):
+        next_board[cell] = letter
+
+    next_clue_cells = set(clue_directions)
+    next_clue_cells.add(placement.origin)
+    next_reserved_stops = set(reserved_stops)
+    if meta.stop_mask:
+        next_reserved_stops.add(meta.stop_cell)
+    next_reserved_blocks = set(reserved_blocks)
+    next_reserved_blocks.update(meta.cross_block_cells)
+    next_used = set(used_words)
+    next_used.add(placement.word.answer)
+    affected = set(placement.cells)
+    affected.add(placement.origin)
+    affected.add(meta.stop_cell)
+    affected.update(meta.cross_block_cells)
+    if not readable_runs_are_supported(
+        next_board,
+        next_clue_cells,
+        next_reserved_stops,
+        next_reserved_blocks,
+        slots,
+        placement,
+        affected,
+        next_used,
+        word_index,
+        width,
+        height,
+    ):
         return False
     return True
 
@@ -465,6 +727,9 @@ def empty_state() -> PartialTemplateState:
         reserved_blocks=set(),
         used=set(),
         slots=[],
+        occupancy={},
+        interlocked_cells=0,
+        short_slot_count=0,
     )
 
 
@@ -486,6 +751,16 @@ def place_in_state(
         width,
         height,
     )
+    stop_cell = placement.stop_cell()
+    stop_mask = cell_bit(stop_cell, width) if in_bounds(stop_cell, width, height) else 0
+    cross_blocks = cross_entry_block_cells(placement, width, height)
+    occupancy = state.occupancy.copy()
+    interlocked_cells = state.interlocked_cells
+    for cell in placement.cells:
+        previous_count = occupancy.get(cell, 0)
+        if previous_count == 1:
+            interlocked_cells += 1
+        occupancy[cell] = previous_count + 1
     return PartialTemplateState(
         board=board,
         clues=clues,
@@ -493,6 +768,14 @@ def place_in_state(
         reserved_blocks=reserved_blocks,
         used=used,
         slots=slots,
+        occupancy=occupancy,
+        interlocked_cells=interlocked_cells,
+        short_slot_count=state.short_slot_count
+        + (1 if len(placement.cells) <= 3 else 0),
+        board_mask=state.board_mask | cells_mask(placement.cells, width),
+        clue_mask=state.clue_mask | cell_bit(placement.origin, width),
+        reserved_stop_mask=state.reserved_stop_mask | stop_mask,
+        reserved_block_mask=state.reserved_block_mask | cells_mask(cross_blocks, width),
         score=score,
     )
 
@@ -502,14 +785,6 @@ def state_from_slots(slots: list[Placement], width: int, height: int) -> Partial
     for placement in slots:
         state = place_in_state(state, placement, width, height, score=state.score)
     return state
-
-
-def cell_occupancy(slots: list[Placement]) -> dict[tuple[int, int], int]:
-    occupancy: dict[tuple[int, int], int] = {}
-    for slot in slots:
-        for cell in slot.cells:
-            occupancy[cell] = occupancy.get(cell, 0) + 1
-    return occupancy
 
 
 def clue_score(clue_cell_ratio: float, quality: TemplateQualitySettings) -> float:
@@ -536,23 +811,22 @@ def score_partial_state(
     if not state.board or total_cells == 0:
         return 0.0
 
-    occupancy = cell_occupancy(state.slots)
     fill_rate = len(state.board) / total_cells
     interlock_ratio = (
-        sum(1 for count in occupancy.values() if count > 1) / len(state.board)
+        state.interlocked_cells / len(state.board)
         if state.board
         else 0.0
     )
     slot_ratio = min(len(state.slots) / max(quality.target_slot_count, 1), 1.0)
     clue_cell_ratio = len(state.clues) / total_cells
     short_slot_ratio = (
-        sum(1 for slot in state.slots if len(slot.cells) <= 3) / len(state.slots)
+        state.short_slot_count / len(state.slots)
         if state.slots
         else 0.0
     )
     crossing_board = {
         cell: state.board[cell]
-        for cell, count in occupancy.items()
+        for cell, count in state.occupancy.items()
         if count > 1
     }
     domain_score = (
@@ -611,6 +885,7 @@ def score_candidate_placement(
         + dual_clue_bonus * 2.0
         + placement_support * heuristics.domain_weight
         + placement.word.length * heuristics.length_weight
+        - max(0, 4 - placement.word.length) * heuristics.short_slot_penalty
     )
 
 
@@ -637,26 +912,24 @@ def ranked_placements_for_state(
     state: PartialTemplateState,
     placements: list[Placement],
     indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    placement_meta: dict[Placement, PlacementMeta],
     width: int,
     height: int,
     max_clues_per_cell: int,
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
-    by_length: dict[int, tuple[WordShape, ...]],
+    word_index: WordSearchIndex,
     domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
     randomizer: random.Random,
 ) -> list[tuple[float, Placement]]:
     ranked = []
     for placement in candidate_placements(state.board, placements, indexed):
         if not can_place(
-            state.board,
-            state.clues,
-            state.reserved_stops,
-            state.reserved_blocks,
-            state.used,
-            state.slots,
+            state,
             placement,
+            placement_meta[placement],
+            word_index,
             width,
             height,
             max_clues_per_cell,
@@ -673,7 +946,7 @@ def ranked_placements_for_state(
             quality,
             heuristics,
             length_counts,
-            by_length,
+            word_index.words_by_length,
             domain_cache,
         )
         if heuristics.randomness:
@@ -687,13 +960,14 @@ def ranked_placements_for_state(
 def build_slots_with_beam(
     placements: list[Placement],
     indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    placement_meta: dict[Placement, PlacementMeta],
     width: int,
     height: int,
     max_clues_per_cell: int,
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
-    by_length: dict[int, tuple[WordShape, ...]],
+    word_index: WordSearchIndex,
     domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
     randomizer: random.Random,
 ) -> PartialTemplateState:
@@ -707,13 +981,14 @@ def build_slots_with_beam(
                 state,
                 placements,
                 indexed,
+                placement_meta,
                 width,
                 height,
                 max_clues_per_cell,
                 quality,
                 heuristics,
                 length_counts,
-                by_length,
+                word_index,
                 domain_cache,
                 randomizer,
             )
@@ -1077,6 +1352,7 @@ def densify_state_by_score(
     state: PartialTemplateState,
     placements: list[Placement],
     indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    placement_meta: dict[Placement, PlacementMeta],
     width: int,
     height: int,
     template_id: str,
@@ -1085,9 +1361,8 @@ def densify_state_by_score(
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
-    by_length: dict[int, tuple[WordShape, ...]],
+    word_index: WordSearchIndex,
     domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
-    allowed_answers: set[str],
     words: list[WordShape],
     randomizer: random.Random,
 ) -> tuple[PartialTemplateState, Template, TemplateEvaluation]:
@@ -1099,7 +1374,7 @@ def densify_state_by_score(
         template_id,
         title,
         max_clues_per_cell,
-        allowed_answers,
+        set(word_index.allowed_answers),
     )
     current_evaluation = evaluate_template(
         current_template,
@@ -1113,13 +1388,14 @@ def densify_state_by_score(
             current_state,
             placements,
             indexed,
+            placement_meta,
             width,
             height,
             max_clues_per_cell,
             quality,
             heuristics,
             length_counts,
-            by_length,
+            word_index,
             domain_cache,
             randomizer,
         )
@@ -1134,7 +1410,7 @@ def densify_state_by_score(
                 template_id,
                 title,
                 max_clues_per_cell,
-                allowed_answers,
+                set(word_index.allowed_answers),
             )
             candidate_evaluation = evaluate_template(
                 candidate_template,
@@ -1169,6 +1445,7 @@ def repair_state_by_score(
     evaluation: TemplateEvaluation,
     placements: list[Placement],
     indexed: dict[tuple[tuple[int, int], str], list[Placement]],
+    placement_meta: dict[Placement, PlacementMeta],
     width: int,
     height: int,
     template_id: str,
@@ -1177,9 +1454,8 @@ def repair_state_by_score(
     quality: TemplateQualitySettings,
     heuristics: SearchHeuristicSettings,
     length_counts: dict[int, int],
-    by_length: dict[int, tuple[WordShape, ...]],
+    word_index: WordSearchIndex,
     domain_cache: dict[tuple[int, tuple[tuple[int, str], ...]], int],
-    allowed_answers: set[str],
     words: list[WordShape],
     randomizer: random.Random,
 ) -> tuple[PartialTemplateState, Template, TemplateEvaluation]:
@@ -1189,11 +1465,10 @@ def repair_state_by_score(
 
     for _ in range(heuristics.repair_passes):
         best_candidate: tuple[PartialTemplateState, Template, TemplateEvaluation] | None = None
-        occupancy = cell_occupancy(current_state.slots)
         removable = sorted(
             current_state.slots,
             key=lambda slot: (
-                sum(1 for cell in slot.cells if occupancy.get(cell, 0) > 1),
+                sum(1 for cell in slot.cells if current_state.occupancy.get(cell, 0) > 1),
                 -len(slot.cells),
             ),
         )
@@ -1208,7 +1483,7 @@ def repair_state_by_score(
                 template_id,
                 title,
                 max_clues_per_cell,
-                allowed_answers,
+                set(word_index.allowed_answers),
             )
             base_evaluation = evaluate_template(
                 base_template,
@@ -1224,13 +1499,14 @@ def repair_state_by_score(
                 base_state,
                 placements,
                 indexed,
+                placement_meta,
                 width,
                 height,
                 max_clues_per_cell,
                 quality,
                 heuristics,
                 length_counts,
-                by_length,
+                word_index,
                 domain_cache,
                 randomizer,
             )
@@ -1243,7 +1519,7 @@ def repair_state_by_score(
                     template_id,
                     title,
                     max_clues_per_cell,
-                    allowed_answers,
+                    set(word_index.allowed_answers),
                 )
                 candidate_evaluation = evaluate_template(
                     candidate_template,
@@ -1301,13 +1577,14 @@ def run_geometry_attempt(
     state = build_slots_with_beam(
         placements=context.placements,
         indexed=context.indexed,
+        placement_meta=context.placement_meta,
         width=context.width,
         height=context.height,
         max_clues_per_cell=context.max_clues_per_cell,
         quality=context.quality,
         heuristics=context.heuristics,
         length_counts=context.length_counts,
-        by_length=context.words_by_length,
+        word_index=context.word_index,
         domain_cache=domain_cache,
         randomizer=randomizer,
     )
@@ -1317,6 +1594,7 @@ def run_geometry_attempt(
         state,
         context.placements,
         context.indexed,
+        context.placement_meta,
         context.width,
         context.height,
         template_id,
@@ -1325,9 +1603,8 @@ def run_geometry_attempt(
         context.quality,
         context.heuristics,
         context.length_counts,
-        context.words_by_length,
+        context.word_index,
         domain_cache,
-        context.allowed_answers,
         context.words,
         randomizer,
     )
@@ -1337,6 +1614,7 @@ def run_geometry_attempt(
         evaluation,
         context.placements,
         context.indexed,
+        context.placement_meta,
         context.width,
         context.height,
         template_id,
@@ -1345,9 +1623,8 @@ def run_geometry_attempt(
         context.quality,
         context.heuristics,
         context.length_counts,
-        context.words_by_length,
+        context.word_index,
         domain_cache,
-        context.allowed_answers,
         context.words,
         randomizer,
     )
@@ -1486,23 +1763,23 @@ def search_templates(
     placements = filter_placements_by_direction(
         all_placements(words, width, height), allowed_directions
     )
-    allowed_answers = {word.answer for word in words}
+    placement_meta = build_placement_meta(placements, width, height)
+    word_index = build_word_search_index(words)
     length_counts: dict[int, int] = {}
     for word in words:
         length_counts[word.length] = length_counts.get(word.length, 0) + 1
-    by_length = words_by_length(words)
     indexed = placement_index(placements)
     context = GeometrySearchContext(
         placements=placements,
         indexed=indexed,
+        placement_meta=placement_meta,
         width=width,
         height=height,
         max_clues_per_cell=max_clues_per_cell,
         quality=quality,
         heuristics=heuristics,
         length_counts=length_counts,
-        words_by_length=by_length,
-        allowed_answers=allowed_answers,
+        word_index=word_index,
         words=words,
         seed=seed,
     )

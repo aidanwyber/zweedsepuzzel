@@ -4,7 +4,7 @@
 		"outDir": "generator/templates",
 		"width": 10,
 		"height": 17,
-		"attempts": 800,
+		"attempts": 120,
 		"seed": -1,
 		"keep": 1,
 		"maxWordLength": 17,
@@ -14,7 +14,7 @@
 		"verbose": true,
 		"stopWhenEnoughPassing": false,
 		"requireFill": true,
-		"fillAttempts": 300,
+		"fillAttempts": 100,
 		"fillSeed": 7,
 		"emitPuzzle": true,
 		"puzzleOut": "generated/puzzle.json",
@@ -41,11 +41,11 @@
 			"workers": 14
 		},
 		"quality": {
-			"minFillRate": 0.152,
-			"minInterlockRatio": 0.12,
-			"minSlotCount": 8,
+			"minFillRate": 0.45,
+			"minInterlockRatio": 0.2,
+			"minSlotCount": 15,
 			"maxShortSlotRatio": 0.15,
-			"maxClueCellRatio": 0.5,
+			"maxClueCellRatio": 0.3,
 			"minClueCellRatio": 0.04,
 			"targetSlotCount": 18,
 			"dualClueBonusCap": 6

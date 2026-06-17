@@ -224,7 +224,7 @@ python3 -m generator.template_generator \
   --out-dir generator/templates \
   --width 5 \
   --height 5 \
-  --attempts 1000 \
+  --attempts 120 \
   --keep 5 \
   --seed 1000 \
   --max-word-length 9 \
@@ -307,6 +307,10 @@ layouts, ranks geometrically passing candidates, and then, when `--require-fill`
 is enabled, calls the main CSP generator from the best geometry score downward
 until enough fillable templates have been found. With `--emit-puzzle`, the best
 filled passing template is also written to the normal generated puzzle outputs.
+During template construction, placements that would create unsupported readable
+runs of two or more letters are pruned before entering the beam. A partial run
+is allowed only when it is already a CSV answer or can still be extended into
+one within the available open cells.
 
 Template slots store both:
 
@@ -341,7 +345,7 @@ Recommended workflow:
 1. Search templates:
 
 ```sh
-python3 -m generator.template_generator --attempts 1000 --keep 5
+python3 -m generator.template_generator --attempts 120 --keep 5
 ```
 
 2. Pick a saved template ID from `generator/templates/`.
@@ -393,12 +397,17 @@ Current implementation:
   interlock, slot progress, clue-cell economy, and word-length support
 - pattern-domain scoring that estimates how many CSV words can fit known slot
   letters during template construction
+- early readable-run pruning that rejects placements creating unsupported
+  two-letter-or-longer fragments before scoring
+- cached placement cell masks and incremental state metrics for fill,
+  interlock, and short-slot scoring
 - delayed fillability checks: geometry candidates are ranked first, then the
   CSP fill check runs from the best-scoring geometry downward until enough
   fillable templates are found
 - optional local repair passes that remove or replace weak slots on exact score
   improvement
 - optional multiprocessing over independent geometry attempts
+- bitset-backed CSP fill domains and crossing filters
 - hard template constraint preventing words from visually continuing past their
   final cell
 - right and down clue directions

@@ -60,6 +60,11 @@ Zweedse puzzels. The word list remains CSV-based.
       slots on exact score improvement.
 - [x] Template generation can parallelize independent geometry attempts with
       worker processes.
+- [x] Template generation prunes unsupported readable runs during placement
+      instead of waiting for final template evaluation.
+- [x] Template generation uses cached placement masks and incremental state
+      metrics for faster candidate scoring.
+- [x] Puzzle filling uses bitset-backed slot domains and crossing filters.
 
 ## In Progress
 
