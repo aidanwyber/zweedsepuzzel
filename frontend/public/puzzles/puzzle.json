@@ -1,10 +1,10 @@
 {
-  "title": "Randomized 10x17 template 10166",
-  "templateId": "random-10x17-10166",
+  "title": "Randomized 10x17 template 25",
+  "templateId": "random-10x17-25",
   "algorithm": "template-driven CSP backtracking with MRV, degree tie-breaks, least-constraining values, and forward checking",
   "width": 10,
   "height": 17,
-  "unique": true,
+  "unique": false,
   "cells": [
     [
       {
@@ -17,138 +17,10 @@
         "type": "block"
       },
       {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "down",
-            "text": "in zwarte nachtjapon",
-            "slotId": "v_003_len7"
-          },
-          {
-            "direction": "right",
-            "text": "tovenarij",
-            "slotId": "v_001_len7"
-          }
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "H",
-        "slotIds": [
-          "v_001_len7"
-        ]
-      },
-      {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "right",
-            "text": "mooiste houtsoort",
-            "slotId": "v_005_len5"
-          }
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "v_005_len5"
-        ]
-      },
-      {
         "type": "block"
       },
       {
         "type": "block"
-      },
-      {
-        "type": "block"
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "B",
-        "slotIds": [
-          "v_003_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "Y",
-        "slotIds": [
-          "v_001_len7"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "v_005_len5"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "down",
-            "text": "vrahtjuh",
-            "slotId": "h_004_len6"
-          }
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "R",
-        "slotIds": [
-          "v_003_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "P",
-        "slotIds": [
-          "v_001_len7"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "K",
-        "slotIds": [
-          "v_005_len5"
-        ]
       },
       {
         "type": "block"
@@ -157,14 +29,9 @@
         "type": "clue",
         "clues": [
           {
-            "direction": "down",
-            "text": "voetbalkind",
-            "slotId": "v_007_len7"
-          },
-          {
             "direction": "right",
-            "text": "tattoekind",
-            "slotId": "v_011_len6"
+            "text": "niet donker",
+            "slotId": "v_007_len5"
           }
         ]
       },
@@ -172,158 +39,7 @@
         "type": "letter",
         "solution": "L",
         "slotIds": [
-          "v_011_len6"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "L",
-        "slotIds": [
-          "h_004_len6"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_004_len6"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "O",
-        "slotIds": [
-          "h_004_len6",
-          "v_003_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "N",
-        "slotIds": [
-          "h_004_len6",
-          "v_001_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "h_004_len6"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_004_len6",
-          "v_005_len5"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "M",
-        "slotIds": [
-          "v_007_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "A",
-        "slotIds": [
-          "v_011_len6"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "right",
-            "text": "op modderkracht",
-            "slotId": "h_002_len7"
-          }
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "M",
-        "slotIds": [
-          "v_003_len7",
-          "h_002_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "O",
-        "slotIds": [
-          "v_001_len7",
-          "h_002_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "h_002_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "N",
-        "slotIds": [
-          "h_002_len7",
-          "v_005_len5"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_002_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "A",
-        "slotIds": [
-          "h_002_len7",
-          "v_007_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "U",
-        "slotIds": [
-          "h_002_len7",
-          "v_011_len6"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "down",
-            "text": "keverkind",
-            "slotId": "h_006_len5"
-          }
+          "v_007_len5"
         ]
       },
       {
@@ -331,105 +47,6 @@
       },
       {
         "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "M",
-        "slotIds": [
-          "v_003_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "S",
-        "slotIds": [
-          "v_001_len7"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "A",
-        "slotIds": [
-          "v_007_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "R",
-        "slotIds": [
-          "v_011_len6"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_006_len5"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "S",
-        "slotIds": [
-          "h_006_len5"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "S",
-        "slotIds": [
-          "h_006_len5"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "v_003_len7",
-          "h_006_len5"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_006_len5",
-          "v_001_len7"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "R",
-        "slotIds": [
-          "v_007_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "v_011_len6"
-        ]
       }
     ],
     [
@@ -442,270 +59,6 @@
       {
         "type": "block"
       },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "v_003_len7"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "T",
-        "slotIds": [
-          "v_007_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "v_011_len6"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "down",
-            "text": "Peter special",
-            "slotId": "v_009_len7"
-          }
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "J",
-        "slotIds": [
-          "v_007_len7"
-        ]
-      },
-      {
-        "type": "block"
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "right",
-            "text": "XY-holte",
-            "slotId": "h_008_len7"
-          },
-          {
-            "direction": "down",
-            "text": "Peter...",
-            "slotId": "h_010_len7"
-          }
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "M",
-        "slotIds": [
-          "h_008_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "A",
-        "slotIds": [
-          "h_008_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "N",
-        "slotIds": [
-          "h_008_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "C",
-        "slotIds": [
-          "v_009_len7",
-          "h_008_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "A",
-        "slotIds": [
-          "h_008_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "V",
-        "slotIds": [
-          "h_008_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_008_len7",
-          "v_007_len7"
-        ]
-      },
-      {
-        "type": "clue",
-        "clues": [
-          {
-            "direction": "down",
-            "text": "vakantie",
-            "slotId": "v_014_len6"
-          }
-        ]
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "T",
-        "slotIds": [
-          "h_010_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "H",
-        "slotIds": [
-          "h_010_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_010_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "C",
-        "slotIds": [
-          "h_010_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "O",
-        "slotIds": [
-          "v_009_len7",
-          "h_010_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "C",
-        "slotIds": [
-          "h_010_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "K",
-        "slotIds": [
-          "h_010_len7"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "v_014_len6"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "R",
-        "slotIds": [
-          "v_009_len7"
-        ]
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "T",
-        "slotIds": [
-          "v_014_len6"
-        ]
-      }
-    ],
-    [
       {
         "type": "block"
       },
@@ -715,56 +68,20 @@
           {
             "direction": "down",
             "text": "Lé weg?",
-            "slotId": "h_013_len9"
+            "slotId": "v_001_len9"
           },
           {
             "direction": "right",
-            "text": "overal ideaal",
-            "slotId": "h_012_len6"
+            "text": "groene groeier",
+            "slotId": "v_004_len5"
           }
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "S",
-        "slotIds": [
-          "h_012_len6"
         ]
       },
       {
         "type": "letter",
         "solution": "P",
         "slotIds": [
-          "h_012_len6"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "O",
-        "slotIds": [
-          "h_012_len6"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "T",
-        "slotIds": [
-          "v_009_len7",
-          "h_012_len6"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "J",
-        "slotIds": [
-          "h_012_len6"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_012_len6"
+          "v_004_len5"
         ]
       },
       {
@@ -772,9 +89,158 @@
       },
       {
         "type": "letter",
+        "solution": "I",
+        "slotIds": [
+          "v_007_len5"
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "koelmeubel",
+            "slotId": "v_005_len8"
+          }
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "speelt gitaar",
+            "slotId": "v_006_len9"
+          }
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "F",
+        "slotIds": [
+          "v_001_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "L",
+        "slotIds": [
+          "v_004_len5"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "C",
+        "slotIds": [
+          "v_007_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "v_005_len8"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "danseee",
+            "slotId": "h_003_len8"
+          },
+          {
+            "direction": "down",
+            "text": "spoorvoertuig",
+            "slotId": "h_002_len9"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "M",
+        "slotIds": [
+          "v_006_len9",
+          "h_003_len8"
+        ]
+      },
+      {
+        "type": "letter",
         "solution": "A",
         "slotIds": [
-          "v_014_len6"
+          "h_003_len8"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "h_003_len8",
+          "v_001_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "h_003_len8",
+          "v_004_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "T",
+        "slotIds": [
+          "h_003_len8"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "H",
+        "slotIds": [
+          "h_003_len8",
+          "v_007_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "v_005_len8",
+          "h_003_len8"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "h_003_len8"
         ]
       }
     ],
@@ -784,67 +250,678 @@
       },
       {
         "type": "letter",
-        "solution": "F",
+        "solution": "T",
         "slotIds": [
-          "h_013_len9"
+          "h_002_len9"
         ]
       },
       {
         "type": "letter",
         "solution": "R",
         "slotIds": [
-          "h_013_len9"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "h_013_len9"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "K",
-        "slotIds": [
-          "h_013_len9"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "A",
-        "slotIds": [
-          "h_013_len9",
-          "v_009_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "N",
-        "slotIds": [
-          "h_013_len9"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "D",
-        "slotIds": [
-          "h_013_len9"
+          "v_006_len9",
+          "h_002_len9"
         ]
       },
       {
         "type": "letter",
         "solution": "E",
         "slotIds": [
-          "h_013_len9"
+          "h_002_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "I",
+        "slotIds": [
+          "h_002_len9",
+          "v_001_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "h_002_len9",
+          "v_004_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "S",
+        "slotIds": [
+          "h_002_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "T",
+        "slotIds": [
+          "v_007_len5",
+          "h_002_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "v_005_len8",
+          "h_002_len9"
         ]
       },
       {
         "type": "letter",
         "solution": "L",
         "slotIds": [
-          "h_013_len9",
-          "v_014_len6"
+          "h_002_len9"
+        ]
+      }
+    ],
+    [
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "warme ster",
+            "slotId": "h_024_len3"
+          }
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "S",
+        "slotIds": [
+          "v_006_len9"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "v_001_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "T",
+        "slotIds": [
+          "v_004_len5"
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "kledingstuk",
+            "slotId": "h_023_len3"
+          }
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "L",
+        "slotIds": [
+          "v_005_len8"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "letter",
+        "solution": "Z",
+        "slotIds": [
+          "h_024_len3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "h_024_len3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "h_024_len3",
+          "v_006_len9"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "v_001_len9"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "h_023_len3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "h_023_len3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "v_005_len8",
+          "h_023_len3"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "v_006_len9"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "v_001_len9"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "slimme primaat",
+            "slotId": "v_022_len3"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "v_005_len8"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "watervogel",
+            "slotId": "h_009_len4"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "h_009_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "v_006_len9",
+          "h_009_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "h_009_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "D",
+        "slotIds": [
+          "v_001_len9",
+          "h_009_len4"
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "warme kleding",
+            "slotId": "h_021_len3"
+          },
+          {
+            "direction": "down",
+            "text": "tattoekind",
+            "slotId": "v_010_len6"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "J",
+        "slotIds": [
+          "h_021_len3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "h_021_len3",
+          "v_022_len3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "S",
+        "slotIds": [
+          "h_021_len3",
+          "v_005_len8"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "rode vrucht",
+            "slotId": "h_008_len5"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "h_008_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "P",
+        "slotIds": [
+          "v_006_len9",
+          "h_008_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "P",
+        "slotIds": [
+          "h_008_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "v_001_len9",
+          "h_008_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "L",
+        "slotIds": [
+          "h_008_len5",
+          "v_010_len6"
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "nachtlicht",
+            "slotId": "v_013_len4"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "v_022_len3"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "T",
+        "slotIds": [
+          "v_005_len8"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "I",
+        "slotIds": [
+          "v_006_len9"
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "lichtbron",
+            "slotId": "h_012_len4"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "L",
+        "slotIds": [
+          "v_001_len9",
+          "h_012_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "h_012_len4",
+          "v_010_len6"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "M",
+        "slotIds": [
+          "h_012_len4",
+          "v_013_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "P",
+        "slotIds": [
+          "v_022_len3",
+          "h_012_len4"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "v_006_len9"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "late dag",
+            "slotId": "v_016_len5"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "U",
+        "slotIds": [
+          "v_010_len6"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "v_013_len4"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "mooiste houtsoort",
+            "slotId": "v_015_len5"
+          }
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "down",
+            "text": "regio",
+            "slotId": "h_011_len9"
+          }
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "autostalling",
+            "slotId": "h_014_len6"
+          },
+          {
+            "direction": "down",
+            "text": "meneer geluid",
+            "slotId": "v_018_len4"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "G",
+        "slotIds": [
+          "h_014_len6"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "v_016_len5",
+          "h_014_len6"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "v_010_len6",
+          "h_014_len6"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "A",
+        "slotIds": [
+          "h_014_len6",
+          "v_013_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "G",
+        "slotIds": [
+          "h_014_len6"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "h_014_len6",
+          "v_015_len5"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "P",
+        "slotIds": [
+          "h_011_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "R",
+        "slotIds": [
+          "h_011_len9",
+          "v_018_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "h_011_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "V",
+        "slotIds": [
+          "h_011_len9",
+          "v_016_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "I",
+        "slotIds": [
+          "v_010_len6",
+          "h_011_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "h_011_len9",
+          "v_013_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "C",
+        "slotIds": [
+          "h_011_len9"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "I",
+        "slotIds": [
+          "h_011_len9",
+          "v_015_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "h_011_len9"
         ]
       }
     ],
@@ -857,14 +934,127 @@
         "clues": [
           {
             "direction": "down",
-            "text": "speelt gitaar",
-            "slotId": "h_015_len9"
+            "text": "groene plek",
+            "slotId": "h_020_len4"
           }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "U",
+        "slotIds": [
+          "v_018_len4"
         ]
       },
       {
         "type": "block"
       },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "v_016_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "v_010_len6"
+        ]
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "v_015_len5"
+        ]
+      },
+      {
+        "type": "block"
+      }
+    ],
+    [
+      {
+        "type": "block"
+      },
+      {
+        "type": "letter",
+        "solution": "T",
+        "slotIds": [
+          "h_020_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "U",
+        "slotIds": [
+          "h_020_len4",
+          "v_018_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "I",
+        "slotIds": [
+          "h_020_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "N",
+        "slotIds": [
+          "v_016_len5",
+          "h_020_len4"
+        ]
+      },
+      {
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "leeswerk",
+            "slotId": "h_019_len4"
+          }
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "B",
+        "slotIds": [
+          "h_019_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "O",
+        "slotIds": [
+          "h_019_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "v_015_len5",
+          "h_019_len4"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "h_019_len4"
+        ]
+      }
+    ],
+    [
       {
         "type": "block"
       },
@@ -875,123 +1065,55 @@
         "type": "letter",
         "solution": "D",
         "slotIds": [
-          "v_009_len7"
+          "v_018_len4"
         ]
       },
       {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "v_014_len6"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "letter",
-        "solution": "M",
-        "slotIds": [
-          "h_015_len9"
+        "type": "clue",
+        "clues": [
+          {
+            "direction": "right",
+            "text": "warm kleed",
+            "slotId": "h_017_len5"
+          }
         ]
       },
       {
         "type": "letter",
-        "solution": "R",
+        "solution": "D",
         "slotIds": [
-          "h_015_len9"
+          "v_016_len5",
+          "h_017_len5"
         ]
       },
       {
         "type": "letter",
-        "solution": "S",
+        "solution": "E",
         "slotIds": [
-          "h_015_len9"
+          "h_017_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "K",
+        "slotIds": [
+          "h_017_len5"
+        ]
+      },
+      {
+        "type": "letter",
+        "solution": "E",
+        "slotIds": [
+          "h_017_len5"
         ]
       },
       {
         "type": "letter",
         "solution": "N",
         "slotIds": [
-          "h_015_len9"
+          "v_015_len5",
+          "h_017_len5"
         ]
-      },
-      {
-        "type": "letter",
-        "solution": "O",
-        "slotIds": [
-          "h_015_len9",
-          "v_009_len7"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "h_015_len9"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "P",
-        "slotIds": [
-          "h_015_len9"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "I",
-        "slotIds": [
-          "h_015_len9"
-        ]
-      },
-      {
-        "type": "letter",
-        "solution": "E",
-        "slotIds": [
-          "v_014_len6",
-          "h_015_len9"
-        ]
-      }
-    ],
-    [
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
-      },
-      {
-        "type": "block"
       },
       {
         "type": "block"
@@ -1000,22 +1122,14 @@
   ],
   "slots": [
     {
-      "id": "v_001_len7",
+      "id": "v_001_len9",
       "direction": "down",
-      "clueDirection": "right",
+      "clueDirection": "down",
       "origin": [
-        0,
-        3
+        1,
+        4
       ],
       "cells": [
-        [
-          0,
-          4
-        ],
-        [
-          1,
-          4
-        ],
         [
           2,
           4
@@ -1035,20 +1149,44 @@
         [
           6,
           4
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          10,
+          4
         ]
       ],
-      "answer": "HYPNOSE",
-      "clue": "tovenarij"
+      "answer": "FRIKANDEL",
+      "clue": "Lé weg?"
     },
     {
-      "id": "h_002_len7",
+      "id": "h_002_len9",
       "direction": "right",
-      "clueDirection": "right",
+      "clueDirection": "down",
       "origin": [
-        4,
-        2
+        3,
+        1
       ],
       "cells": [
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ],
         [
           4,
           3
@@ -1078,63 +1216,18 @@
           9
         ]
       ],
-      "answer": "MOINEAU",
-      "clue": "op modderkracht"
+      "answer": "TREINSTEL",
+      "clue": "spoorvoertuig"
     },
     {
-      "id": "v_003_len7",
-      "direction": "down",
-      "clueDirection": "down",
-      "origin": [
-        0,
-        3
-      ],
-      "cells": [
-        [
-          1,
-          3
-        ],
-        [
-          2,
-          3
-        ],
-        [
-          3,
-          3
-        ],
-        [
-          4,
-          3
-        ],
-        [
-          5,
-          3
-        ],
-        [
-          6,
-          3
-        ],
-        [
-          7,
-          3
-        ]
-      ],
-      "answer": "BROMMIE",
-      "clue": "in zwarte nachtjapon"
-    },
-    {
-      "id": "h_004_len6",
+      "id": "h_003_len8",
       "direction": "right",
-      "clueDirection": "down",
+      "clueDirection": "right",
       "origin": [
-        2,
+        3,
         1
       ],
       "cells": [
-        [
-          3,
-          1
-        ],
         [
           3,
           2
@@ -1154,86 +1247,69 @@
         [
           3,
           6
-        ]
-      ],
-      "answer": "LEONIE",
-      "clue": "vrahtjuh"
-    },
-    {
-      "id": "v_005_len5",
-      "direction": "down",
-      "clueDirection": "right",
-      "origin": [
-        0,
-        5
-      ],
-      "cells": [
-        [
-          0,
-          6
-        ],
-        [
-          1,
-          6
-        ],
-        [
-          2,
-          6
         ],
         [
           3,
-          6
+          7
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          3,
+          9
+        ]
+      ],
+      "answer": "MARATHON",
+      "clue": "danseee"
+    },
+    {
+      "id": "v_004_len5",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        1,
+        4
+      ],
+      "cells": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
         ],
         [
           4,
-          6
+          5
+        ],
+        [
+          5,
+          5
         ]
       ],
-      "answer": "EIKEN",
-      "clue": "mooiste houtsoort"
+      "answer": "PLANT",
+      "clue": "groene groeier"
     },
     {
-      "id": "h_006_len5",
-      "direction": "right",
-      "clueDirection": "down",
-      "origin": [
-        5,
-        0
-      ],
-      "cells": [
-        [
-          6,
-          0
-        ],
-        [
-          6,
-          1
-        ],
-        [
-          6,
-          2
-        ],
-        [
-          6,
-          3
-        ],
-        [
-          6,
-          4
-        ]
-      ],
-      "answer": "ESSIE",
-      "clue": "keverkind"
-    },
-    {
-      "id": "v_007_len7",
+      "id": "v_005_len8",
       "direction": "down",
       "clueDirection": "down",
       "origin": [
-        2,
+        1,
         8
       ],
       "cells": [
+        [
+          2,
+          8
+        ],
         [
           3,
           8
@@ -1263,18 +1339,104 @@
           8
         ]
       ],
-      "answer": "MAARTJE",
-      "clue": "voetbalkind"
+      "answer": "KOELKAST",
+      "clue": "koelmeubel"
     },
     {
-      "id": "h_008_len7",
+      "id": "v_006_len9",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        2,
+        2
+      ],
+      "cells": [
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          11,
+          2
+        ]
+      ],
+      "answer": "MR SNOEPIE",
+      "clue": "speelt gitaar"
+    },
+    {
+      "id": "v_007_len5",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        6
+      ],
+      "cells": [
+        [
+          0,
+          7
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ]
+      ],
+      "answer": "LICHT",
+      "clue": "niet donker"
+    },
+    {
+      "id": "h_008_len5",
       "direction": "right",
       "clueDirection": "right",
       "origin": [
         9,
-        1
+        0
       ],
       "cells": [
+        [
+          9,
+          1
+        ],
         [
           9,
           2
@@ -1290,25 +1452,42 @@
         [
           9,
           5
-        ],
-        [
-          9,
-          6
-        ],
-        [
-          9,
-          7
-        ],
-        [
-          9,
-          8
         ]
       ],
-      "answer": "MANCAVE",
-      "clue": "XY-holte"
+      "answer": "APPEL",
+      "clue": "rode vrucht"
     },
     {
-      "id": "v_009_len7",
+      "id": "h_009_len4",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        8,
+        0
+      ],
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          4
+        ]
+      ],
+      "answer": "EEND",
+      "clue": "watervogel"
+    },
+    {
+      "id": "v_010_len6",
       "direction": "down",
       "clueDirection": "down",
       "origin": [
@@ -1339,132 +1518,13 @@
         [
           14,
           5
-        ],
-        [
-          15,
-          5
-        ]
-      ],
-      "answer": "CORTADO",
-      "clue": "Peter special"
-    },
-    {
-      "id": "h_010_len7",
-      "direction": "right",
-      "clueDirection": "down",
-      "origin": [
-        9,
-        1
-      ],
-      "cells": [
-        [
-          10,
-          1
-        ],
-        [
-          10,
-          2
-        ],
-        [
-          10,
-          3
-        ],
-        [
-          10,
-          4
-        ],
-        [
-          10,
-          5
-        ],
-        [
-          10,
-          6
-        ],
-        [
-          10,
-          7
-        ]
-      ],
-      "answer": "THE COCK",
-      "clue": "Peter..."
-    },
-    {
-      "id": "v_011_len6",
-      "direction": "down",
-      "clueDirection": "right",
-      "origin": [
-        2,
-        8
-      ],
-      "cells": [
-        [
-          2,
-          9
-        ],
-        [
-          3,
-          9
-        ],
-        [
-          4,
-          9
-        ],
-        [
-          5,
-          9
-        ],
-        [
-          6,
-          9
-        ],
-        [
-          7,
-          9
         ]
       ],
       "answer": "LAURIE",
       "clue": "tattoekind"
     },
     {
-      "id": "h_012_len6",
-      "direction": "right",
-      "clueDirection": "right",
-      "origin": [
-        12,
-        1
-      ],
-      "cells": [
-        [
-          12,
-          2
-        ],
-        [
-          12,
-          3
-        ],
-        [
-          12,
-          4
-        ],
-        [
-          12,
-          5
-        ],
-        [
-          12,
-          6
-        ],
-        [
-          12,
-          7
-        ]
-      ],
-      "answer": "SPOTJE",
-      "clue": "overal ideaal"
-    },
-    {
-      "id": "h_013_len9",
+      "id": "h_011_len9",
       "direction": "right",
       "clueDirection": "down",
       "origin": [
@@ -1509,48 +1569,263 @@
           9
         ]
       ],
-      "answer": "FRIKANDEL",
-      "clue": "Lé weg?"
+      "answer": "PROVINCIE",
+      "clue": "regio"
     },
     {
-      "id": "v_014_len6",
-      "direction": "down",
-      "clueDirection": "down",
+      "id": "h_012_len4",
+      "direction": "right",
+      "clueDirection": "right",
       "origin": [
-        9,
-        9
+        10,
+        3
       ],
       "cells": [
         [
           10,
-          9
+          4
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          10,
+          7
+        ]
+      ],
+      "answer": "LAMP",
+      "clue": "lichtbron"
+    },
+    {
+      "id": "v_013_len4",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        9,
+        6
+      ],
+      "cells": [
+        [
+          10,
+          6
         ],
         [
           11,
-          9
+          6
         ],
         [
           12,
-          9
+          6
         ],
         [
           13,
-          9
+          6
+        ]
+      ],
+      "answer": "MAAN",
+      "clue": "nachtlicht"
+    },
+    {
+      "id": "h_014_len6",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        12,
+        2
+      ],
+      "cells": [
+        [
+          12,
+          3
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          12,
+          8
+        ]
+      ],
+      "answer": "GARAGE",
+      "clue": "autostalling"
+    },
+    {
+      "id": "v_015_len5",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        11,
+        8
+      ],
+      "cells": [
+        [
+          12,
+          8
+        ],
+        [
+          13,
+          8
         ],
         [
           14,
-          9
+          8
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          16,
+          8
+        ]
+      ],
+      "answer": "EIKEN",
+      "clue": "mooiste houtsoort"
+    },
+    {
+      "id": "v_016_len5",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        11,
+        4
+      ],
+      "cells": [
+        [
+          12,
+          4
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          14,
+          4
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          16,
+          4
+        ]
+      ],
+      "answer": "AVOND",
+      "clue": "late dag"
+    },
+    {
+      "id": "h_017_len5",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        16,
+        3
+      ],
+      "cells": [
+        [
+          16,
+          4
+        ],
+        [
+          16,
+          5
+        ],
+        [
+          16,
+          6
+        ],
+        [
+          16,
+          7
+        ],
+        [
+          16,
+          8
+        ]
+      ],
+      "answer": "DEKEN",
+      "clue": "warm kleed"
+    },
+    {
+      "id": "v_018_len4",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        12,
+        2
+      ],
+      "cells": [
+        [
+          13,
+          2
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          16,
+          2
+        ]
+      ],
+      "answer": "RUUD",
+      "clue": "meneer geluid"
+    },
+    {
+      "id": "h_019_len4",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        15,
+        5
+      ],
+      "cells": [
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
         ],
         [
           15,
           9
         ]
       ],
-      "answer": "ITALIE",
-      "clue": "vakantie"
+      "answer": "BOEK",
+      "clue": "leeswerk"
     },
     {
-      "id": "h_015_len9",
+      "id": "h_020_len4",
       "direction": "right",
       "clueDirection": "down",
       "origin": [
@@ -1573,58 +1848,138 @@
         [
           15,
           4
-        ],
+        ]
+      ],
+      "answer": "TUIN",
+      "clue": "groene plek"
+    },
+    {
+      "id": "h_021_len3",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        8,
+        5
+      ],
+      "cells": [
         [
-          15,
-          5
-        ],
-        [
-          15,
+          8,
           6
         ],
         [
-          15,
+          8,
           7
         ],
         [
-          15,
+          8,
           8
-        ],
-        [
-          15,
-          9
         ]
       ],
-      "answer": "MR SNOEPIE",
-      "clue": "speelt gitaar"
+      "answer": "JAS",
+      "clue": "warme kleding"
+    },
+    {
+      "id": "v_022_len3",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        7,
+        7
+      ],
+      "cells": [
+        [
+          8,
+          7
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          10,
+          7
+        ]
+      ],
+      "answer": "AAP",
+      "clue": "slimme primaat"
+    },
+    {
+      "id": "h_023_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        5,
+        6
+      ],
+      "cells": [
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          6,
+          8
+        ]
+      ],
+      "answer": "ROK",
+      "clue": "kledingstuk"
+    },
+    {
+      "id": "h_024_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        5,
+        0
+      ],
+      "cells": [
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "answer": "ZON",
+      "clue": "warme ster"
     }
   ],
   "metrics": {
-    "fillRate": 0.488,
-    "clueCellRatio": 0.065,
-    "interlockRatio": 0.217,
-    "letterCells": 83,
-    "clueCells": 11,
-    "slotCount": 15
+    "fillRate": 0.547,
+    "clueCellRatio": 0.118,
+    "interlockRatio": 0.398,
+    "letterCells": 93,
+    "clueCells": 20,
+    "slotCount": 24
   },
   "generation": {
     "attempt": 1,
     "attempts": 1000,
-    "seed": 173
+    "seed": 31
   },
   "quality": {
     "profile": "draft",
     "passed": true,
-    "score": 54.675,
+    "score": 56.408,
     "reasons": [],
     "values": {
-      "structuralUnique": true,
+      "structuralUnique": false,
       "clueUnique": true,
-      "fillRate": 0.488,
-      "interlockRatio": 0.217,
-      "slotCount": 15,
-      "shortWordRatio": 0.0,
-      "longestClue": 20,
+      "fillRate": 0.547,
+      "interlockRatio": 0.398,
+      "slotCount": 24,
+      "shortWordRatio": 0.167,
+      "longestClue": 17,
       "components": 1,
       "unterminatedSlotCount": 0,
       "invalidClueCellCount": 0,

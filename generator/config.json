@@ -23,8 +23,8 @@
 			"beamWidth": 6,
 			"branchingFactor": 5,
 			"placementSteps": 200,
-			"candidatePool": 100,
-			"randomness": 0.08,
+			"candidatePool": 200,
+			"randomness": 0.18,
 			"interlockWeight": 42.0,
 			"fillWeight": 28.0,
 			"slotWeight": 16.0,
@@ -37,7 +37,7 @@
 			"densifyMinGain": 0.001
 		},
 		"quality": {
-			"minFillRate": 0.4,
+			"minFillRate": 0.5,
 			"minInterlockRatio": 0.2,
 			"minSlotCount": 3,
 			"maxShortSlotRatio": 1.0,
