@@ -30,7 +30,7 @@
 			"slotWeight": 16.0,
 			"clueWeight": 8.0,
 			"domainWeight": 8.0,
-			"shortSlotPenalty": 0.4,
+			"shortSlotPenalty": 4,
 			"lengthWeight": 0.2,
 			"densifyPasses": 6,
 			"densifyCandidatePool": 60,
