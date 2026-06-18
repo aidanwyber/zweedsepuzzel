@@ -10,10 +10,13 @@ from typing import Literal
 
 from generator.config import config_value, load_config, resolve_seed
 from generator.pdf_generator import (
+    clue_text_capacity,
     clue_fits_in_grid,
+    fit_grid,
     pdf_path_for_template,
     unreadable_clue_issues,
     write_puzzle_pdf,
+    wrap_text,
 )
 from generator.template import (
     READABLE_RUN_MIN_LENGTH,
@@ -37,6 +40,20 @@ class WordEntry:
     @property
     def length(self) -> int:
         return len(self.letters)
+
+
+@dataclass(frozen=True)
+class ClueFitExclusion:
+    answer: str
+    clue: str
+    answer_length: int
+    character_count: int
+    required_lines: int
+    available_lines: int
+    text_width: float
+    font_size: float
+    clue_counts: tuple[int, ...]
+    hyphenated_pieces: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -116,9 +133,120 @@ def load_words(path: Path) -> list[WordEntry]:
     return entries
 
 
+def template_clue_counts(template: Template) -> tuple[int, ...]:
+    clue_counts_by_origin: dict[tuple[int, int], int] = {}
+    for slot in template.slots:
+        clue_counts_by_origin[slot.origin] = (
+            clue_counts_by_origin.get(slot.origin, 0) + 1
+        )
+    return tuple(sorted(set(clue_counts_by_origin.values()))) or (1,)
+
+
+def clue_fit_exclusion(
+    word: WordEntry,
+    columns: int,
+    rows: int,
+    clue_counts: tuple[int, ...],
+) -> ClueFitExclusion | None:
+    if any(
+        clue_fits_in_grid(word.clue, columns, rows, clue_count)
+        for clue_count in clue_counts
+    ):
+        return None
+
+    grid = fit_grid(columns, rows)
+    failures = []
+    for clue_count in clue_counts:
+        capacity = clue_text_capacity(grid.cell, clue_count)
+        lines = wrap_text(
+            word.clue,
+            capacity.font_size,
+            capacity.text_width,
+            capacity.max_lines,
+            clip=False,
+        )
+        failures.append(
+            (
+                len(lines),
+                capacity.max_lines,
+                capacity.text_width,
+                capacity.font_size,
+                tuple(lines),
+            )
+        )
+
+    required_lines, available_lines, text_width, font_size, hyphenated_pieces = min(
+        failures,
+        key=lambda item: (
+            max(0, item[0] - item[1]),
+            item[0],
+            -item[2],
+            -item[3],
+        ),
+    )
+    return ClueFitExclusion(
+        answer=word.answer,
+        clue=word.clue,
+        answer_length=word.length,
+        character_count=len(word.clue),
+        required_lines=required_lines,
+        available_lines=available_lines,
+        text_width=text_width,
+        font_size=font_size,
+        clue_counts=clue_counts,
+        hyphenated_pieces=hyphenated_pieces,
+    )
+
+
+def filter_words_by_pdf_clue_fit(
+    words: list[WordEntry],
+    columns: int,
+    rows: int,
+    clue_counts: tuple[int, ...],
+) -> tuple[list[WordEntry], list[ClueFitExclusion]]:
+    kept: list[WordEntry] = []
+    exclusions: list[ClueFitExclusion] = []
+    for word in words:
+        exclusion = clue_fit_exclusion(word, columns, rows, clue_counts)
+        if exclusion is None:
+            kept.append(word)
+        else:
+            exclusions.append(exclusion)
+    return kept, exclusions
+
+
+def print_clue_fit_exclusions(
+    exclusions: list[ClueFitExclusion],
+    original_count: int,
+    kept_count: int,
+) -> None:
+    print(
+        f"PDF clue prefilter: kept {kept_count}/{original_count} words; "
+        f"excluded {len(exclusions)} clues that do not fit any configured clue cell."
+    )
+    exclusions_by_length: dict[int, list[ClueFitExclusion]] = {}
+    for exclusion in exclusions:
+        exclusions_by_length.setdefault(exclusion.answer_length, []).append(exclusion)
+
+    for answer_length in sorted(exclusions_by_length):
+        length_exclusions = exclusions_by_length[answer_length]
+        print(f"Length {answer_length}: {len(length_exclusions)} excluded")
+        for exclusion in length_exclusions:
+            clue_counts = "/".join(str(count) for count in exclusion.clue_counts)
+            print(
+                f"- {exclusion.answer}: {exclusion.character_count} chars, "
+                f"{exclusion.required_lines}>{exclusion.available_lines} lines, "
+                f"{exclusion.text_width:.1f} pt at {exclusion.font_size:.2f} pt, "
+                f"clue counts {clue_counts}, "
+                f"pieces {' / '.join(exclusion.hyphenated_pieces)}: "
+                f"{exclusion.clue}"
+            )
+
+
 def pdf_readable_slot_domain_gaps(
     template: Template, words: list[WordEntry]
 ) -> list[str]:
+    grid = fit_grid(template.width, template.height)
     clue_counts_by_origin: dict[tuple[int, int], int] = {}
     for slot in template.slots:
         clue_counts_by_origin[slot.origin] = (
@@ -128,13 +256,42 @@ def pdf_readable_slot_domain_gaps(
     gaps: list[str] = []
     for slot in template.slots:
         clue_count = clue_counts_by_origin.get(slot.origin, 1)
-        has_candidate = any(
-            word.length == slot.length
-            and clue_fits_in_grid(word.clue, template.width, template.height, clue_count)
-            for word in words
+        candidates = [word for word in words if word.length == slot.length]
+        if any(
+            clue_fits_in_grid(word.clue, template.width, template.height, clue_count)
+            for word in candidates
+        ):
+            continue
+
+        if not candidates:
+            gaps.append(f"{slot.id} len {slot.length}: no word candidates")
+            continue
+
+        capacity = clue_text_capacity(grid.cell, clue_count)
+        failed = []
+        for word in candidates:
+            lines = wrap_text(
+                word.clue,
+                capacity.font_size,
+                capacity.text_width,
+                capacity.max_lines,
+                clip=False,
+            )
+            failed.append((len(lines), len(word.clue), word.clue))
+        required_lines, character_count, clue = min(
+            failed,
+            key=lambda item: (
+                max(0, item[0] - capacity.max_lines),
+                item[0],
+                item[1],
+            ),
         )
-        if not has_candidate:
-            gaps.append(f"{slot.id} len {slot.length} in {clue_count}-clue cell")
+        gaps.append(
+            f"{slot.id} len {slot.length} in {clue_count}-clue cell "
+            f"(best candidate still fails: {character_count} chars, "
+            f"{required_lines}>{capacity.max_lines} lines, "
+            f"{capacity.text_width:.1f} pt at {capacity.font_size:.2f} pt: {clue})"
+        )
 
     return gaps
 
@@ -612,12 +769,61 @@ def attach_quality(puzzle: dict, report: QualityReport, profile: QualityProfile)
     return puzzle
 
 
+def clue_label_count(puzzle: dict) -> int:
+    return sum(
+        len(cell.get("clues", []))
+        for row in puzzle["cells"]
+        for cell in row
+        if cell.get("type") == "clue"
+    )
+
+
+def longest_clue_length(puzzle: dict) -> int:
+    return max(
+        (
+            len(str(clue.get("text", "")))
+            for row in puzzle["cells"]
+            for cell in row
+            if cell.get("type") == "clue"
+            for clue in cell.get("clues", [])
+        ),
+        default=0,
+    )
+
+
+def summarize_clue_fit_issues(puzzle: dict, limit: int = 3) -> str:
+    issues = unreadable_clue_issues(puzzle)
+    total = clue_label_count(puzzle)
+    if not issues:
+        return (
+            f"PDF clue fit pass ({total} clues, "
+            f"longest {longest_clue_length(puzzle)} chars)"
+        )
+
+    examples = []
+    for issue in issues[:limit]:
+        examples.append(
+            f"{issue.slot_id or '?'}@({issue.row},{issue.col}) "
+            f"{issue.character_count} chars, "
+            f"{issue.required_lines}>{issue.available_lines} lines, "
+            f"{issue.text_width:.1f} pt at {issue.font_size:.2f} pt: "
+            f"{issue.text}"
+        )
+    if len(issues) > limit:
+        examples.append(f"{len(issues) - limit} more")
+    return (
+        f"PDF clue fit fail ({len(issues)}/{total} unreadable): "
+        + "; ".join(examples)
+    )
+
+
 def generate_best_candidate(
     template: Template,
     words: list[WordEntry],
     profile: QualityProfile,
     attempts: int,
     seed: int,
+    verbose: bool = False,
 ) -> tuple[dict | None, QualityReport | None, dict | None, QualityReport | None]:
     best_puzzle: dict | None = None
     best_report: QualityReport | None = None
@@ -636,6 +842,11 @@ def generate_best_candidate(
         puzzle["generation"] = {"attempt": attempt + 1, "attempts": attempts, "seed": attempt_seed}
         report = evaluate_quality(template, puzzle, profile, words)
         attach_quality(puzzle, report, profile)
+        if verbose:
+            print(
+                f"fill attempt {attempt + 1}/{attempts} seed {attempt_seed}: "
+                f"{summarize_clue_fit_issues(puzzle)}"
+            )
 
         if best_report is None or report.score > best_report.score:
             best_puzzle = puzzle
@@ -722,13 +933,28 @@ def main() -> None:
         help="Number of candidate fills to try before choosing the best passing puzzle.",
     )
     parser.add_argument("--seed", type=int, default=int(config_value(config, "seed", 7)))
+    parser.add_argument(
+        "--verbose",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "verbose", False)),
+        help="Print candidate clue-fit pass/fail diagnostics.",
+    )
     args = parser.parse_args()
     seed = resolve_seed(args.seed)
     if seed != args.seed:
         print(f"Using random seed {seed}.")
 
-    words = load_words(args.words)
     template = templates[args.template]
+    words = load_words(args.words)
+    unfiltered_word_count = len(words)
+    words, exclusions = filter_words_by_pdf_clue_fit(
+        words,
+        template.width,
+        template.height,
+        template_clue_counts(template),
+    )
+    if args.verbose:
+        print_clue_fit_exclusions(exclusions, unfiltered_word_count, len(words))
     profile = profiles[args.quality]
     passing_puzzle, passing_report, best_puzzle, best_report = generate_best_candidate(
         template=template,
@@ -736,6 +962,7 @@ def main() -> None:
         profile=profile,
         attempts=max(args.attempts, 1),
         seed=seed,
+        verbose=args.verbose,
     )
 
     if profile.name == "publisher" and passing_puzzle is None:

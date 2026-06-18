@@ -5,6 +5,7 @@ from functools import lru_cache
 import json
 import math
 import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
@@ -15,19 +16,115 @@ from generator.dutch_hyphenation import split_word_for_width
 MM_TO_PT = 72 / 25.4
 A5_WIDTH_PT = 148 * MM_TO_PT
 A5_HEIGHT_PT = 210 * MM_TO_PT
-DEFAULT_MARGIN_PT = 9 * MM_TO_PT
+DEFAULT_MARGIN_PT = 8 * MM_TO_PT
 STROKE_WIDTH = 0.15 * MM_TO_PT
-BLOCK_GRAY_VALUE = 0.67
-CLUE_GRAY_VALUE = 0.85
-FONT_SIZE = 8
-MIN_FONT_SIZE = 6.25
+BLOCK_GRAY_VALUE = 99/255
+CLUE_GRAY_VALUE = 0.9
+FONT_SIZE = 5.5
+MIN_FONT_SIZE = FONT_SIZE
 MIN_MULTI_CLUE_LINES = 2
-ARROW_MARGIN_PT = 2 * MM_TO_PT
-TEXT_PADDING_PT = 1.4
-TEXT_GAP_PT = 0.8
-LINE_HEIGHT_RATIO = 1.0
-ARROW_WIDTH_PT = 6
-ARROW_HEIGHT_PT = 6
+ARROW_MARGIN_PT = 1 * MM_TO_PT
+TEXT_PADDING_PT = 0.5 * MM_TO_PT
+LINE_HEIGHT_RATIO = 1
+ARROW_SIZE_PT = 6
+HELVETICA_WIDTHS = {
+    " ": 278,
+    "!": 333,
+    '"': 474,
+    "#": 556,
+    "$": 556,
+    "%": 889,
+    "&": 722,
+    "'": 278,
+    "(": 333,
+    ")": 333,
+    "*": 389,
+    "+": 584,
+    ",": 278,
+    "-": 333,
+    ".": 278,
+    "/": 278,
+    "0": 556,
+    "1": 556,
+    "2": 556,
+    "3": 556,
+    "4": 556,
+    "5": 556,
+    "6": 556,
+    "7": 556,
+    "8": 556,
+    "9": 556,
+    ":": 333,
+    ";": 333,
+    "<": 584,
+    "=": 584,
+    ">": 584,
+    "?": 611,
+    "@": 975,
+    "A": 722,
+    "B": 722,
+    "C": 722,
+    "D": 722,
+    "E": 667,
+    "F": 611,
+    "G": 778,
+    "H": 778,
+    "I": 389,
+    "J": 500,
+    "K": 778,
+    "L": 667,
+    "M": 944,
+    "N": 722,
+    "O": 778,
+    "P": 611,
+    "Q": 778,
+    "R": 722,
+    "S": 556,
+    "T": 667,
+    "U": 722,
+    "V": 722,
+    "W": 1000,
+    "X": 722,
+    "Y": 722,
+    "Z": 667,
+    "[": 333,
+    "\\": 278,
+    "]": 333,
+    "^": 584,
+    "_": 556,
+    "`": 333,
+    "a": 556,
+    "b": 611,
+    "c": 556,
+    "d": 611,
+    "e": 556,
+    "f": 333,
+    "g": 611,
+    "h": 611,
+    "i": 278,
+    "j": 278,
+    "k": 556,
+    "l": 278,
+    "m": 889,
+    "n": 611,
+    "o": 611,
+    "p": 611,
+    "q": 611,
+    "r": 389,
+    "s": 556,
+    "t": 333,
+    "u": 611,
+    "v": 556,
+    "w": 778,
+    "x": 556,
+    "y": 556,
+    "z": 500,
+    "{": 389,
+    "|": 280,
+    "}": 389,
+    "~": 584,
+    "’": 278,
+}
 
 Direction = Literal["right", "down"]
 
@@ -61,8 +158,20 @@ class ClueFitIssue:
     col: int
     slot_id: str | None
     text: str
+    character_count: int
     required_lines: int
     available_lines: int
+    text_width: float
+    font_size: float
+    lines: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class Bounds:
+    left: float
+    bottom: float
+    right: float
+    top: float
 
 
 class PdfContent:
@@ -128,7 +237,7 @@ def write_pdf(path: Path, content: bytes, width: float = A5_WIDTH_PT, height: fl
             + b"/Resources << /Font << "
             + b"/F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica "
             + b"/Encoding /WinAnsiEncoding >> "
-            + b"/F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold "
+            + b"/F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica "
             + b"/Encoding /WinAnsiEncoding >> "
             + b">> >> /Contents 4 0 R >>"
         ),
@@ -214,8 +323,7 @@ def clue_text_capacity(cell_size: float, clue_count: int) -> ClueTextCapacity:
     )
     font_size = max(MIN_FONT_SIZE, font_size)
     line_height = font_size * LINE_HEIGHT_RATIO
-    arrow_x = cell_size - ARROW_MARGIN_PT - ARROW_WIDTH_PT
-    text_width = max(0, arrow_x - TEXT_GAP_PT - TEXT_PADDING_PT)
+    text_width = max(0, cell_size - 2 * TEXT_PADDING_PT)
     available_height = max(segment_height - 2 * TEXT_PADDING_PT, line_height)
     max_lines = max(1, math.floor(available_height / line_height))
     return ClueTextCapacity(
@@ -325,8 +433,12 @@ def unreadable_clue_issues(puzzle: dict) -> list[ClueFitIssue]:
                             col=col_index,
                             slot_id=clue.get("slotId"),
                             text=text,
+                            character_count=len(text),
                             required_lines=len(lines),
                             available_lines=capacity.max_lines,
+                            text_width=capacity.text_width,
+                            font_size=capacity.font_size,
+                            lines=tuple(lines),
                         )
                     )
 
@@ -337,7 +449,9 @@ def format_clue_fit_issues(issues: list[ClueFitIssue]) -> str:
     return "\n".join(
         "- "
         f"{issue.slot_id or '?'}@({issue.row},{issue.col}) "
-        f"needs {issue.required_lines} lines, has {issue.available_lines}: "
+        f"needs {issue.required_lines} lines, has {issue.available_lines}, "
+        f"{issue.character_count} chars, "
+        f"text width {issue.text_width:.1f} pt at {issue.font_size:.2f} pt: "
         f"{issue.text}"
         for issue in issues
     )
@@ -353,15 +467,20 @@ def require_readable_clues(puzzle: dict) -> None:
 
 
 def estimated_text_width(text: str, font_size: float) -> float:
-    width = 0.0
+    width = 0
     for character in text:
-        if character in "ijlI.,' ":
-            width += 0.28
-        elif character in "mwMW":
-            width += 0.78
-        else:
-            width += 0.55
-    return width * font_size
+        width += HELVETICA_WIDTHS.get(_pdf_width_character(character), 556)
+    return width * font_size / 1000
+
+
+def _pdf_width_character(character: str) -> str:
+    if character in HELVETICA_WIDTHS:
+        return character
+    decomposed = unicodedata.normalize("NFKD", character)
+    for candidate in decomposed:
+        if candidate in HELVETICA_WIDTHS:
+            return candidate
+    return character
 
 
 def draw_arrow(
@@ -373,33 +492,91 @@ def draw_arrow(
     clue_direction: Direction,
     answer_direction: Direction,
 ) -> None:
-    left = x
-    right = x + width
-    bottom = y
-    top = y + height
-    mid_x = x + width * 0.5
-    mid_y = y + height * 0.5
+    canvas.stroke_width(STROKE_WIDTH)
+    for x1, y1, x2, y2 in arrow_segments(
+        width,
+        height,
+        clue_direction,
+        answer_direction,
+    ):
+        canvas.line(x + x1, y + y1, x + x2, y + y2)
+
+
+def arrow_segments(
+    width: float,
+    height: float,
+    clue_direction: Direction,
+    answer_direction: Direction,
+) -> tuple[tuple[float, float, float, float], ...]:
+    left = 0.0
+    right = width
+    bottom = 0.0
+    top = height
+    mid_x = width * 0.5
+    mid_y = height * 0.5
     head = min(width, height) * 0.18
 
-    canvas.stroke_width(STROKE_WIDTH)
     if clue_direction == answer_direction == "right":
-        canvas.line(left, mid_y, right, mid_y)
-        canvas.line(right, mid_y, right - head, mid_y + head)
-        canvas.line(right, mid_y, right - head, mid_y - head)
-    elif clue_direction == answer_direction == "down":
-        canvas.line(mid_x, top, mid_x, bottom)
-        canvas.line(mid_x, bottom, mid_x - head, bottom + head)
-        canvas.line(mid_x, bottom, mid_x + head, bottom + head)
-    elif clue_direction == "right" and answer_direction == "down":
-        canvas.line(left, mid_y, mid_x, mid_y)
-        canvas.line(mid_x, mid_y, mid_x, bottom)
-        canvas.line(mid_x, bottom, mid_x - head, bottom + head)
-        canvas.line(mid_x, bottom, mid_x + head, bottom + head)
-    else:
-        canvas.line(mid_x, top, mid_x, mid_y)
-        canvas.line(mid_x, mid_y, right, mid_y)
-        canvas.line(right, mid_y, right - head, mid_y + head)
-        canvas.line(right, mid_y, right - head, mid_y - head)
+        return (
+            (left, mid_y, right, mid_y),
+            (right, mid_y, right - head, mid_y + head),
+            (right, mid_y, right - head, mid_y - head),
+        )
+    if clue_direction == answer_direction == "down":
+        return (
+            (mid_x, top, mid_x, bottom),
+            (mid_x, bottom, mid_x - head, bottom + head),
+            (mid_x, bottom, mid_x + head, bottom + head),
+        )
+    if clue_direction == "right" and answer_direction == "down":
+        return (
+            (left, mid_y, mid_x, mid_y),
+            (mid_x, mid_y, mid_x, bottom),
+            (mid_x, bottom, mid_x - head, bottom + head),
+            (mid_x, bottom, mid_x + head, bottom + head),
+        )
+    return (
+        (mid_x, top, mid_x, mid_y),
+        (mid_x, mid_y, right, mid_y),
+        (right, mid_y, right - head, mid_y + head),
+        (right, mid_y, right - head, mid_y - head),
+    )
+
+
+def arrow_bounds(
+    width: float,
+    height: float,
+    clue_direction: Direction,
+    answer_direction: Direction,
+) -> Bounds:
+    segments = arrow_segments(width, height, clue_direction, answer_direction)
+    xs = [coordinate for segment in segments for coordinate in (segment[0], segment[2])]
+    ys = [coordinate for segment in segments for coordinate in (segment[1], segment[3])]
+    stroke_pad = STROKE_WIDTH * 0.5
+    return Bounds(
+        left=min(xs) - stroke_pad,
+        bottom=min(ys) - stroke_pad,
+        right=max(xs) + stroke_pad,
+        top=max(ys) + stroke_pad,
+    )
+
+
+def arrow_origin_for_bottom_right(
+    segment_right: float,
+    segment_bottom: float,
+    clue_direction: Direction,
+    answer_direction: Direction,
+) -> tuple[float, float]:
+    bounds = arrow_bounds(
+        ARROW_SIZE_PT,
+        ARROW_SIZE_PT,
+        clue_direction,
+        answer_direction,
+    )
+    return (
+        segment_right - ARROW_MARGIN_PT - bounds.right,
+        segment_bottom + ARROW_MARGIN_PT - bounds.bottom,
+    )
 
 
 def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: float) -> None:
@@ -421,12 +598,12 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
 
         direction = clue.get("direction", "right")
         answer_direction = clue.get("answerDirection", direction)
-        arrow_x = x + size - ARROW_MARGIN_PT - ARROW_WIDTH_PT
-        arrow_y = segment_bottom + (segment_height - ARROW_HEIGHT_PT) / 2
-        if direction == "down":
-            arrow_y = segment_bottom + TEXT_PADDING_PT
-        if len(clues) == 1 and direction != answer_direction:
-            arrow_y = segment_bottom + ARROW_MARGIN_PT
+        arrow_x, arrow_y = arrow_origin_for_bottom_right(
+            x + size,
+            segment_bottom,
+            direction,
+            answer_direction,
+        )
 
         text_x = x + TEXT_PADDING_PT
         lines = wrap_text(
@@ -435,10 +612,7 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
             text_capacity.text_width,
             text_capacity.max_lines,
         )
-        block_height = len(lines) * line_height
-        text_top = segment_bottom + (segment_height + block_height) / 2 - font_size
-        if direction == "down":
-            text_top = segment_top - TEXT_PADDING_PT - font_size
+        text_top = segment_top - TEXT_PADDING_PT - font_size
 
         for line_index, line in enumerate(lines):
             canvas.text(
@@ -453,8 +627,8 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
             canvas,
             arrow_x,
             arrow_y,
-            ARROW_WIDTH_PT,
-            ARROW_HEIGHT_PT,
+            ARROW_SIZE_PT,
+            ARROW_SIZE_PT,
             direction,
             answer_direction,
         )

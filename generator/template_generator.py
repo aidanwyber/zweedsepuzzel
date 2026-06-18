@@ -10,9 +10,11 @@ from pathlib import Path
 from generator.config import config_value, load_config, resolve_seed
 from generator.generate import (
     DRAFT_PROFILE,
+    filter_words_by_pdf_clue_fit,
     generate_best_candidate,
     load_words,
     pdf_readable_slot_domain_gaps,
+    print_clue_fit_exclusions,
     write_json,
 )
 from generator.pdf_generator import pdf_path_for_template, write_puzzle_pdf
@@ -269,6 +271,39 @@ def load_word_shapes(path: Path, max_length: int) -> list[WordShape]:
             seen.add(normalized_answer)
             words.append(WordShape(answer=normalized_answer, letters=letters))
     return words
+
+
+def word_shapes_from_entries(entries: list, max_length: int) -> list[WordShape]:
+    seen: set[str] = set()
+    words: list[WordShape] = []
+    for entry in entries:
+        letters = tokenize(entry.answer)
+        normalized_answer = display_answer(letters)
+        if 2 <= len(letters) <= max_length and normalized_answer not in seen:
+            seen.add(normalized_answer)
+            words.append(WordShape(answer=normalized_answer, letters=letters))
+    return words
+
+
+def print_length_exclusions(excluded_words: list, min_length: int, max_length: int) -> None:
+    if not excluded_words:
+        return
+
+    print(
+        f"Word length exclusions: {len(excluded_words)} words outside "
+        f"{min_length}..{max_length} letters."
+    )
+    for word in excluded_words:
+        if word.length < min_length:
+            delta = min_length - word.length
+            reason = f"{delta} chars too few"
+        else:
+            delta = word.length - max_length
+            reason = f"{delta} chars too many"
+        print(
+            f"- {word.answer}: length {word.length}, allowed {min_length}..{max_length}, "
+            f"{reason}"
+        )
 
 
 def words_by_length(words: list[WordShape]) -> dict[int, tuple[WordShape, ...]]:
@@ -1359,8 +1394,12 @@ def fill_rejection_reason(
                     examples += f", {len(gaps) - 3} more"
                 return (
                     "no fill assignment found after PDF clue fit filtering; "
-                    f"no readable candidates for {examples}"
+                    f"no readable candidates for: {examples}"
                 )
+            return (
+                "no fill assignment found after PDF clue fit filtering; "
+                "all slots have readable candidates, but no compatible assignment was solved"
+            )
         return "no fill assignment found"
 
     reasons = tuple(report.reasons)
@@ -1703,6 +1742,7 @@ def finalize_with_fill_checks(
     fill_words: list,
     fill_attempts: int,
     fill_seed: int,
+    verbose: bool = False,
 ) -> SearchResults:
     if not require_fill:
         return finalize_search_results(
@@ -1726,18 +1766,27 @@ def finalize_with_fill_checks(
                 profile=DRAFT_PROFILE,
                 attempts=max(fill_attempts, 1),
                 seed=fill_seed + index,
+                verbose=verbose,
             )
             if puzzle is not None and report is not None and report.passed:
                 fillable.append((evaluation, template))
                 puzzles[template.id] = puzzle
+                if verbose:
+                    print(
+                        f"{template.id}: fill/PDF checks pass, "
+                        f"score {report.score}"
+                    )
                 continue
 
+            reason = fill_rejection_reason(best_report, template, fill_words)
             rejected_evaluation = reject_with_reason(
                 evaluation,
-                fill_rejection_reason(best_report, template, fill_words),
+                reason,
                 "fillable",
             )
             rejected.append((rejected_evaluation, template))
+            if verbose:
+                print(f"{template.id}: fill/PDF checks reject: {reason}")
     except KeyboardInterrupt:
         interrupted = True
 
@@ -1883,6 +1932,7 @@ def search_templates(
             fill_words=fill_words,
             fill_attempts=fill_attempts,
             fill_seed=fill_seed,
+            verbose=verbose,
         )
 
     return finalize_with_fill_checks(
@@ -1895,6 +1945,7 @@ def search_templates(
         fill_words=fill_words,
         fill_attempts=fill_attempts,
         fill_seed=fill_seed,
+        verbose=verbose,
     )
 
 
@@ -2227,8 +2278,39 @@ def main() -> None:
         workers=max(args.workers, 1),
     )
 
-    words = load_word_shapes(args.words, max_length=args.max_word_length)
-    fill_words = load_words(args.words)
+    loaded_fill_words = load_words(args.words)
+    min_word_length = 2
+    fill_words = [
+        word
+        for word in loaded_fill_words
+        if min_word_length <= word.length <= args.max_word_length
+    ]
+    length_excluded_words = [
+        word
+        for word in loaded_fill_words
+        if word.length < min_word_length or word.length > args.max_word_length
+    ]
+    if args.verbose and len(fill_words) != len(loaded_fill_words):
+        print(
+            f"Word length prefilter: kept {len(fill_words)}/{len(loaded_fill_words)} "
+            f"words with {min_word_length}..{args.max_word_length} letters."
+        )
+        print_length_exclusions(
+            length_excluded_words,
+            min_word_length,
+            args.max_word_length,
+        )
+    unfiltered_word_count = len(fill_words)
+    clue_counts = tuple(range(1, args.max_clues_per_cell + 1))
+    fill_words, exclusions = filter_words_by_pdf_clue_fit(
+        fill_words,
+        args.width,
+        args.height,
+        clue_counts,
+    )
+    if args.verbose:
+        print_clue_fit_exclusions(exclusions, unfiltered_word_count, len(fill_words))
+    words = word_shapes_from_entries(fill_words, max_length=args.max_word_length)
     allowed_directions: set[Direction]
     if args.clue_directions == "both":
         allowed_directions = {"right", "down"}

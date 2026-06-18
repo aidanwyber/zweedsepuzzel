@@ -2,7 +2,7 @@
 	"words": "generator/data/peter_words.csv",
 	"templateSearch": {
 		"outDir": "generator/templates",
-		"width": 10,
+		"width": 11,
 		"height": 17,
 		"attempts": 120,
 		"seed": -1,
@@ -14,7 +14,7 @@
 		"verbose": true,
 		"stopWhenEnoughPassing": false,
 		"requireFill": true,
-		"fillAttempts": 100,
+		"fillAttempts": 200,
 		"fillSeed": 7,
 		"emitPuzzle": true,
 		"emitPdf": true,
@@ -63,6 +63,7 @@
 		"template": "10x17",
 		"quality": "publisher",
 		"attempts": 2000,
-		"seed": 7
+		"seed": 7,
+		"verbose": true
 	}
 }
