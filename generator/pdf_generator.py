@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from functools import lru_cache
 import json
 import math
@@ -191,10 +192,10 @@ class PdfContent:
         self.parts.append(value.encode("ascii"))
 
     def gray_fill(self, value: float) -> None:
-        self.raw(f"{value:.25f} g\n")
+        self.raw(f"{value:.6f} g\n")
 
     def gray_stroke(self, value: float) -> None:
-        self.raw(f"{value:.25f} G\n")
+        self.raw(f"{value:.6f} G\n")
 
     def rect(self, x: float, y: float, width: float, height: float, fill: bool = True) -> None:
         operator = "f" if fill else "S"
@@ -237,23 +238,44 @@ def pdf_literal(value: str) -> bytes:
 
 
 def write_pdf(path: Path, content: bytes, width: float = A5_WIDTH_PT, height: float = A5_HEIGHT_PT) -> None:
+    content = b"q\n" + content + b"Q\n"
+    stream_data = content if content.endswith(b"\n") else content + b"\n"
+    stream = (
+        b"<< /Length "
+        + str(len(stream_data)).encode("ascii")
+        + b" >>\nstream\n"
+        + stream_data
+        + b"endstream"
+    )
+    document_id = hashlib.md5(
+        content
+        + f"{width:.3f}x{height:.3f}".encode("ascii")
+    ).hexdigest().encode("ascii")
     objects = [
         b"<< /Type /Catalog /Pages 2 0 R >>",
         b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
         (
             b"<< /Type /Page /Parent 2 0 R "
             + f"/MediaBox [0 0 {width:.3f} {height:.3f}] ".encode("ascii")
-            + b"/Resources << /Font << "
-            + b"/F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica "
-            + b"/Encoding /WinAnsiEncoding >> "
-            + b"/F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica "
-            + b"/Encoding /WinAnsiEncoding >> "
-            + b">> >> /Contents 4 0 R >>"
+            + f"/CropBox [0 0 {width:.3f} {height:.3f}] ".encode("ascii")
+            + b"/Resources << "
+            + b"/ProcSet [/PDF /Text] "
+            + b"/Font << /F1 5 0 R /F2 6 0 R >> "
+            + b">> /Contents 4 0 R >>"
         ),
-        b"<< /Length " + str(len(content)).encode("ascii") + b" >>\nstream\n" + content + b"endstream",
+        stream,
+        (
+            b"<< /Type /Font /Subtype /Type1 /Name /F1 /BaseFont /Helvetica "
+            + b"/Encoding /WinAnsiEncoding >>"
+        ),
+        (
+            b"<< /Type /Font /Subtype /Type1 /Name /F2 /BaseFont /Helvetica "
+            + b"/Encoding /WinAnsiEncoding >>"
+        ),
+        b"<< /Producer (zweedsepuzzel pdf_generator) >>",
     ]
 
-    output = bytearray(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n")
+    output = bytearray(b"%PDF-1.3\n%\xe2\xe3\xcf\xd3\n")
     offsets = [0]
     for index, body in enumerate(objects, start=1):
         offsets.append(len(output))
@@ -268,7 +290,9 @@ def write_pdf(path: Path, content: bytes, width: float = A5_WIDTH_PT, height: fl
         output.extend(f"{offset:010d} 00000 n \n".encode("ascii"))
     output.extend(
         (
-            f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\n"
+            f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R "
+            f"/Info 7 0 R /ID [<{document_id.decode('ascii')}> "
+            f"<{document_id.decode('ascii')}>] >>\n"
             f"startxref\n{xref_offset}\n%%EOF\n"
         ).encode("ascii")
     )
@@ -682,18 +706,6 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
         )
 
 
-def draw_empty_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: float) -> None:
-    clues = sorted(cell.get("clues", []), key=clue_order)
-    if len(clues) <= 1:
-        return
-
-    segment_height = size / len(clues)
-    for index in range(1, len(clues)):
-        segment_top = y + size - index * segment_height
-        canvas.stroke_width(STROKE_WIDTH)
-        canvas.line(x, segment_top, x + size, segment_top)
-
-
 def cell_position(grid: FitGrid, row_index: int, col_index: int) -> tuple[float, float]:
     x = grid.x + grid.border + col_index * (grid.cell + grid.gap)
     y = (
@@ -779,9 +791,7 @@ def draw_solution(puzzle: dict) -> tuple[bytes, float, float]:
     for row_index, row in enumerate(cells):
         for col_index, cell in enumerate(row):
             x, y = cell_position(grid, row_index, col_index)
-            if cell.get("type") == "clue":
-                draw_empty_clue_cell(canvas, cell, x, y, grid.cell)
-            elif cell.get("type") == "letter":
+            if cell.get("type") == "letter":
                 draw_solution_letter(canvas, cell, x, y, grid.cell)
 
     return canvas.bytes(), page_width, page_height
