@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from functools import lru_cache
 import json
 import math
 import re
@@ -8,14 +9,25 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
+from generator.dutch_hyphenation import split_word_for_width
+
 
 MM_TO_PT = 72 / 25.4
 A5_WIDTH_PT = 148 * MM_TO_PT
 A5_HEIGHT_PT = 210 * MM_TO_PT
-DEFAULT_MARGIN_PT = 12 * MM_TO_PT
+DEFAULT_MARGIN_PT = 9 * MM_TO_PT
 STROKE_WIDTH = 0.15 * MM_TO_PT
 BLOCK_GRAY_VALUE = 0.67
 CLUE_GRAY_VALUE = 0.85
+FONT_SIZE = 8
+MIN_FONT_SIZE = 6.25
+MIN_MULTI_CLUE_LINES = 2
+ARROW_MARGIN_PT = 2 * MM_TO_PT
+TEXT_PADDING_PT = 1.4
+TEXT_GAP_PT = 0.8
+LINE_HEIGHT_RATIO = 1.0
+ARROW_WIDTH_PT = 6
+ARROW_HEIGHT_PT = 6
 
 Direction = Literal["right", "down"]
 
@@ -41,6 +53,16 @@ class FitGrid:
     cell: float
     gap: float
     border: float
+
+
+@dataclass(frozen=True)
+class ClueFitIssue:
+    row: int
+    col: int
+    slot_id: str | None
+    text: str
+    required_lines: int
+    available_lines: int
 
 
 class PdfContent:
@@ -104,8 +126,10 @@ def write_pdf(path: Path, content: bytes, width: float = A5_WIDTH_PT, height: fl
             b"<< /Type /Page /Parent 2 0 R "
             + f"/MediaBox [0 0 {width:.3f} {height:.3f}] ".encode("ascii")
             + b"/Resources << /Font << "
-            + b"/F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> "
-            + b"/F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> "
+            + b"/F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica "
+            + b"/Encoding /WinAnsiEncoding >> "
+            + b"/F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold "
+            + b"/Encoding /WinAnsiEncoding >> "
             + b">> >> /Contents 4 0 R >>"
         ),
         b"<< /Length " + str(len(content)).encode("ascii") + b" >>\nstream\n" + content + b"endstream",
@@ -172,7 +196,43 @@ def clue_order(clue: dict) -> int:
     return 0 if clue.get("direction") == "right" else 1
 
 
-def wrap_text(text: str, font_size: float, max_width: float, max_lines: int) -> list[str]:
+@dataclass(frozen=True)
+class ClueTextCapacity:
+    font_size: float
+    line_height: float
+    text_width: float
+    max_lines: int
+
+
+def clue_text_capacity(cell_size: float, clue_count: int) -> ClueTextCapacity:
+    segment_height = cell_size / max(clue_count, 1)
+    target_lines = MIN_MULTI_CLUE_LINES if clue_count > 1 else 1
+    font_size = min(
+        FONT_SIZE,
+        (segment_height - 2 * TEXT_PADDING_PT)
+        / (target_lines * LINE_HEIGHT_RATIO),
+    )
+    font_size = max(MIN_FONT_SIZE, font_size)
+    line_height = font_size * LINE_HEIGHT_RATIO
+    arrow_x = cell_size - ARROW_MARGIN_PT - ARROW_WIDTH_PT
+    text_width = max(0, arrow_x - TEXT_GAP_PT - TEXT_PADDING_PT)
+    available_height = max(segment_height - 2 * TEXT_PADDING_PT, line_height)
+    max_lines = max(1, math.floor(available_height / line_height))
+    return ClueTextCapacity(
+        font_size=font_size,
+        line_height=line_height,
+        text_width=text_width,
+        max_lines=max_lines,
+    )
+
+
+def wrap_text(
+    text: str,
+    font_size: float,
+    max_width: float,
+    max_lines: int,
+    clip: bool = True,
+) -> list[str]:
     if max_lines <= 0 or max_width <= 0:
         return []
 
@@ -180,22 +240,25 @@ def wrap_text(text: str, font_size: float, max_width: float, max_lines: int) -> 
     lines: list[str] = []
     current = ""
 
+    def fits(value: str) -> bool:
+        return estimated_text_width(value, font_size) <= max_width
+
     for word in words:
         candidate = word if not current else f"{current} {word}"
-        if estimated_text_width(candidate, font_size) <= max_width:
+        if fits(candidate):
             current = candidate
             continue
         if current:
             lines.append(current)
             current = ""
-        if estimated_text_width(word, font_size) <= max_width:
+        if fits(word):
             current = word
         else:
-            lines.extend(break_word(word, font_size, max_width))
+            lines.extend(split_word_for_width(word, fits))
     if current:
         lines.append(current)
 
-    if len(lines) <= max_lines:
+    if not clip or len(lines) <= max_lines:
         return lines
 
     clipped = lines[:max_lines]
@@ -206,19 +269,87 @@ def wrap_text(text: str, font_size: float, max_width: float, max_lines: int) -> 
     return clipped
 
 
-def break_word(word: str, font_size: float, max_width: float) -> list[str]:
-    chunks: list[str] = []
-    current = ""
-    for character in word:
-        candidate = current + character
-        if current and estimated_text_width(candidate, font_size) > max_width:
-            chunks.append(current)
-            current = character
-        else:
-            current = candidate
-    if current:
-        chunks.append(current)
-    return chunks
+def clue_text_lines(text: str, cell_size: float, clue_count: int) -> list[str]:
+    capacity = clue_text_capacity(cell_size, clue_count)
+    return wrap_text(
+        text,
+        capacity.font_size,
+        capacity.text_width,
+        capacity.max_lines,
+        clip=False,
+    )
+
+
+def clue_text_fits(text: str, cell_size: float, clue_count: int) -> bool:
+    capacity = clue_text_capacity(cell_size, clue_count)
+    lines = wrap_text(
+        text,
+        capacity.font_size,
+        capacity.text_width,
+        capacity.max_lines,
+        clip=False,
+    )
+    return len(lines) <= capacity.max_lines
+
+
+@lru_cache(maxsize=65536)
+def clue_fits_in_grid(text: str, columns: int, rows: int, clue_count: int) -> bool:
+    grid = fit_grid(columns, rows)
+    return clue_text_fits(text, grid.cell, clue_count)
+
+
+def unreadable_clue_issues(puzzle: dict) -> list[ClueFitIssue]:
+    grid = fit_grid(int(puzzle["width"]), int(puzzle["height"]))
+    issues: list[ClueFitIssue] = []
+
+    for row_index, row in enumerate(puzzle["cells"]):
+        for col_index, cell in enumerate(row):
+            if cell.get("type") != "clue":
+                continue
+
+            clues = sorted(cell.get("clues", []), key=clue_order)
+            capacity = clue_text_capacity(grid.cell, len(clues))
+            for clue in clues:
+                text = str(clue.get("text", ""))
+                lines = wrap_text(
+                    text,
+                    capacity.font_size,
+                    capacity.text_width,
+                    capacity.max_lines,
+                    clip=False,
+                )
+                if len(lines) > capacity.max_lines:
+                    issues.append(
+                        ClueFitIssue(
+                            row=row_index,
+                            col=col_index,
+                            slot_id=clue.get("slotId"),
+                            text=text,
+                            required_lines=len(lines),
+                            available_lines=capacity.max_lines,
+                        )
+                    )
+
+    return issues
+
+
+def format_clue_fit_issues(issues: list[ClueFitIssue]) -> str:
+    return "\n".join(
+        "- "
+        f"{issue.slot_id or '?'}@({issue.row},{issue.col}) "
+        f"needs {issue.required_lines} lines, has {issue.available_lines}: "
+        f"{issue.text}"
+        for issue in issues
+    )
+
+
+def require_readable_clues(puzzle: dict) -> None:
+    issues = unreadable_clue_issues(puzzle)
+    if issues:
+        raise ValueError(
+            "PDF clue labels cannot be displayed without truncation:\n"
+            f"{format_clue_fit_issues(issues)}"
+        )
 
 
 def estimated_text_width(text: str, font_size: float) -> float:
@@ -242,10 +373,10 @@ def draw_arrow(
     clue_direction: Direction,
     answer_direction: Direction,
 ) -> None:
-    left = x + width * 0.18
-    right = x + width * 0.82
-    bottom = y + height * 0.18
-    top = y + height * 0.82
+    left = x
+    right = x + width
+    bottom = y
+    top = y + height
     mid_x = x + width * 0.5
     mid_y = y + height * 0.5
     head = min(width, height) * 0.18
@@ -276,12 +407,9 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
     if not clues:
         return
 
-    padding = size * (4 / 76)
-    text_gap = size * (3 / 76)
-    arrow_width = size * (22 / 76)
-    arrow_height = size * (18 / 76)
-    font_size = max(size * (10 / 76), 3.2)
-    line_height = font_size * 1.08
+    text_capacity = clue_text_capacity(size, len(clues))
+    font_size = text_capacity.font_size
+    line_height = text_capacity.line_height
     segment_height = size / len(clues)
 
     for index, clue in enumerate(clues):
@@ -293,20 +421,24 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
 
         direction = clue.get("direction", "right")
         answer_direction = clue.get("answerDirection", direction)
-        arrow_x = x + size - padding - arrow_width
-        arrow_y = segment_bottom + (segment_height - arrow_height) / 2
+        arrow_x = x + size - ARROW_MARGIN_PT - ARROW_WIDTH_PT
+        arrow_y = segment_bottom + (segment_height - ARROW_HEIGHT_PT) / 2
         if direction == "down":
-            arrow_y = segment_bottom + padding
+            arrow_y = segment_bottom + TEXT_PADDING_PT
+        if len(clues) == 1 and direction != answer_direction:
+            arrow_y = segment_bottom + ARROW_MARGIN_PT
 
-        text_x = x + padding
-        text_width = max(arrow_x - text_gap - text_x, size * 0.35)
-        available_height = max(segment_height - 2 * padding, line_height)
-        max_lines = max(1, math.floor(available_height / line_height))
-        lines = wrap_text(str(clue.get("text", "")), font_size, text_width, max_lines)
+        text_x = x + TEXT_PADDING_PT
+        lines = wrap_text(
+            str(clue.get("text", "")),
+            font_size,
+            text_capacity.text_width,
+            text_capacity.max_lines,
+        )
         block_height = len(lines) * line_height
         text_top = segment_bottom + (segment_height + block_height) / 2 - font_size
         if direction == "down":
-            text_top = segment_top - padding - font_size
+            text_top = segment_top - TEXT_PADDING_PT - font_size
 
         for line_index, line in enumerate(lines):
             canvas.text(
@@ -321,8 +453,8 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
             canvas,
             arrow_x,
             arrow_y,
-            arrow_width,
-            arrow_height,
+            ARROW_WIDTH_PT,
+            ARROW_HEIGHT_PT,
             direction,
             answer_direction,
         )
@@ -381,6 +513,7 @@ def draw_puzzle(puzzle: dict) -> bytes:
 
 
 def write_puzzle_pdf(puzzle: dict, path: Path) -> None:
+    require_readable_clues(puzzle)
     write_pdf(path, draw_puzzle(puzzle))
 
 
@@ -399,7 +532,10 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     puzzle = json.loads(args.input.read_text(encoding="utf-8"))
-    write_puzzle_pdf(puzzle, args.out)
+    try:
+        write_puzzle_pdf(puzzle, args.out)
+    except ValueError as error:
+        raise SystemExit(str(error)) from error
     print(f"Wrote {args.out}")
 
 

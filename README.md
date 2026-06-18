@@ -88,6 +88,9 @@ limited space.
 
 Dutch `IJ` is handled as one puzzle letter internally.
 
+Generation also checks whether each clue can be displayed in the A5 PDF grid
+without truncation. Candidates with unreadable PDF clue labels are rejected.
+
 The active CSV path is configured once in `generator/config.json` with the
 top-level `words` setting.
 

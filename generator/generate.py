@@ -9,7 +9,12 @@ from pathlib import Path
 from typing import Literal
 
 from generator.config import config_value, load_config, resolve_seed
-from generator.pdf_generator import pdf_path_for_template, write_puzzle_pdf
+from generator.pdf_generator import (
+    clue_fits_in_grid,
+    pdf_path_for_template,
+    unreadable_clue_issues,
+    write_puzzle_pdf,
+)
 from generator.template import (
     READABLE_RUN_MIN_LENGTH,
     Slot,
@@ -109,6 +114,29 @@ def load_words(path: Path) -> list[WordEntry]:
                 )
             )
     return entries
+
+
+def pdf_readable_slot_domain_gaps(
+    template: Template, words: list[WordEntry]
+) -> list[str]:
+    clue_counts_by_origin: dict[tuple[int, int], int] = {}
+    for slot in template.slots:
+        clue_counts_by_origin[slot.origin] = (
+            clue_counts_by_origin.get(slot.origin, 0) + 1
+        )
+
+    gaps: list[str] = []
+    for slot in template.slots:
+        clue_count = clue_counts_by_origin.get(slot.origin, 1)
+        has_candidate = any(
+            word.length == slot.length
+            and clue_fits_in_grid(word.clue, template.width, template.height, clue_count)
+            for word in words
+        )
+        if not has_candidate:
+            gaps.append(f"{slot.id} len {slot.length} in {clue_count}-clue cell")
+
+    return gaps
 
 
 def compact_template() -> Template:
@@ -248,16 +276,36 @@ class Solver:
         self.word_by_id = {index: word for index, word in enumerate(words)}
         self.word_bits_by_length: dict[int, int] = {}
         self.position_letter_bits: dict[tuple[int, int, str], int] = {}
+        clue_counts_by_origin: dict[tuple[int, int], int] = {}
+        for slot in template.slots:
+            clue_counts_by_origin[slot.origin] = (
+                clue_counts_by_origin.get(slot.origin, 0) + 1
+            )
+
+        clue_count_values = sorted(set(clue_counts_by_origin.values()))
+        readable_word_bits: dict[tuple[int, int], int] = {}
         for index, word in enumerate(words):
             bit = 1 << index
             self.word_bits_by_length[word.length] = (
                 self.word_bits_by_length.get(word.length, 0) | bit
             )
+            for clue_count in clue_count_values:
+                if clue_fits_in_grid(
+                    word.clue,
+                    template.width,
+                    template.height,
+                    clue_count,
+                ):
+                    key = (word.length, clue_count)
+                    readable_word_bits[key] = readable_word_bits.get(key, 0) | bit
             for position, letter in enumerate(word.letters):
                 key = (word.length, position, letter)
                 self.position_letter_bits[key] = self.position_letter_bits.get(key, 0) | bit
         self.domains = {
-            slot.id: self.word_bits_by_length.get(slot.length, 0)
+            slot.id: readable_word_bits.get(
+                (slot.length, clue_counts_by_origin.get(slot.origin, 1)),
+                0,
+            )
             for slot in template.slots
         }
         self.overlaps = derive_overlaps(template.slots)
@@ -461,6 +509,7 @@ def evaluate_quality(
     invalid_cross_entry_cells = template.invalid_cross_entry_cells()
     unclued_runs = template.unclued_readable_runs()
     invalid_runs = invalid_readable_words(puzzle, words)
+    unreadable_clues = unreadable_clue_issues(puzzle)
     short_words = sum(1 for slot in slots if len(tokenize_answer(slot["answer"])) <= 3)
     short_word_ratio = short_words / len(slots) if slots else 1.0
     longest_clue = max((len(slot["clue"]) for slot in slots), default=0)
@@ -480,6 +529,7 @@ def evaluate_quality(
         "invalidCrossEntryCellCount": len(invalid_cross_entry_cells),
         "uncluedReadableRunCount": len(unclued_runs),
         "invalidReadableWordCount": len(invalid_runs),
+        "unreadableClueCount": len(unreadable_clues),
     }
 
     reasons: list[str] = []
@@ -497,6 +547,13 @@ def evaluate_quality(
             f"{answer} {direction}@{origin}" for direction, answer, origin in invalid_runs[:3]
         )
         reasons.append(f"{len(invalid_runs)} readable non-words ({examples})")
+    if unreadable_clues:
+        examples = ", ".join(
+            f"{issue.slot_id or '?'}@({issue.row},{issue.col}) "
+            f"{issue.required_lines}>{issue.available_lines}"
+            for issue in unreadable_clues[:3]
+        )
+        reasons.append(f"{len(unreadable_clues)} unreadable PDF clues ({examples})")
     if unterminated_slots:
         examples = ", ".join(
             f"{slot_id}@{cell}" for slot_id, cell in unterminated_slots[:3]

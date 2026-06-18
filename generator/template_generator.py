@@ -8,7 +8,13 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 
 from generator.config import config_value, load_config, resolve_seed
-from generator.generate import DRAFT_PROFILE, generate_best_candidate, load_words, write_json
+from generator.generate import (
+    DRAFT_PROFILE,
+    generate_best_candidate,
+    load_words,
+    pdf_readable_slot_domain_gaps,
+    write_json,
+)
 from generator.pdf_generator import pdf_path_for_template, write_puzzle_pdf
 from generator.template import READABLE_RUN_MIN_LENGTH, Direction, Slot, Template
 from generator.word_csv import read_word_rows
@@ -1339,6 +1345,34 @@ def reject_with_reason(
     )
 
 
+def fill_rejection_reason(
+    report,
+    template: Template | None = None,
+    fill_words: list | None = None,
+) -> str:
+    if report is None:
+        if template is not None and fill_words is not None:
+            gaps = pdf_readable_slot_domain_gaps(template, fill_words)
+            if gaps:
+                examples = ", ".join(gaps[:3])
+                if len(gaps) > 3:
+                    examples += f", {len(gaps) - 3} more"
+                return (
+                    "no fill assignment found after PDF clue fit filtering; "
+                    f"no readable candidates for {examples}"
+                )
+        return "no fill assignment found"
+
+    reasons = tuple(report.reasons)
+    if not reasons:
+        return "no valid fill found"
+
+    examples = "; ".join(reasons[:3])
+    if len(reasons) > 3:
+        examples += f"; {len(reasons) - 3} more"
+    return f"no valid fill found: {examples}"
+
+
 def should_accept_densified(
     current: TemplateEvaluation, candidate: TemplateEvaluation, min_gain: float
 ) -> bool:
@@ -1686,7 +1720,7 @@ def finalize_with_fill_checks(
 
     try:
         for index, (evaluation, template) in enumerate(passing):
-            puzzle, report, _, _ = generate_best_candidate(
+            puzzle, report, _, best_report = generate_best_candidate(
                 template=template,
                 words=fill_words,
                 profile=DRAFT_PROFILE,
@@ -1696,12 +1730,11 @@ def finalize_with_fill_checks(
             if puzzle is not None and report is not None and report.passed:
                 fillable.append((evaluation, template))
                 puzzles[template.id] = puzzle
-                if len(fillable) >= keep:
-                    break
+                continue
 
             rejected_evaluation = reject_with_reason(
                 evaluation,
-                "no valid fill found",
+                fill_rejection_reason(best_report, template, fill_words),
                 "fillable",
             )
             rejected.append((rejected_evaluation, template))
@@ -1739,7 +1772,8 @@ def record_geometry_result(
         print(
             f"attempt {result.attempt + 1}/{attempts} "
             f"seed {template.id.rsplit('-', 1)[-1]}: "
-            f"pass, score {evaluation.score}, passes geometry gates"
+            f"pass, score {evaluation.score}, passes geometry gates; "
+            "fill/PDF checks pending"
         )
 
 
