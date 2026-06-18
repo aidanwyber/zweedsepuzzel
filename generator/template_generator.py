@@ -17,7 +17,7 @@ from generator.generate import (
     print_clue_fit_exclusions,
     write_json,
 )
-from generator.pdf_generator import pdf_path_for_template, write_puzzle_pdf
+from generator.pdf_generator import pdf_path_for_template, write_puzzle_pdf_pair
 from generator.template import READABLE_RUN_MIN_LENGTH, Direction, Slot, Template
 from generator.word_csv import read_word_rows
 
@@ -1991,8 +1991,11 @@ def print_and_maybe_save(
                         if name_by_template
                         else pdf_out
                     )
-                    write_puzzle_pdf(puzzle, named_pdf_out)
-                    written_paths.append(named_pdf_out)
+                    puzzle_pdf_out, solution_pdf_out = write_puzzle_pdf_pair(
+                        puzzle,
+                        named_pdf_out,
+                    )
+                    written_paths.extend((puzzle_pdf_out, solution_pdf_out))
                 if written_paths:
                     write_status += ", wrote " + " and ".join(
                         str(path) for path in written_paths

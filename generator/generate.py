@@ -15,7 +15,7 @@ from generator.pdf_generator import (
     fit_grid,
     pdf_path_for_template,
     unreadable_clue_issues,
-    write_puzzle_pdf,
+    write_puzzle_pdf_pair,
     wrap_text,
 )
 from generator.template import (
@@ -988,14 +988,14 @@ def main() -> None:
         else args.pdf_out
     )
     if args.emit_pdf:
-        write_puzzle_pdf(puzzle, pdf_out)
+        _, solution_pdf_out = write_puzzle_pdf_pair(puzzle, pdf_out)
 
     print(f"Generated {puzzle['title']} with {len(puzzle['slots'])} slots.")
     print(f"Quality: {profile.name}, passed: {report.passed}, score: {report.score}")
     print(f"Structural unique: {puzzle['unique']}")
     write_targets = f"{args.out} and {args.frontend_out}"
     if args.emit_pdf:
-        write_targets += f", and {pdf_out}"
+        write_targets += f", {pdf_out}, and {solution_pdf_out}"
     print(f"Wrote {write_targets}")
 
 

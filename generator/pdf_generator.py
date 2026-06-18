@@ -16,7 +16,11 @@ from generator.dutch_hyphenation import split_word_for_width
 MM_TO_PT = 72 / 25.4
 A5_WIDTH_PT = 148 * MM_TO_PT
 A5_HEIGHT_PT = 210 * MM_TO_PT
-DEFAULT_MARGIN_PT = 8 * MM_TO_PT
+MARGIN_PT = 8 * MM_TO_PT
+DEFAULT_MARGIN_PT = MARGIN_PT
+SOLUTION_GAP_PT = 5 * MM_TO_PT
+SOLUTION_LAYOUT_COLUMNS = 3
+SOLUTION_LAYOUT_ROWS = 3
 STROKE_WIDTH = 0.15 * MM_TO_PT
 BLOCK_GRAY_VALUE = 99/255
 CLUE_GRAY_VALUE = 0.9
@@ -139,6 +143,11 @@ def pdf_path_for_template(path: Path, template_id: str | None) -> Path:
 
     suffix = path.suffix or ".pdf"
     return path.with_name(f"{path.stem}-{safe_template_id}{suffix}")
+
+
+def solution_pdf_path(path: Path) -> Path:
+    suffix = path.suffix or ".pdf"
+    return path.with_name(f"{path.stem}-solution{suffix}")
 
 
 @dataclass(frozen=True)
@@ -277,28 +286,67 @@ def fit_grid(
 ) -> FitGrid:
     available_width = page_width - margin * 2
     available_height = page_height - margin * 2
+    return fit_grid_in_box(
+        columns=columns,
+        rows=rows,
+        box_x=margin,
+        box_y=margin,
+        box_width=available_width,
+        box_height=available_height,
+    )
+
+
+def fit_grid_in_box(
+    columns: int,
+    rows: int,
+    box_x: float,
+    box_y: float,
+    box_width: float,
+    box_height: float,
+) -> FitGrid:
     horizontal_strokes = (columns - 1) * STROKE_WIDTH + 2 * STROKE_WIDTH
     vertical_strokes = (rows - 1) * STROKE_WIDTH + 2 * STROKE_WIDTH
     cell = min(
-        (available_width - horizontal_strokes) / columns,
-        (available_height - vertical_strokes) / rows,
+        (box_width - horizontal_strokes) / columns,
+        (box_height - vertical_strokes) / rows,
     )
     if cell <= 0:
-        raise ValueError("Grid cannot fit within the configured page margins.")
+        raise ValueError("Grid cannot fit within the configured box.")
 
     gap = STROKE_WIDTH
     border = STROKE_WIDTH
     width = columns * cell + (columns - 1) * gap + 2 * border
     height = rows * cell + (rows - 1) * gap + 2 * border
     return FitGrid(
-        x=margin + (available_width - width) / 2,
-        y=margin + (available_height - height) / 2,
+        x=box_x + (box_width - width) / 2,
+        y=box_y + (box_height - height) / 2,
         width=width,
         height=height,
         cell=cell,
         gap=gap,
         border=border,
     )
+
+
+def solution_pdf_size(
+    page_width: float = A5_WIDTH_PT,
+    page_height: float = A5_HEIGHT_PT,
+    margin: float = MARGIN_PT,
+    gap: float = SOLUTION_GAP_PT,
+) -> tuple[float, float]:
+    width = (
+        page_width
+        - 2 * margin
+        - (SOLUTION_LAYOUT_COLUMNS - 1) * gap
+    ) / SOLUTION_LAYOUT_COLUMNS
+    height = (
+        page_height
+        - 2 * margin
+        - (SOLUTION_LAYOUT_ROWS - 1) * gap
+    ) / SOLUTION_LAYOUT_ROWS
+    if width <= 0 or height <= 0:
+        raise ValueError("Solution PDF size cannot fit within the configured A5 layout.")
+    return width, height
 
 
 def clue_order(clue: dict) -> int:
@@ -634,30 +682,47 @@ def draw_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: flo
         )
 
 
-def draw_puzzle(puzzle: dict) -> bytes:
-    columns = int(puzzle["width"])
-    rows = int(puzzle["height"])
-    cells = puzzle["cells"]
-    grid = fit_grid(columns, rows)
-    canvas = PdfContent()
+def draw_empty_clue_cell(canvas: PdfContent, cell: dict, x: float, y: float, size: float) -> None:
+    clues = sorted(cell.get("clues", []), key=clue_order)
+    if len(clues) <= 1:
+        return
 
+    segment_height = size / len(clues)
+    for index in range(1, len(clues)):
+        segment_top = y + size - index * segment_height
+        canvas.stroke_width(STROKE_WIDTH)
+        canvas.line(x, segment_top, x + size, segment_top)
+
+
+def cell_position(grid: FitGrid, row_index: int, col_index: int) -> tuple[float, float]:
+    x = grid.x + grid.border + col_index * (grid.cell + grid.gap)
+    y = (
+        grid.y
+        + grid.height
+        - grid.border
+        - grid.cell
+        - row_index * (grid.cell + grid.gap)
+    )
+    return x, y
+
+
+def draw_grid_background(
+    canvas: PdfContent,
+    cells: list,
+    grid: FitGrid,
+    page_width: float,
+    page_height: float,
+) -> None:
     canvas.raw("1 J 1 j\n")
     canvas.gray_fill(1)
-    canvas.rect(0, 0, A5_WIDTH_PT, A5_HEIGHT_PT)
+    canvas.rect(0, 0, page_width, page_height)
     canvas.gray_fill(0)
     canvas.gray_stroke(0)
     canvas.rect(grid.x, grid.y, grid.width, grid.height)
 
     for row_index, row in enumerate(cells):
         for col_index, cell in enumerate(row):
-            x = grid.x + grid.border + col_index * (grid.cell + grid.gap)
-            y = (
-                grid.y
-                + grid.height
-                - grid.border
-                - grid.cell
-                - row_index * (grid.cell + grid.gap)
-            )
+            x, y = cell_position(grid, row_index, col_index)
             cell_type = cell.get("type")
             if cell_type == "block":
                 canvas.gray_fill(BLOCK_GRAY_VALUE)
@@ -667,28 +732,76 @@ def draw_puzzle(puzzle: dict) -> bytes:
                 canvas.gray_fill(1)
             canvas.rect(x, y, grid.cell, grid.cell)
 
+
+def draw_solution_letter(canvas: PdfContent, cell: dict, x: float, y: float, size: float) -> None:
+    value = str(cell.get("solution", ""))
+    if not value:
+        return
+
+    font_size = min(FONT_SIZE, size * 0.58)
+    text_width = estimated_text_width(value, font_size)
+    text_x = x + (size - text_width) / 2
+    text_y = y + (size - font_size) / 2 + font_size * 0.12
+    canvas.text(value, text_x, text_y, font_size, font="F1")
+
+
+def draw_puzzle(puzzle: dict) -> bytes:
+    columns = int(puzzle["width"])
+    rows = int(puzzle["height"])
+    cells = puzzle["cells"]
+    grid = fit_grid(columns, rows)
+    canvas = PdfContent()
+
+    draw_grid_background(canvas, cells, grid, A5_WIDTH_PT, A5_HEIGHT_PT)
     canvas.gray_stroke(0)
     canvas.gray_fill(0)
     for row_index, row in enumerate(cells):
         for col_index, cell in enumerate(row):
             if cell.get("type") != "clue":
                 continue
-            x = grid.x + grid.border + col_index * (grid.cell + grid.gap)
-            y = (
-                grid.y
-                + grid.height
-                - grid.border
-                - grid.cell
-                - row_index * (grid.cell + grid.gap)
-            )
+            x, y = cell_position(grid, row_index, col_index)
             draw_clue_cell(canvas, cell, x, y, grid.cell)
 
     return canvas.bytes()
 
 
+def draw_solution(puzzle: dict) -> tuple[bytes, float, float]:
+    columns = int(puzzle["width"])
+    rows = int(puzzle["height"])
+    cells = puzzle["cells"]
+    page_width, page_height = solution_pdf_size()
+    grid = fit_grid(columns, rows, page_width=page_width, page_height=page_height, margin=0)
+    canvas = PdfContent()
+
+    draw_grid_background(canvas, cells, grid, page_width, page_height)
+    canvas.gray_stroke(0)
+    canvas.gray_fill(0)
+    for row_index, row in enumerate(cells):
+        for col_index, cell in enumerate(row):
+            x, y = cell_position(grid, row_index, col_index)
+            if cell.get("type") == "clue":
+                draw_empty_clue_cell(canvas, cell, x, y, grid.cell)
+            elif cell.get("type") == "letter":
+                draw_solution_letter(canvas, cell, x, y, grid.cell)
+
+    return canvas.bytes(), page_width, page_height
+
+
 def write_puzzle_pdf(puzzle: dict, path: Path) -> None:
     require_readable_clues(puzzle)
     write_pdf(path, draw_puzzle(puzzle))
+
+
+def write_solution_pdf(puzzle: dict, path: Path) -> None:
+    content, page_width, page_height = draw_solution(puzzle)
+    write_pdf(path, content, width=page_width, height=page_height)
+
+
+def write_puzzle_pdf_pair(puzzle: dict, path: Path) -> tuple[Path, Path]:
+    write_puzzle_pdf(puzzle, path)
+    solution_path = solution_pdf_path(path)
+    write_solution_pdf(puzzle, solution_path)
+    return path, solution_path
 
 
 def parse_args() -> argparse.Namespace:
@@ -707,10 +820,10 @@ def main() -> None:
     args = parse_args()
     puzzle = json.loads(args.input.read_text(encoding="utf-8"))
     try:
-        write_puzzle_pdf(puzzle, args.out)
+        puzzle_path, solution_path = write_puzzle_pdf_pair(puzzle, args.out)
     except ValueError as error:
         raise SystemExit(str(error)) from error
-    print(f"Wrote {args.out}")
+    print(f"Wrote {puzzle_path} and {solution_path}")
 
 
 if __name__ == "__main__":
