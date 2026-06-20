@@ -1961,6 +1961,8 @@ def print_and_maybe_save(
     frontend_out: Path | None = None,
     pdf_out: Path | None = None,
     name_by_template: bool = True,
+    emit_word_list: bool = True,
+    word_list_out_dir: Path | None = None,
 ) -> None:
     if not candidates:
         print(f"No {label} templates found.")
@@ -1996,6 +1998,24 @@ def print_and_maybe_save(
                         named_pdf_out,
                     )
                     written_paths.extend((puzzle_pdf_out, solution_pdf_out))
+                if emit_word_list and word_list_out_dir is not None:
+                    word_list_out = word_list_path_for_output(
+                        word_list_out_dir,
+                        puzzle_pdf_out if emit_pdf and pdf_out is not None else puzzle_out,
+                        template.id,
+                    )
+                    write_json(
+                        word_list_out,
+                        puzzle_word_list_payload(
+                            puzzle,
+                            source_path=(
+                                puzzle_pdf_out
+                                if emit_pdf and pdf_out is not None
+                                else puzzle_out
+                            ),
+                        ),
+                    )
+                    written_paths.append(word_list_out)
                 if written_paths:
                     write_status += ", wrote " + " and ".join(
                         str(path) for path in written_paths
@@ -2006,6 +2026,57 @@ def print_and_maybe_save(
         print(f"   metrics: {evaluation.metrics}")
         if evaluation.reasons:
             print(f"   reasons: {', '.join(evaluation.reasons)}")
+
+
+def puzzle_word_list_payload(puzzle: dict, source_path: Path | None = None) -> dict:
+    slots = puzzle.get("slots", [])
+    answers = sorted(
+        {
+            str(slot.get("answer", "")).strip().upper()
+            for slot in slots
+            if str(slot.get("answer", "")).strip()
+        }
+    )
+    payload = {
+        "templateId": puzzle.get("templateId"),
+        "title": puzzle.get("title"),
+        "sourcePath": str(source_path) if source_path is not None else None,
+        "slotCount": len(slots),
+        "uniqueWordCount": len(answers),
+        "words": answers,
+        "slots": [
+            {
+                "id": slot.get("id"),
+                "answer": slot.get("answer"),
+                "clue": slot.get("clue"),
+                "direction": slot.get("direction"),
+                "clueDirection": slot.get("clueDirection"),
+            }
+            for slot in slots
+        ],
+    }
+    return payload
+
+
+def word_list_path_for_output(
+    out_dir: Path, source_path: Path | None, template_id: str | None
+) -> Path:
+    if source_path is not None:
+        stem = source_path.stem
+    else:
+        stem = re.sub(r"[^A-Za-z0-9_.-]+", "-", template_id or "puzzle").strip("-")
+        if not stem:
+            stem = "puzzle"
+    return out_dir / f"{stem}.json"
+
+
+def path_for_repeated_call(path: Path, call_index: int, repeated_calls: int) -> Path:
+    if repeated_calls <= 1:
+        return path
+
+    suffix = path.suffix
+    stem = path.stem if suffix else path.name
+    return path.with_name(f"{stem}-run-{call_index + 1:03d}{suffix}")
 
 
 def main() -> None:
@@ -2034,6 +2105,12 @@ def main() -> None:
     parser.add_argument("--height", type=int, default=int(config_value(config, "height", 17)))
     parser.add_argument(
         "--attempts", type=int, default=int(config_value(config, "attempts", 200))
+    )
+    parser.add_argument(
+        "--repeated-calls",
+        type=int,
+        default=int(config_value(config, "repeatedCalls", 1)),
+        help="Run the full template search and emission workflow this many times.",
     )
     parser.add_argument("--seed", type=int, default=int(config_value(config, "seed", 1000)))
     parser.add_argument("--keep", type=int, default=int(config_value(config, "keep", 3)))
@@ -2119,6 +2196,18 @@ def main() -> None:
         "--pdf-out",
         type=Path,
         default=Path(config_value(config, "pdfOut", "output/pdf/puzzle.pdf")),
+    )
+    parser.add_argument(
+        "--emit-word-list",
+        action=argparse.BooleanOptionalAction,
+        default=bool(config_value(config, "emitWordList", True)),
+        help="Write a compact word-list JSON manifest for each emitted puzzle.",
+    )
+    parser.add_argument(
+        "--word-list-out-dir",
+        type=Path,
+        default=Path(config_value(config, "wordListOutDir", "output/json")),
+        help="Directory for emitted word-list JSON manifests.",
     )
     parser.add_argument(
         "--name-by-template",
@@ -2256,12 +2345,7 @@ def main() -> None:
         help="Number of worker processes for independent geometry attempts.",
     )
     args = parser.parse_args()
-    seed = resolve_seed(args.seed)
-    fill_seed = resolve_seed(args.fill_seed) if args.require_fill else args.fill_seed
-    if seed != args.seed:
-        print(f"Using random seed {seed}.")
-    if args.require_fill and fill_seed != args.fill_seed:
-        print(f"Using random fill seed {fill_seed}.")
+    repeated_calls = max(args.repeated_calls, 1)
 
     quality = TemplateQualitySettings.from_config(config_value(config, "quality", {}))
     base_heuristics = SearchHeuristicSettings.from_config(heuristic_config)
@@ -2320,44 +2404,59 @@ def main() -> None:
     else:
         allowed_directions = {args.clue_directions}
 
-    results = search_templates(
-        words=words,
-        fill_words=fill_words,
-        width=args.width,
-        height=args.height,
-        attempts=max(args.attempts, 1),
-        seed=seed,
-        keep=max(args.keep, 1),
-        allowed_directions=allowed_directions,
-        max_clues_per_cell=args.max_clues_per_cell,
-        quality=quality,
-        heuristics=heuristics,
-        stop_when_enough_passing=args.stop_when_enough_passing,
-        require_fill=args.require_fill,
-        fill_attempts=args.fill_attempts,
-        fill_seed=fill_seed,
-        verbose=args.verbose,
-    )
+    for call_index in range(repeated_calls):
+        if repeated_calls > 1:
+            print(f"Repeated call {call_index + 1}/{repeated_calls}")
 
-    if results.interrupted:
-        print(
-            "Interrupted; using the best templates collected before the current attempt."
+        seed = resolve_seed(args.seed)
+        fill_seed = resolve_seed(args.fill_seed) if args.require_fill else args.fill_seed
+        if seed != args.seed:
+            print(f"Using random seed {seed}.")
+        if args.require_fill and fill_seed != args.fill_seed:
+            print(f"Using random fill seed {fill_seed}.")
+
+        results = search_templates(
+            words=words,
+            fill_words=fill_words,
+            width=args.width,
+            height=args.height,
+            attempts=max(args.attempts, 1),
+            seed=seed,
+            keep=max(args.keep, 1),
+            allowed_directions=allowed_directions,
+            max_clues_per_cell=args.max_clues_per_cell,
+            quality=quality,
+            heuristics=heuristics,
+            stop_when_enough_passing=args.stop_when_enough_passing,
+            require_fill=args.require_fill,
+            fill_attempts=args.fill_attempts,
+            fill_seed=fill_seed,
+            verbose=args.verbose,
         )
-    print(f"Attempted {results.attempted} templates.")
-    print_and_maybe_save(
-        "passing",
-        results.passing,
-        args.out_dir,
-        save=True,
-        puzzles=results.puzzles,
-        emit_puzzle=args.emit_puzzle,
-        emit_pdf=args.emit_pdf,
-        puzzle_out=args.puzzle_out,
-        frontend_out=args.frontend_out,
-        pdf_out=args.pdf_out,
-        name_by_template=args.name_by_template,
-    )
-    print_and_maybe_save("rejected", results.rejected, args.out_dir, save=args.save_rejected)
+
+        if results.interrupted:
+            print(
+                "Interrupted; using the best templates collected before the current attempt."
+            )
+        print(f"Attempted {results.attempted} templates.")
+        print_and_maybe_save(
+            "passing",
+            results.passing,
+            args.out_dir,
+            save=True,
+            puzzles=results.puzzles,
+            emit_puzzle=args.emit_puzzle,
+            emit_pdf=args.emit_pdf,
+            puzzle_out=args.puzzle_out,
+            frontend_out=args.frontend_out,
+            pdf_out=path_for_repeated_call(args.pdf_out, call_index, repeated_calls),
+            name_by_template=args.name_by_template,
+            emit_word_list=args.emit_word_list,
+            word_list_out_dir=args.word_list_out_dir,
+        )
+        print_and_maybe_save(
+            "rejected", results.rejected, args.out_dir, save=args.save_rejected
+        )
 
 
 if __name__ == "__main__":

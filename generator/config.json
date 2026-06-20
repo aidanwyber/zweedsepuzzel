@@ -4,7 +4,8 @@
 		"outDir": "generator/templates",
 		"width": 11,
 		"height": 17,
-		"attempts": 120,
+		"attempts": 50,
+		"repeatedCalls": 34,
 		"seed": -1,
 		"keep": 1,
 		"maxWordLength": 17,
@@ -21,6 +22,8 @@
 		"puzzleOut": "generated/puzzle.json",
 		"frontendOut": "frontend/public/puzzles/puzzle.json",
 		"pdfOut": "output/pdf/puzzle.pdf",
+		"emitWordList": true,
+		"wordListOutDir": "output/json",
 		"nameByTemplate": true,
 		"heuristics": {
 			"beamWidth": 5,
