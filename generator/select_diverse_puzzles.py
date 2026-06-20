@@ -152,8 +152,10 @@ def improve_by_swapping(
     improved = True
     while improved:
         improved = False
-        selected_set = set(current)
-        remaining = [candidate for candidate in candidates if candidate not in selected_set]
+        selected_paths = {candidate.path for candidate in current}
+        remaining = [
+            candidate for candidate in candidates if candidate.path not in selected_paths
+        ]
         for index in range(len(current)):
             for replacement in remaining:
                 candidate_selection = list(current)
