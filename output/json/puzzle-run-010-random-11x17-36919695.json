@@ -1,0 +1,171 @@
+{
+  "templateId": "random-11x17-36919695",
+  "title": "Randomized 11x17 template 36919695",
+  "sourcePath": "output\\pdf\\puzzle-run-010-random-11x17-36919695.pdf",
+  "slotCount": 20,
+  "uniqueWordCount": 20,
+  "words": [
+    "ANNA",
+    "ANNIE",
+    "ARENASTRAAT",
+    "AUV",
+    "BIER",
+    "BOVENFREES",
+    "BUENAS AIRES",
+    "ESSIE",
+    "HM",
+    "KNIK",
+    "LEONIE",
+    "MANNENAVOND",
+    "RABARBER",
+    "SATE",
+    "SCHRAPER",
+    "SONAR",
+    "SONDE",
+    "SSS",
+    "ZAUBERFLOTE",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_002_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_004_len11",
+      "answer": "MANNENAVOND",
+      "clue": "op donderdag",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_005_len8",
+      "answer": "RABARBER",
+      "clue": "oma’s lekkernij",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_006_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len8",
+      "answer": "SCHRAPER",
+      "clue": "handgereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_009_len5",
+      "answer": "ESSIE",
+      "clue": "keverkind",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_010_len5",
+      "answer": "SONAR",
+      "clue": "met geluidsgolven",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_012_len5",
+      "answer": "SONDE",
+      "clue": "prikkie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len5",
+      "answer": "ANNIE",
+      "clue": "grote eter",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_014_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_016_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_017_len3",
+      "answer": "AUV",
+      "clue": "Autonomous Underwater Vehicle",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_018_len2",
+      "answer": "HM",
+      "clue": "niet goed",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_019_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_020_len4",
+      "answer": "KNIK",
+      "clue": "druk op een stokkie",
+      "direction": "down",
+      "clueDirection": "down"
+    }
+  ]
+}

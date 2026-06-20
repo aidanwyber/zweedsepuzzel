@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-73596581",
+  "title": "Randomized 11x17 template 73596581",
+  "sourcePath": "output\\pdf\\puzzle-run-012-random-11x17-73596581.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "AUV",
+    "BAO",
+    "BH",
+    "BODEM",
+    "BUENAS AIRES",
+    "ED",
+    "EURO",
+    "HM",
+    "HMMM",
+    "IT",
+    "KOMOPNOU",
+    "LAURIE",
+    "LIDAR",
+    "LUH",
+    "LUHLUHLUHLUHLUH",
+    "ORANJE",
+    "PEETJE",
+    "PIETJE",
+    "RUUD",
+    "SPOTJE",
+    "SSS",
+    "T PLEINTJE",
+    "VOELSPRIET"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "VOELSPRIET",
+      "clue": "voetbalclub",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "SPOTJE",
+      "clue": "overal ideaal",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len6",
+      "answer": "ORANJE",
+      "clue": "beste vlakleur",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_005_len9",
+      "answer": "T PLEINTJE",
+      "clue": "snackbar",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_006_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len5",
+      "answer": "LIDAR",
+      "clue": "met lichtgolven",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_009_len8",
+      "answer": "KOMOPNOU",
+      "clue": "motiverende slogan",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len15",
+      "answer": "LUHLUHLUHLUHLUH",
+      "clue": "songtekst",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len4",
+      "answer": "EURO",
+      "clue": "in de wc",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_012_len5",
+      "answer": "BODEM",
+      "clue": "bed",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_013_len3",
+      "answer": "BAO",
+      "clue": "beste vriendje",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "LUH",
+      "clue": "songtekst",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "AUV",
+      "clue": "Autonomous Underwater Vehicle",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_016_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_017_len4",
+      "answer": "HMMM",
+      "clue": "niet goed",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_018_len2",
+      "answer": "HM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_019_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_020_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_021_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_022_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_023_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

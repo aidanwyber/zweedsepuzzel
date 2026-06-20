@@ -1,0 +1,203 @@
+{
+  "templateId": "random-11x17-29530521",
+  "title": "Randomized 11x17 template 29530521",
+  "sourcePath": "output\\pdf\\puzzle-run-001-random-11x17-29530521.pdf",
+  "slotCount": 24,
+  "uniqueWordCount": 24,
+  "words": [
+    "ANNA",
+    "ARNOLD",
+    "BAKKIE",
+    "BH",
+    "BIER",
+    "BOBO",
+    "ED",
+    "EIKEN",
+    "FRIKANDEL",
+    "HM",
+    "HMM",
+    "IT",
+    "LAMMYCOAT",
+    "LAURIE",
+    "LEONIE",
+    "MAC",
+    "MAKITA",
+    "MR MUSCLE",
+    "PIETJE",
+    "RUUD",
+    "SCHRAPER",
+    "SILENCIO",
+    "VOELSPRIET",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "VOELSPRIET",
+      "clue": "voetbalclub",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_004_len8",
+      "answer": "MR MUSCLE",
+      "clue": "sterke meneer",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_005_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len8",
+      "answer": "SCHRAPER",
+      "clue": "handgereedschap",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len8",
+      "answer": "SILENCIO",
+      "clue": "stilte (it.)",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_009_len5",
+      "answer": "EIKEN",
+      "clue": "mooiste houtsoort",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_010_len6",
+      "answer": "ARNOLD",
+      "clue": "get to the choppah",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_011_len6",
+      "answer": "MAKITA",
+      "clue": "accuboor",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len9",
+      "answer": "FRIKANDEL",
+      "clue": "Lé weg?",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_013_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_014_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_015_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_016_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_017_len3",
+      "answer": "HMM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_019_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_020_len2",
+      "answer": "HM",
+      "clue": "niet goed",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_021_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_022_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_023_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_024_len9",
+      "answer": "LAMMYCOAT",
+      "clue": "klein lammetje",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}

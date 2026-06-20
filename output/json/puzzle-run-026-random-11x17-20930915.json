@@ -1,0 +1,171 @@
+{
+  "templateId": "random-11x17-20930915",
+  "title": "Randomized 11x17 template 20930915",
+  "sourcePath": "output\\pdf\\puzzle-run-026-random-11x17-20930915.pdf",
+  "slotCount": 20,
+  "uniqueWordCount": 20,
+  "words": [
+    "ANNIE",
+    "BH",
+    "BOBO",
+    "CHOCOCHINO",
+    "CNC",
+    "ED",
+    "FUGRO",
+    "IMU",
+    "LUH",
+    "LUHLUH",
+    "LUHLUHLUHLUHLUH",
+    "MANNENAVOND",
+    "MOINEAU",
+    "MR MUSCLE",
+    "PINK FLOYD",
+    "RUUD",
+    "SOLDEERBOUT",
+    "VERZINKBOOR",
+    "WIJN",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len10",
+      "answer": "CHOCOCHINO",
+      "clue": "stoere mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_002_len11",
+      "answer": "SOLDEERBOUT",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "VERZINKBOOR",
+      "clue": "gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_004_len11",
+      "answer": "MANNENAVOND",
+      "clue": "op donderdag",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_005_len15",
+      "answer": "LUHLUHLUHLUHLUH",
+      "clue": "songtekst",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_006_len8",
+      "answer": "MR MUSCLE",
+      "clue": "sterke meneer",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len9",
+      "answer": "PINK FLOYD",
+      "clue": "goeie band",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_008_len5",
+      "answer": "ANNIE",
+      "clue": "grote eter",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len6",
+      "answer": "LUHLUH",
+      "clue": "songtekst",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len7",
+      "answer": "MOINEAU",
+      "clue": "op modderkracht",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_011_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len5",
+      "answer": "FUGRO",
+      "clue": "werk",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_013_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "LUH",
+      "clue": "songtekst",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_016_len3",
+      "answer": "IMU",
+      "clue": "Inertial Measurement Unit",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "WIJN",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_020_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

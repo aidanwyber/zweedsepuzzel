@@ -1,0 +1,187 @@
+{
+  "templateId": "random-11x17-73398021",
+  "title": "Randomized 11x17 template 73398021",
+  "sourcePath": "output\\pdf\\puzzle-run-020-random-11x17-73398021.pdf",
+  "slotCount": 22,
+  "uniqueWordCount": 22,
+  "words": [
+    "ARNOLD",
+    "BH",
+    "BOBO",
+    "BOVENFREES",
+    "ED",
+    "GPS",
+    "IPHONE",
+    "ITALO",
+    "LAURIE",
+    "LEONIE",
+    "LEUGEN",
+    "LIDAR",
+    "LITTLE PARAGUAYO",
+    "NDT",
+    "PEETJE",
+    "PIETJE",
+    "RABARBER",
+    "ROV",
+    "SAUNA",
+    "TESLA",
+    "TUBBO",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_002_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len6",
+      "answer": "IPHONE",
+      "clue": "slechtste gsm merk",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_004_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_005_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_006_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len15",
+      "answer": "LITTLE PARAGUAYO",
+      "clue": "fly away",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len5",
+      "answer": "LIDAR",
+      "clue": "met lichtgolven",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_009_len8",
+      "answer": "RABARBER",
+      "clue": "oma’s lekkernij",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_010_len6",
+      "answer": "ARNOLD",
+      "clue": "get to the choppah",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_011_len6",
+      "answer": "LEUGEN",
+      "clue": "ik doe het allemaal voor jullie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_012_len5",
+      "answer": "TUBBO",
+      "clue": "mensensoepkom",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len5",
+      "answer": "ITALO",
+      "clue": "genre",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "NDT",
+      "clue": "Non-Destructive Testing",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_016_len3",
+      "answer": "GPS",
+      "clue": "locatiebepaling",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_017_len5",
+      "answer": "TESLA",
+      "clue": "ruimteschip",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_018_len5",
+      "answer": "SAUNA",
+      "clue": "heet en bloot",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_020_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_021_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_022_len3",
+      "answer": "ROV",
+      "clue": "Remotely Operated Vehicle",
+      "direction": "down",
+      "clueDirection": "down"
+    }
+  ]
+}

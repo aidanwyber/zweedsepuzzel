@@ -1,0 +1,723 @@
+{
+  "id": "random-11x17-80804107",
+  "title": "Randomized 11x17 template 80804107",
+  "width": 11,
+  "height": 17,
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        7
+      ],
+      "cells": [
+        [
+          0,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          9,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "h_002_len6",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        4,
+        2
+      ],
+      "cells": [
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "v_003_len11",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        4
+      ],
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          10,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "h_004_len6",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        9,
+        0
+      ],
+      "cells": [
+        [
+          10,
+          0
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          10,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "h_005_len5",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        7,
+        1
+      ],
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          8,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "v_006_len8",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        7,
+        1
+      ],
+      "cells": [
+        [
+          7,
+          2
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          14,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "h_007_len10",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        11,
+        0
+      ],
+      "cells": [
+        [
+          12,
+          0
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          12,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "v_008_len5",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        10,
+        8
+      ],
+      "cells": [
+        [
+          11,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          14,
+          8
+        ],
+        [
+          15,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "h_009_len6",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        7,
+        4
+      ],
+      "cells": [
+        [
+          7,
+          5
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          7,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "v_010_len5",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        10,
+        6
+      ],
+      "cells": [
+        [
+          11,
+          6
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          15,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "v_011_len3",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        3,
+        3
+      ],
+      "cells": [
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "h_012_len4",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        4,
+        0
+      ],
+      "cells": [
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v_013_len5",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        1,
+        0
+      ],
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "h_014_len4",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        1,
+        0
+      ],
+      "cells": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "h_015_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        13,
+        0
+      ],
+      "cells": [
+        [
+          14,
+          0
+        ],
+        [
+          14,
+          1
+        ],
+        [
+          14,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v_016_len3",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        14,
+        3
+      ],
+      "cells": [
+        [
+          14,
+          4
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          16,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "v_017_len3",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        13,
+        1
+      ],
+      "cells": [
+        [
+          14,
+          1
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          16,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "h_018_len6",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        0,
+        4
+      ],
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "h_019_len6",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        14,
+        3
+      ],
+      "cells": [
+        [
+          15,
+          3
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "v_020_len9",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        2,
+        10
+      ],
+      "cells": [
+        [
+          3,
+          10
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          11,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "h_021_len3",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        5,
+        7
+      ],
+      "cells": [
+        [
+          5,
+          8
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          5,
+          10
+        ]
+      ]
+    }
+  ]
+}

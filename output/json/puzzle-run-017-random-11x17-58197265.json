@@ -1,0 +1,211 @@
+{
+  "templateId": "random-11x17-58197265",
+  "title": "Randomized 11x17 template 58197265",
+  "sourcePath": "output\\pdf\\puzzle-run-017-random-11x17-58197265.pdf",
+  "slotCount": 25,
+  "uniqueWordCount": 25,
+  "words": [
+    "ANNA",
+    "ANNIE",
+    "AUV",
+    "BAKKIE",
+    "BLOKFLUIT",
+    "BLUE DRAGON",
+    "BOBO",
+    "BOVENFREES",
+    "CPT",
+    "DIKKE",
+    "GIS",
+    "GPS",
+    "IT",
+    "LAURIE",
+    "MAC",
+    "NDT",
+    "PEETJE",
+    "PROJECT X",
+    "PTC",
+    "RUUD",
+    "SCHUTZ",
+    "SIKKENS",
+    "SMAKKEMO",
+    "SONAR",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_005_len8",
+      "answer": "SMAKKEMO",
+      "clue": "smakkende superheld",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len8",
+      "answer": "PROJECT X",
+      "clue": "TOP SECRET",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len9",
+      "answer": "BLOKFLUIT",
+      "clue": "tovermiddel",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_009_len5",
+      "answer": "ANNIE",
+      "clue": "grote eter",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_010_len5",
+      "answer": "DIKKE",
+      "clue": "aanspreekvorm",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_011_len5",
+      "answer": "SONAR",
+      "clue": "met geluidsgolven",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_012_len7",
+      "answer": "SIKKENS",
+      "clue": "verf",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_013_len3",
+      "answer": "GPS",
+      "clue": "locatiebepaling",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_014_len3",
+      "answer": "GIS",
+      "clue": "Geographic Information System",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len6",
+      "answer": "SCHUTZ",
+      "clue": "barokcomponist",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_016_len3",
+      "answer": "PTC",
+      "clue": "Peter the Cock",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "CPT",
+      "clue": "Cone Penetration Test",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_018_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_019_len3",
+      "answer": "NDT",
+      "clue": "Non-Destructive Testing",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_020_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_021_len3",
+      "answer": "AUV",
+      "clue": "Autonomous Underwater Vehicle",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_022_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_023_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_024_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "auto_h_15_01_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

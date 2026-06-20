@@ -1,0 +1,163 @@
+{
+  "templateId": "random-11x17-45674949",
+  "title": "Randomized 11x17 template 45674949",
+  "sourcePath": "output\\pdf\\puzzle-run-013-random-11x17-45674949.pdf",
+  "slotCount": 19,
+  "uniqueWordCount": 19,
+  "words": [
+    "AJAX",
+    "ARENASTRAAT",
+    "BOVENFREES",
+    "BUENAS AIRES",
+    "ESSIE",
+    "EURO",
+    "IPHONE",
+    "LAURIE",
+    "LEONIE",
+    "NDT",
+    "PETER SPECIAL",
+    "PIETJE",
+    "PROJECT X",
+    "SATE",
+    "SCHUTZ",
+    "SPOTJE",
+    "TEKENING",
+    "TESLA",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "SPOTJE",
+      "clue": "overal ideaal",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_004_len6",
+      "answer": "IPHONE",
+      "clue": "slechtste gsm merk",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_005_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len8",
+      "answer": "TEKENING",
+      "clue": "verjaardagscadeau",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_008_len12",
+      "answer": "PETER SPECIAL",
+      "clue": "beter dan cortado",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_009_len6",
+      "answer": "SCHUTZ",
+      "clue": "barokcomponist",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_010_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_011_len4",
+      "answer": "EURO",
+      "clue": "in de wc",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len5",
+      "answer": "TESLA",
+      "clue": "ruimteschip",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_013_len5",
+      "answer": "ESSIE",
+      "clue": "keverkind",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_014_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_015_len4",
+      "answer": "AJAX",
+      "clue": "alarmsysteem",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_016_len3",
+      "answer": "NDT",
+      "clue": "Non-Destructive Testing",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_017_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len8",
+      "answer": "PROJECT X",
+      "clue": "TOP SECRET",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_019_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}

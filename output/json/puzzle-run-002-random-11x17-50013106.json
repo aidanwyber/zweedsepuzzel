@@ -1,0 +1,179 @@
+{
+  "templateId": "random-11x17-50013106",
+  "title": "Randomized 11x17 template 50013106",
+  "sourcePath": "output\\pdf\\puzzle-run-002-random-11x17-50013106.pdf",
+  "slotCount": 21,
+  "uniqueWordCount": 21,
+  "words": [
+    "ANNA",
+    "ARENASTRAAT",
+    "ARIA",
+    "BADPUTJE",
+    "BH",
+    "BIER",
+    "CNC",
+    "ESSIE",
+    "FUGRO",
+    "HELICAL BUCKLING",
+    "IMU",
+    "IT",
+    "KLUSSEN",
+    "KNIK",
+    "MANNENAVOND",
+    "MOINEAU",
+    "OPERA",
+    "PIETJE",
+    "SOLDEERBOUT",
+    "YOU GOT THIS",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len10",
+      "answer": "YOU GOT THIS",
+      "clue": "truitekst",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_002_len11",
+      "answer": "MANNENAVOND",
+      "clue": "op donderdag",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "SOLDEERBOUT",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_004_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_005_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len15",
+      "answer": "HELICAL BUCKLING",
+      "clue": "boorprobleem",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len7",
+      "answer": "MOINEAU",
+      "clue": "op modderkracht",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len8",
+      "answer": "BADPUTJE",
+      "clue": "blijven herhalen",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_010_len5",
+      "answer": "OPERA",
+      "clue": "klassieke zang",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_011_len5",
+      "answer": "FUGRO",
+      "clue": "werk",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_012_len5",
+      "answer": "ESSIE",
+      "clue": "keverkind",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len7",
+      "answer": "KLUSSEN",
+      "clue": "hobby",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "IMU",
+      "clue": "Inertial Measurement Unit",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_016_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_018_len4",
+      "answer": "KNIK",
+      "clue": "druk op een stokkie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_019_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_020_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_021_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

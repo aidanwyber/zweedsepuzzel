@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-93834759",
+  "title": "Randomized 11x17 template 93834759",
+  "sourcePath": "output\\pdf\\puzzle-run-011-random-11x17-93834759.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "AJAX",
+    "BH",
+    "BIER",
+    "BLUE DRAGON",
+    "BOBO",
+    "BUENAS AIRES",
+    "CPT",
+    "EURO",
+    "FUGRO",
+    "IT",
+    "ITALO",
+    "LAGUNITAS",
+    "LAURIE",
+    "LEONIE",
+    "LUH",
+    "PAP",
+    "PIETJE",
+    "PTC",
+    "ROBBIE",
+    "SAUNA",
+    "SPOTJE",
+    "SSS",
+    "ZAUBERFLOTE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "SPOTJE",
+      "clue": "overal ideaal",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_004_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_005_len6",
+      "answer": "ROBBIE",
+      "clue": "koffieleut",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len9",
+      "answer": "LAGUNITAS",
+      "clue": "IPA",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_009_len5",
+      "answer": "ITALO",
+      "clue": "genre",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len5",
+      "answer": "FUGRO",
+      "clue": "werk",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len5",
+      "answer": "SAUNA",
+      "clue": "heet en bloot",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_012_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "PAP",
+      "clue": "griesmeelvader",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_015_len3",
+      "answer": "PTC",
+      "clue": "Peter the Cock",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_016_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len4",
+      "answer": "EURO",
+      "clue": "in de wc",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_018_len3",
+      "answer": "LUH",
+      "clue": "songtekst",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len3",
+      "answer": "CPT",
+      "clue": "Cone Penetration Test",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_020_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_021_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_022_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_023_len4",
+      "answer": "AJAX",
+      "clue": "alarmsysteem",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

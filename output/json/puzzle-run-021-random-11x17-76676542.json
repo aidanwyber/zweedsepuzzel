@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-76676542",
+  "title": "Randomized 11x17 template 76676542",
+  "sourcePath": "output\\pdf\\puzzle-run-021-random-11x17-76676542.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "ADIDAS",
+    "ARIA",
+    "BAKKIE",
+    "BAO",
+    "BH",
+    "BOBO",
+    "CNC",
+    "CROCS",
+    "ED",
+    "FUGRO",
+    "HAMERBOOR",
+    "HYPNOSE",
+    "IPHONE",
+    "LUH",
+    "LUHLUH",
+    "MAKITA",
+    "MANNENAVOND",
+    "PAP",
+    "RUUD",
+    "SCHRAPER",
+    "SPOTJE",
+    "VOELSPRIET",
+    "ZAUBERFLOTE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "VOELSPRIET",
+      "clue": "voetbalclub",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "IPHONE",
+      "clue": "slechtste gsm merk",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_003_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_004_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_005_len11",
+      "answer": "MANNENAVOND",
+      "clue": "op donderdag",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len6",
+      "answer": "SPOTJE",
+      "clue": "overal ideaal",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_007_len9",
+      "answer": "HAMERBOOR",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len8",
+      "answer": "SCHRAPER",
+      "clue": "handgereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len5",
+      "answer": "FUGRO",
+      "clue": "werk",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_010_len6",
+      "answer": "LUHLUH",
+      "clue": "songtekst",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len5",
+      "answer": "CROCS",
+      "clue": "werkschoenen",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_012_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len6",
+      "answer": "ADIDAS",
+      "clue": "huiskleding",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "BAO",
+      "clue": "beste vriendje",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "PAP",
+      "clue": "griesmeelvader",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_016_len7",
+      "answer": "HYPNOSE",
+      "clue": "tovenarij",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len3",
+      "answer": "LUH",
+      "clue": "songtekst",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_020_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_021_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_022_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_023_len6",
+      "answer": "MAKITA",
+      "clue": "accuboor",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}

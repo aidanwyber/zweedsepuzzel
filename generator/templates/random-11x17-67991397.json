@@ -1,0 +1,737 @@
+{
+  "id": "random-11x17-67991397",
+  "title": "Randomized 11x17 template 67991397",
+  "width": 11,
+  "height": 17,
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        5,
+        9
+      ],
+      "cells": [
+        [
+          6,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          14,
+          9
+        ],
+        [
+          15,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "h_002_len6",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        8,
+        4
+      ],
+      "cells": [
+        [
+          9,
+          4
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          9,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "h_003_len6",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        13,
+        3
+      ],
+      "cells": [
+        [
+          13,
+          4
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          13,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "v_004_len6",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        3,
+        5
+      ],
+      "cells": [
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "h_005_len6",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        5,
+        0
+      ],
+      "cells": [
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          6,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "h_006_len8",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        4,
+        0
+      ],
+      "cells": [
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          4,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "v_007_len5",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        3
+      ],
+      "cells": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "h_008_len7",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        1,
+        0
+      ],
+      "cells": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "v_009_len6",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        10,
+        6
+      ],
+      "cells": [
+        [
+          11,
+          6
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          16,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "v_010_len8",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        5,
+        1
+      ],
+      "cells": [
+        [
+          6,
+          1
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          13,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "v_011_len4",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        12,
+        4
+      ],
+      "cells": [
+        [
+          13,
+          4
+        ],
+        [
+          14,
+          4
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          16,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "h_012_len5",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        11,
+        2
+      ],
+      "cells": [
+        [
+          11,
+          3
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          11,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "h_013_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        9,
+        0
+      ],
+      "cells": [
+        [
+          10,
+          0
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          10,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "h_014_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        12,
+        0
+      ],
+      "cells": [
+        [
+          13,
+          0
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          13,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "h_015_len4",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        7,
+        0
+      ],
+      "cells": [
+        [
+          8,
+          0
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "v_016_len3",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        12,
+        2
+      ],
+      "cells": [
+        [
+          13,
+          2
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          15,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "h_017_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        14,
+        0
+      ],
+      "cells": [
+        [
+          15,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          15,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "v_018_len6",
+      "direction": "down",
+      "clueDirection": "down",
+      "origin": [
+        0,
+        10
+      ],
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          2,
+          10
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          6,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "v_019_len4",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        8,
+        6
+      ],
+      "cells": [
+        [
+          8,
+          7
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          11,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "v_020_len4",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        2,
+        7
+      ],
+      "cells": [
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "v_021_len7",
+      "direction": "down",
+      "clueDirection": "right",
+      "origin": [
+        0,
+        1
+      ],
+      "cells": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "h_022_len3",
+      "direction": "right",
+      "clueDirection": "down",
+      "origin": [
+        14,
+        8
+      ],
+      "cells": [
+        [
+          15,
+          8
+        ],
+        [
+          15,
+          9
+        ],
+        [
+          15,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "auto_h_06_09_len2",
+      "direction": "right",
+      "clueDirection": "right",
+      "origin": [
+        6,
+        8
+      ],
+      "cells": [
+        [
+          6,
+          9
+        ],
+        [
+          6,
+          10
+        ]
+      ]
+    }
+  ]
+}

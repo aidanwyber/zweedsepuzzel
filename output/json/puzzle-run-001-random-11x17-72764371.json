@@ -1,0 +1,203 @@
+{
+  "templateId": "random-11x17-72764371",
+  "title": "Randomized 11x17 template 72764371",
+  "sourcePath": "output\\pdf\\puzzle-run-001-random-11x17-72764371.pdf",
+  "slotCount": 24,
+  "uniqueWordCount": 24,
+  "words": [
+    "ARNOLD",
+    "AUV",
+    "BAKKIE",
+    "BH",
+    "BLUE DRAGON",
+    "CNC",
+    "CROCS",
+    "HM",
+    "HMM",
+    "HMMMM",
+    "IT",
+    "ITALO",
+    "LAMMYCOAT",
+    "LAURIE",
+    "LEONIE",
+    "LUKAKU",
+    "MR MUSCLE",
+    "PEETJE",
+    "SATE",
+    "SMAKKEMO",
+    "SONDE",
+    "VOELSPRIET",
+    "VOLVO",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "VOELSPRIET",
+      "clue": "voetbalclub",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len9",
+      "answer": "LAMMYCOAT",
+      "clue": "klein lammetje",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_005_len8",
+      "answer": "MR MUSCLE",
+      "clue": "sterke meneer",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_007_len6",
+      "answer": "LUKAKU",
+      "clue": "Vlaamse spits",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len8",
+      "answer": "SMAKKEMO",
+      "clue": "smakkende superheld",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_009_len6",
+      "answer": "ARNOLD",
+      "clue": "get to the choppah",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_010_len5",
+      "answer": "HMMMM",
+      "clue": "niet goed",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_011_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_012_len5",
+      "answer": "SONDE",
+      "clue": "prikkie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_014_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_015_len3",
+      "answer": "HMM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_016_len3",
+      "answer": "AUV",
+      "clue": "Autonomous Underwater Vehicle",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_019_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_020_len2",
+      "answer": "HM",
+      "clue": "niet goed",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_021_len5",
+      "answer": "VOLVO",
+      "clue": "nieuw ruimteschip",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_022_len5",
+      "answer": "ITALO",
+      "clue": "genre",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_023_len5",
+      "answer": "CROCS",
+      "clue": "werkschoenen",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "auto_v_04_01_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "down",
+      "clueDirection": "down"
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-4602559",
+  "title": "Randomized 11x17 template 4602559",
+  "sourcePath": "output\\pdf\\puzzle-run-025-random-11x17-4602559.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "ANNIE",
+    "BH",
+    "BIER",
+    "CHOCOCHINO",
+    "CPT",
+    "CROCS",
+    "DIKKE",
+    "ELEMENT P",
+    "ESSIE",
+    "IMU",
+    "IT",
+    "KLUSSEN",
+    "KNIK",
+    "KOMOPNOU",
+    "LEONIEDEPIE",
+    "MANNENAVOND",
+    "MARATHON",
+    "PAP",
+    "PIETJE",
+    "PTC",
+    "SATE",
+    "SIKKENS",
+    "ZAUBERFLOTE"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len10",
+      "answer": "CHOCOCHINO",
+      "clue": "stoere mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_002_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "MANNENAVOND",
+      "clue": "op donderdag",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_004_len8",
+      "answer": "MARATHON",
+      "clue": "danseee",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_005_len11",
+      "answer": "LEONIEDEPIE",
+      "clue": "Leonie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_006_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_007_len8",
+      "answer": "ELEMENT P",
+      "clue": "sterkste materiaal",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_008_len5",
+      "answer": "ANNIE",
+      "clue": "grote eter",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_009_len5",
+      "answer": "DIKKE",
+      "clue": "aanspreekvorm",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_010_len4",
+      "answer": "KNIK",
+      "clue": "druk op een stokkie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_011_len5",
+      "answer": "ESSIE",
+      "clue": "keverkind",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_012_len3",
+      "answer": "CPT",
+      "clue": "Cone Penetration Test",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_013_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_014_len5",
+      "answer": "CROCS",
+      "clue": "werkschoenen",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "PAP",
+      "clue": "griesmeelvader",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_016_len8",
+      "answer": "KOMOPNOU",
+      "clue": "motiverende slogan",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_017_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_018_len3",
+      "answer": "PTC",
+      "clue": "Peter the Cock",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len3",
+      "answer": "IMU",
+      "clue": "Inertial Measurement Unit",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_020_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_021_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_022_len7",
+      "answer": "SIKKENS",
+      "clue": "verf",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_023_len7",
+      "answer": "KLUSSEN",
+      "clue": "hobby",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-70935991",
+  "title": "Randomized 11x17 template 70935991",
+  "sourcePath": "output\\pdf\\puzzle-run-004-random-11x17-70935991.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "BAKKIE",
+    "BAO",
+    "BOBO",
+    "BUENAS AIRES",
+    "CIRKELZAAG",
+    "CNC",
+    "EURO",
+    "IPHONE",
+    "ITALO",
+    "LAURIE",
+    "LIJST",
+    "LUHLUH",
+    "MAC",
+    "MR SNOEPIE",
+    "NDT",
+    "ORANJE",
+    "PEETJE",
+    "PIETJE",
+    "POSTZEGEL",
+    "SCHUTZ",
+    "SONDE",
+    "SSS",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "CIRKELZAAG",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len6",
+      "answer": "ORANJE",
+      "clue": "beste vlakleur",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_004_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_005_len6",
+      "answer": "IPHONE",
+      "clue": "slechtste gsm merk",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_006_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len9",
+      "answer": "POSTZEGEL",
+      "clue": "doucheflappie",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len4",
+      "answer": "EURO",
+      "clue": "in de wc",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_009_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_010_len6",
+      "answer": "LUHLUH",
+      "clue": "songtekst",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_011_len6",
+      "answer": "SCHUTZ",
+      "clue": "barokcomponist",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_012_len5",
+      "answer": "SONDE",
+      "clue": "prikkie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_013_len3",
+      "answer": "BAO",
+      "clue": "beste vriendje",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_015_len5",
+      "answer": "ITALO",
+      "clue": "genre",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_016_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_019_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_020_len3",
+      "answer": "NDT",
+      "clue": "Non-Destructive Testing",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_021_len4",
+      "answer": "LIJST",
+      "clue": "Chinese rijst",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_022_len9",
+      "answer": "MR SNOEPIE",
+      "clue": "speelt gitaar",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_023_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}

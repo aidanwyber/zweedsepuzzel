@@ -1,0 +1,179 @@
+{
+  "templateId": "random-11x17-80804107",
+  "title": "Randomized 11x17 template 80804107",
+  "sourcePath": "output\\pdf\\puzzle-run-015-random-11x17-80804107.pdf",
+  "slotCount": 21,
+  "uniqueWordCount": 21,
+  "words": [
+    "ARIA",
+    "BAKKIE",
+    "BAO",
+    "BIER",
+    "BLUE DRAGON",
+    "CIRKELZAAG",
+    "CPT",
+    "EUROMUNT",
+    "FUGRO",
+    "HAVIK",
+    "LAURIE",
+    "LEONIE",
+    "LIDAR",
+    "LUH",
+    "LUHLUHLUH",
+    "LUKAKU",
+    "PAP",
+    "PEETJE",
+    "PTC",
+    "SONDE",
+    "ZAUBERFLOTE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "CIRKELZAAG",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_004_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_005_len5",
+      "answer": "FUGRO",
+      "clue": "werk",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len8",
+      "answer": "EUROMUNT",
+      "clue": "in de wc",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_007_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len5",
+      "answer": "SONDE",
+      "clue": "prikkie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len6",
+      "answer": "LUKAKU",
+      "clue": "Vlaamse spits",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_010_len5",
+      "answer": "HAVIK",
+      "clue": "zelfde ogen",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_011_len3",
+      "answer": "PAP",
+      "clue": "griesmeelvader",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_012_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_013_len5",
+      "answer": "LIDAR",
+      "clue": "met lichtgolven",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "CPT",
+      "clue": "Cone Penetration Test",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_016_len3",
+      "answer": "BAO",
+      "clue": "beste vriendje",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_017_len3",
+      "answer": "PTC",
+      "clue": "Peter the Cock",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_019_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_020_len9",
+      "answer": "LUHLUHLUH",
+      "clue": "songtekst",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_021_len3",
+      "answer": "LUH",
+      "clue": "songtekst",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

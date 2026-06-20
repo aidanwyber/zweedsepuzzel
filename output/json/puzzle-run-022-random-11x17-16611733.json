@@ -1,0 +1,179 @@
+{
+  "templateId": "random-11x17-16611733",
+  "title": "Randomized 11x17 template 16611733",
+  "sourcePath": "output\\pdf\\puzzle-run-022-random-11x17-16611733.pdf",
+  "slotCount": 21,
+  "uniqueWordCount": 21,
+  "words": [
+    "BAKKIE",
+    "BAO",
+    "BH",
+    "BUENAS AIRES",
+    "CROCS",
+    "EURO",
+    "GIS",
+    "GPS",
+    "LAGUNITAS",
+    "LAURIE",
+    "LIJST",
+    "ORANJE",
+    "OVERAL",
+    "RUUD",
+    "SIKKENS",
+    "SILENCIO",
+    "SSS",
+    "TESLA",
+    "TUBBO",
+    "VERZINKBOOR",
+    "VOELSPRIET"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "VOELSPRIET",
+      "clue": "voetbalclub",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_004_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_005_len11",
+      "answer": "VERZINKBOOR",
+      "clue": "gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len7",
+      "answer": "SIKKENS",
+      "clue": "verf",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len8",
+      "answer": "SILENCIO",
+      "clue": "stilte (it.)",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_008_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_009_len3",
+      "answer": "GIS",
+      "clue": "Geographic Information System",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len5",
+      "answer": "CROCS",
+      "clue": "werkschoenen",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len5",
+      "answer": "TESLA",
+      "clue": "ruimteschip",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len3",
+      "answer": "GPS",
+      "clue": "locatiebepaling",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_013_len4",
+      "answer": "LIJST",
+      "clue": "Chinese rijst",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len5",
+      "answer": "TUBBO",
+      "clue": "mensensoepkom",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_015_len4",
+      "answer": "EURO",
+      "clue": "in de wc",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_016_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "BAO",
+      "clue": "beste vriendje",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_019_len9",
+      "answer": "LAGUNITAS",
+      "clue": "IPA",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_020_len6",
+      "answer": "OVERAL",
+      "clue": "Parkside pak",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_021_len6",
+      "answer": "ORANJE",
+      "clue": "beste vlakleur",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}

@@ -231,6 +231,7 @@ python3 -m generator.template_generator \
   --width 5 \
   --height 5 \
   --attempts 120 \
+  --repeated-calls 1 \
   --keep 5 \
   --seed 1000 \
   --max-word-length 9 \
@@ -245,6 +246,10 @@ Option meanings:
 - `--out-dir`: directory where passing template JSON files are saved.
 - `--width` and `--height`: template grid size.
 - `--attempts`: number of randomized layout candidates to try.
+- `--repeated-calls`: number of complete template-search runs to perform.
+  Defaults to `1`. When greater than `1`, emitted PDF paths get a
+  `run-001`, `run-002`, ... suffix so every puzzle and solution PDF pair is
+  kept.
 - `--keep`: number of top candidates to report.
 - `--seed`: deterministic starting seed for reproducible searches. Use `-1` to
   choose a random seed between `10000` and `10000000` for that run.
@@ -270,6 +275,11 @@ Option meanings:
 - `--emit-pdf` / `--no-emit-pdf`: when `--emit-puzzle` writes the best filled
   passing puzzle, also render it as an A5 grayscale PDF.
 - `--pdf-out`: output path used by `--emit-puzzle --emit-pdf`.
+- `--emit-word-list` / `--no-emit-word-list`: write a compact JSON manifest
+  for each emitted puzzle with its selected answers and clues.
+- `--word-list-out-dir`: directory for those manifests. Defaults to
+  `output/json`. When PDFs are emitted, each manifest uses the matching puzzle
+  PDF basename.
 - `--name-by-template` / `--no-name-by-template`: append the template id to PDF
   filenames, for example `puzzle-10x17.pdf`.
 - `--beam-width`: number of partial template states kept during construction.
@@ -312,6 +322,23 @@ To see passing templates as they are found:
 ```sh
 python3 -m generator.template_generator --attempts 20 --seed 100001 --verbose
 ```
+
+### Selecting a Diverse Puzzle Collection
+
+When `--emit-word-list` is enabled, generated puzzles get companion manifests
+in `output/json`. Use those manifests to pick a collection whose puzzles share
+as few answers as possible:
+
+```sh
+python3 -m generator.select_diverse_puzzles --size 10
+```
+
+The selector writes `output/json/collection-10.json` by default. It also empties
+`output/pdf/selection` and copies the selected puzzle PDFs plus their
+`-solution.pdf` partners into that folder. It minimizes total pairwise shared
+answers, then the worst pairwise overlap, then maximizes the number of unique
+answers across the selected collection. Small candidate pools are checked
+exhaustively; larger pools use greedy selection plus swap improvement.
 
 The search is geometry-first. It uses CSV word shapes to find plausible slot
 layouts, ranks geometrically passing candidates, and then, when `--require-fill`

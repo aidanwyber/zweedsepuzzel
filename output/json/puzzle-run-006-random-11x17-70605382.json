@@ -1,0 +1,187 @@
+{
+  "templateId": "random-11x17-70605382",
+  "title": "Randomized 11x17 template 70605382",
+  "sourcePath": "output\\pdf\\puzzle-run-006-random-11x17-70605382.pdf",
+  "slotCount": 22,
+  "uniqueWordCount": 22,
+  "words": [
+    "ARENASTRAAT",
+    "BAKKIE",
+    "BH",
+    "BIER",
+    "BLUE DRAGON",
+    "BODEM",
+    "CIRKELZAAG",
+    "CNC",
+    "ED",
+    "EIKEN",
+    "HAVIK",
+    "HM",
+    "KAPZAAG",
+    "LUH",
+    "MAC",
+    "MANCAVE",
+    "MANNENAVOND",
+    "MR SNOEPIE",
+    "PAP",
+    "SAUNA",
+    "SCHUTZ",
+    "ZAUBERFLOTE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_003_len11",
+      "answer": "MANNENAVOND",
+      "clue": "op donderdag",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_004_len7",
+      "answer": "MANCAVE",
+      "clue": "XY-holte",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_005_len10",
+      "answer": "CIRKELZAAG",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len7",
+      "answer": "KAPZAAG",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len9",
+      "answer": "MR SNOEPIE",
+      "clue": "speelt gitaar",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len5",
+      "answer": "BODEM",
+      "clue": "bed",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_011_len5",
+      "answer": "EIKEN",
+      "clue": "mooiste houtsoort",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_012_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len3",
+      "answer": "PAP",
+      "clue": "griesmeelvader",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_014_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_015_len5",
+      "answer": "SAUNA",
+      "clue": "heet en bloot",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_016_len5",
+      "answer": "HAVIK",
+      "clue": "zelfde ogen",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "LUH",
+      "clue": "songtekst",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_018_len6",
+      "answer": "SCHUTZ",
+      "clue": "barokcomponist",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_020_len2",
+      "answer": "HM",
+      "clue": "niet goed",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_021_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_022_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "down",
+      "clueDirection": "down"
+    }
+  ]
+}

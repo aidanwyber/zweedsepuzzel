@@ -1,0 +1,171 @@
+{
+  "templateId": "random-11x17-423568",
+  "title": "Randomized 11x17 template 423568",
+  "sourcePath": "output\\pdf\\puzzle-run-023-random-11x17-423568.pdf",
+  "slotCount": 20,
+  "uniqueWordCount": 20,
+  "words": [
+    "ANNA",
+    "ARENASTRAAT",
+    "AUV",
+    "BOVENFREES",
+    "BUENAS AIRES",
+    "CNC",
+    "EUFY",
+    "HAVIK",
+    "ITALO",
+    "LAURIE",
+    "LIJST",
+    "LUKAKU",
+    "MAC",
+    "MR MUSCLE",
+    "MR UNIVERSE",
+    "PAP",
+    "PEETJE",
+    "PTC",
+    "PUUR EN EERLIJK",
+    "VERZINKBOOR"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_002_len11",
+      "answer": "VERZINKBOOR",
+      "clue": "gereedschap",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len12",
+      "answer": "PUUR EN EERLIJK",
+      "clue": "geweldige kookkunsten",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_005_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_006_len8",
+      "answer": "MR MUSCLE",
+      "clue": "sterke meneer",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_007_len10",
+      "answer": "MR UNIVERSE",
+      "clue": "global director",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len6",
+      "answer": "LUKAKU",
+      "clue": "Vlaamse spits",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len4",
+      "answer": "LIJST",
+      "clue": "Chinese rijst",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_012_len4",
+      "answer": "EUFY",
+      "clue": "bel",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_013_len5",
+      "answer": "HAVIK",
+      "clue": "zelfde ogen",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "PAP",
+      "clue": "griesmeelvader",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_015_len5",
+      "answer": "ITALO",
+      "clue": "genre",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_016_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_017_len3",
+      "answer": "PTC",
+      "clue": "Peter the Cock",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_018_len3",
+      "answer": "AUV",
+      "clue": "Autonomous Underwater Vehicle",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_019_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "auto_h_02_08_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

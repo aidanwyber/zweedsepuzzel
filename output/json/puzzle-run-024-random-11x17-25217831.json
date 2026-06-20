@@ -1,0 +1,219 @@
+{
+  "templateId": "random-11x17-25217831",
+  "title": "Randomized 11x17 template 25217831",
+  "sourcePath": "output\\pdf\\puzzle-run-024-random-11x17-25217831.pdf",
+  "slotCount": 26,
+  "uniqueWordCount": 26,
+  "words": [
+    "ADIDAS",
+    "ANNA",
+    "ARIA",
+    "AUV",
+    "BODEM",
+    "DIKKE",
+    "ED",
+    "EURO",
+    "GPS",
+    "HMM",
+    "IPHONE",
+    "IT",
+    "LEONIE",
+    "LIDAR",
+    "MAKITA",
+    "NDT",
+    "OPERA",
+    "PEETJE",
+    "ROV",
+    "RUUD",
+    "SOLDEERBOUT",
+    "SONAR",
+    "SSS",
+    "VERZINKBOOR",
+    "YOU GOT THIS",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "YOU GOT THIS",
+      "clue": "truitekst",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len5",
+      "answer": "BODEM",
+      "clue": "bed",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_004_len6",
+      "answer": "IPHONE",
+      "clue": "slechtste gsm merk",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_005_len11",
+      "answer": "VERZINKBOOR",
+      "clue": "gereedschap",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len11",
+      "answer": "SOLDEERBOUT",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_008_len5",
+      "answer": "SONAR",
+      "clue": "met geluidsgolven",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_009_len5",
+      "answer": "DIKKE",
+      "clue": "aanspreekvorm",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_010_len6",
+      "answer": "MAKITA",
+      "clue": "accuboor",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_011_len5",
+      "answer": "OPERA",
+      "clue": "klassieke zang",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_012_len4",
+      "answer": "EURO",
+      "clue": "in de wc",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_014_len6",
+      "answer": "ADIDAS",
+      "clue": "huiskleding",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len5",
+      "answer": "LIDAR",
+      "clue": "met lichtgolven",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_016_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "GPS",
+      "clue": "locatiebepaling",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_019_len3",
+      "answer": "NDT",
+      "clue": "Non-Destructive Testing",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_020_len3",
+      "answer": "HMM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_021_len3",
+      "answer": "ROV",
+      "clue": "Remotely Operated Vehicle",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_022_len3",
+      "answer": "AUV",
+      "clue": "Autonomous Underwater Vehicle",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_023_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_024_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_025_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_026_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}

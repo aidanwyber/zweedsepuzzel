@@ -1,0 +1,171 @@
+{
+  "templateId": "random-11x17-68822355",
+  "title": "Randomized 11x17 template 68822355",
+  "sourcePath": "output\\pdf\\puzzle-run-016-random-11x17-68822355.pdf",
+  "slotCount": 20,
+  "uniqueWordCount": 20,
+  "words": [
+    "AIDAN",
+    "ARENASTRAAT",
+    "BADPUTJE",
+    "BODEM",
+    "BUENAS AIRES",
+    "ED",
+    "EIKEN",
+    "FRIKANDEL",
+    "FUGRO",
+    "IMU",
+    "IT",
+    "LAURIE",
+    "LIJST",
+    "ORANJE",
+    "PIETJE",
+    "ROBBIE",
+    "SONAR",
+    "T PLEINTJE",
+    "VOELSPRIET",
+    "WIJN"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "VOELSPRIET",
+      "clue": "voetbalclub",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "ORANJE",
+      "clue": "beste vlakleur",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_005_len9",
+      "answer": "FRIKANDEL",
+      "clue": "Lé weg?",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_006_len11",
+      "answer": "BUENAS AIRES",
+      "clue": "restaurantjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_007_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len8",
+      "answer": "BADPUTJE",
+      "clue": "blijven herhalen",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_009_len6",
+      "answer": "ROBBIE",
+      "clue": "koffieleut",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_010_len5",
+      "answer": "BODEM",
+      "clue": "bed",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_011_len9",
+      "answer": "T PLEINTJE",
+      "clue": "snackbar",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len5",
+      "answer": "SONAR",
+      "clue": "met geluidsgolven",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_013_len5",
+      "answer": "AIDAN",
+      "clue": "knapste schoonzoon",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_014_len5",
+      "answer": "FUGRO",
+      "clue": "werk",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_015_len3",
+      "answer": "IMU",
+      "clue": "Inertial Measurement Unit",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_016_len4",
+      "answer": "LIJST",
+      "clue": "Chinese rijst",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "WIJN",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_019_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_020_len5",
+      "answer": "EIKEN",
+      "clue": "mooiste houtsoort",
+      "direction": "down",
+      "clueDirection": "down"
+    }
+  ]
+}

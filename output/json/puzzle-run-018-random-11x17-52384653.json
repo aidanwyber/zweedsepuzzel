@@ -1,0 +1,187 @@
+{
+  "templateId": "random-11x17-52384653",
+  "title": "Randomized 11x17 template 52384653",
+  "sourcePath": "output\\pdf\\puzzle-run-018-random-11x17-52384653.pdf",
+  "slotCount": 22,
+  "uniqueWordCount": 22,
+  "words": [
+    "ARENASTRAAT",
+    "AUV",
+    "BH",
+    "CHOCOCHINO",
+    "CIRKELZAAG",
+    "ELEMENT P",
+    "GIS",
+    "HAVIK",
+    "HELICAL BUCKLING",
+    "HM",
+    "HMM",
+    "HMMM",
+    "HMMMMMM",
+    "IPHONE",
+    "IT",
+    "KIP CASHEW",
+    "LAURIE",
+    "MAC",
+    "OPERA",
+    "PISTACHE",
+    "SATE",
+    "SSS"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len10",
+      "answer": "CHOCOCHINO",
+      "clue": "stoere mannendrank",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_002_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len8",
+      "answer": "PISTACHE",
+      "clue": "avondsnack",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_004_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_005_len15",
+      "answer": "HELICAL BUCKLING",
+      "clue": "boorprobleem",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len10",
+      "answer": "CIRKELZAAG",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len9",
+      "answer": "KIP CASHEW",
+      "clue": "Thais gerecht",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_008_len8",
+      "answer": "ELEMENT P",
+      "clue": "sterkste materiaal",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len5",
+      "answer": "HAVIK",
+      "clue": "zelfde ogen",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len5",
+      "answer": "OPERA",
+      "clue": "klassieke zang",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len3",
+      "answer": "GIS",
+      "clue": "Geographic Information System",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "AUV",
+      "clue": "Autonomous Underwater Vehicle",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_015_len4",
+      "answer": "HMMM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_016_len7",
+      "answer": "HMMMMMM",
+      "clue": "niet goed",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_018_len3",
+      "answer": "HMM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_019_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_020_len2",
+      "answer": "HM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_021_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_022_len6",
+      "answer": "IPHONE",
+      "clue": "slechtste gsm merk",
+      "direction": "down",
+      "clueDirection": "down"
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "templateId": "random-11x17-15694350",
+  "title": "Randomized 11x17 template 15694350",
+  "sourcePath": "output\\pdf\\puzzle-run-005-random-11x17-15694350.pdf",
+  "slotCount": 20,
+  "uniqueWordCount": 20,
+  "words": [
+    "ANNA",
+    "ANNIE",
+    "ARIA",
+    "BADPUTJE",
+    "BIER",
+    "BOBO",
+    "BOVENFREES",
+    "EIKEN",
+    "IT",
+    "LAURIE",
+    "LIDAR",
+    "LITTLE PARAGUAYO",
+    "ORANJE",
+    "PIETJE",
+    "ROBBIE",
+    "SATE",
+    "TUBBO",
+    "VERZINKBOOR",
+    "VOLVO",
+    "ZAUBERFLOTE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "ROBBIE",
+      "clue": "koffieleut",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len15",
+      "answer": "LITTLE PARAGUAYO",
+      "clue": "fly away",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_004_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_005_len11",
+      "answer": "VERZINKBOOR",
+      "clue": "gereedschap",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len6",
+      "answer": "ORANJE",
+      "clue": "beste vlakleur",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len5",
+      "answer": "LIDAR",
+      "clue": "met lichtgolven",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_008_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_009_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_010_len8",
+      "answer": "BADPUTJE",
+      "clue": "blijven herhalen",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_011_len5",
+      "answer": "EIKEN",
+      "clue": "mooiste houtsoort",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_012_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_013_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_014_len4",
+      "answer": "BIER",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_015_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_016_len5",
+      "answer": "TUBBO",
+      "clue": "mensensoepkom",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_017_len5",
+      "answer": "VOLVO",
+      "clue": "nieuw ruimteschip",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_018_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_019_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_020_len5",
+      "answer": "ANNIE",
+      "clue": "grote eter",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

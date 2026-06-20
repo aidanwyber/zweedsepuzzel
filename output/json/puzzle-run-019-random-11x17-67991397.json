@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-67991397",
+  "title": "Randomized 11x17 template 67991397",
+  "sourcePath": "output\\pdf\\puzzle-run-019-random-11x17-67991397.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "ANNA",
+    "ARIA",
+    "BH",
+    "BOVENFREES",
+    "CNC",
+    "EUROMUNT",
+    "HYPNOSE",
+    "IMU",
+    "ITALO",
+    "KAPZAAG",
+    "KOMOPNOU",
+    "LAURIE",
+    "LEONIE",
+    "LEUGEN",
+    "LIJST",
+    "LUHLUH",
+    "MAC",
+    "PEETJE",
+    "PIETJE",
+    "PTC",
+    "RUUD",
+    "SSS",
+    "TESLA"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_005_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_006_len8",
+      "answer": "KOMOPNOU",
+      "clue": "motiverende slogan",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_007_len5",
+      "answer": "ITALO",
+      "clue": "genre",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_008_len7",
+      "answer": "KAPZAAG",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_009_len6",
+      "answer": "LEUGEN",
+      "clue": "ik doe het allemaal voor jullie",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_010_len8",
+      "answer": "EUROMUNT",
+      "clue": "in de wc",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_011_len4",
+      "answer": "LIJST",
+      "clue": "Chinese rijst",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_012_len5",
+      "answer": "TESLA",
+      "clue": "ruimteschip",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len3",
+      "answer": "IMU",
+      "clue": "Inertial Measurement Unit",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "PTC",
+      "clue": "Peter the Cock",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_015_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_016_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_017_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_018_len6",
+      "answer": "LUHLUH",
+      "clue": "songtekst",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_019_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_020_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_021_len7",
+      "answer": "HYPNOSE",
+      "clue": "tovenarij",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_022_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "auto_h_06_09_len2",
+      "answer": "BH",
+      "clue": "borehole",
+      "direction": "right",
+      "clueDirection": "right"
+    }
+  ]
+}

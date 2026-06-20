@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-2241440",
+  "title": "Randomized 11x17 template 2241440",
+  "sourcePath": "output\\pdf\\puzzle-run-003-random-11x17-2241440.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "BADPUTJE",
+    "BAO",
+    "BLOKSCHAAF",
+    "BLUE DRAGON",
+    "BOBO",
+    "CNC",
+    "CPT",
+    "DIKKE",
+    "GPS",
+    "HYPNOSE",
+    "IMU",
+    "IPHONE",
+    "IT",
+    "ITALO",
+    "LEONIEDEPIE",
+    "LEUGEN",
+    "PAP",
+    "PIETJE",
+    "SATE",
+    "SOLDEERBOUT",
+    "SONAR",
+    "ZAUBERFLOTE",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "h_001_len6",
+      "answer": "PIETJE",
+      "clue": "piratenvoorvader",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_002_len6",
+      "answer": "IPHONE",
+      "clue": "slechtste gsm merk",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_003_len6",
+      "answer": "LEUGEN",
+      "clue": "ik doe het allemaal voor jullie",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len11",
+      "answer": "LEONIEDEPIE",
+      "clue": "Leonie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_005_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_006_len10",
+      "answer": "BLOKSCHAAF",
+      "clue": "handgereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_007_len5",
+      "answer": "SONAR",
+      "clue": "met geluidsgolven",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_008_len11",
+      "answer": "SOLDEERBOUT",
+      "clue": "elektrisch gereedschap",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len8",
+      "answer": "BADPUTJE",
+      "clue": "blijven herhalen",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_010_len7",
+      "answer": "HYPNOSE",
+      "clue": "tovenarij",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_011_len5",
+      "answer": "DIKKE",
+      "clue": "aanspreekvorm",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_013_len3",
+      "answer": "GPS",
+      "clue": "locatiebepaling",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_014_len3",
+      "answer": "PAP",
+      "clue": "griesmeelvader",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_015_len3",
+      "answer": "IMU",
+      "clue": "Inertial Measurement Unit",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_016_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_017_len3",
+      "answer": "CPT",
+      "clue": "Cone Penetration Test",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_018_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_020_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_021_len3",
+      "answer": "BAO",
+      "clue": "beste vriendje",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_022_len5",
+      "answer": "ITALO",
+      "clue": "genre",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_023_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "right",
+      "clueDirection": "down"
+    }
+  ]
+}

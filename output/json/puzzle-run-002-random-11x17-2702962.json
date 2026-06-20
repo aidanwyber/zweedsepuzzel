@@ -1,0 +1,187 @@
+{
+  "templateId": "random-11x17-2702962",
+  "title": "Randomized 11x17 template 2702962",
+  "sourcePath": "output\\pdf\\puzzle-run-002-random-11x17-2702962.pdf",
+  "slotCount": 22,
+  "uniqueWordCount": 22,
+  "words": [
+    "ARENASTRAAT",
+    "ARIA",
+    "BAKKIE",
+    "BLUE DRAGON",
+    "BOBO",
+    "BODEM",
+    "BOVENFREES",
+    "CPT",
+    "ED",
+    "EURO",
+    "HAVIK",
+    "HM",
+    "IT",
+    "KOMOPNOU",
+    "MAC",
+    "MARATHON",
+    "PEETJE",
+    "PTC",
+    "SPOTJE",
+    "TRANSFORMERS",
+    "WIJN",
+    "ZAUBERFLOTE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "SPOTJE",
+      "clue": "overal ideaal",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "ZAUBERFLOTE",
+      "clue": "toverfluit",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_004_len12",
+      "answer": "TRANSFORMERS",
+      "clue": "robots in the sky",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_005_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len6",
+      "answer": "PEETJE",
+      "clue": "goeie rapper",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_007_len11",
+      "answer": "ARENASTRAAT",
+      "clue": "habitat",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_008_len8",
+      "answer": "MARATHON",
+      "clue": "danseee",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len5",
+      "answer": "BODEM",
+      "clue": "bed",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_010_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_011_len5",
+      "answer": "HAVIK",
+      "clue": "zelfde ogen",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_012_len6",
+      "answer": "BAKKIE",
+      "clue": "espresso",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_013_len4",
+      "answer": "EURO",
+      "clue": "in de wc",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_014_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_015_len3",
+      "answer": "CPT",
+      "clue": "Cone Penetration Test",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_016_len2",
+      "answer": "HM",
+      "clue": "niet goed",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_017_len3",
+      "answer": "PTC",
+      "clue": "Peter the Cock",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_018_len3",
+      "answer": "MAC",
+      "clue": "kompjoetah",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_019_len3",
+      "answer": "WIJN",
+      "clue": "mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_020_len2",
+      "answer": "IT",
+      "clue": "Italie",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_021_len2",
+      "answer": "ED",
+      "clue": "favoriete schoonzoon",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_022_len8",
+      "answer": "KOMOPNOU",
+      "clue": "motiverende slogan",
+      "direction": "right",
+      "clueDirection": "down"
+    }
+  ]
+}

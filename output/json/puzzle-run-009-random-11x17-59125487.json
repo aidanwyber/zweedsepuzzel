@@ -1,0 +1,195 @@
+{
+  "templateId": "random-11x17-59125487",
+  "title": "Randomized 11x17 template 59125487",
+  "sourcePath": "output\\pdf\\puzzle-run-009-random-11x17-59125487.pdf",
+  "slotCount": 23,
+  "uniqueWordCount": 23,
+  "words": [
+    "ANNA",
+    "ARIA",
+    "BAO",
+    "BLUE DRAGON",
+    "BOBO",
+    "BODEM",
+    "BOVENFREES",
+    "CHOCOCHINO",
+    "CNC",
+    "CROCS",
+    "EIKEN",
+    "IMU",
+    "LAURIE",
+    "LEONIE",
+    "MANNENAVOND",
+    "MR SNOEPIE",
+    "ORANJE",
+    "RABARBER",
+    "RUUD",
+    "SATE",
+    "SPOTJE",
+    "SSS",
+    "ZEE"
+  ],
+  "slots": [
+    {
+      "id": "v_001_len10",
+      "answer": "BLUE DRAGON",
+      "clue": "kekke robot",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_002_len6",
+      "answer": "LEONIE",
+      "clue": "vrâhtjuh",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_003_len11",
+      "answer": "MANNENAVOND",
+      "clue": "op donderdag",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_004_len6",
+      "answer": "ORANJE",
+      "clue": "beste vlakleur",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_005_len8",
+      "answer": "RABARBER",
+      "clue": "oma’s lekkernij",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_006_len6",
+      "answer": "LAURIE",
+      "clue": "tattoekind",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_007_len10",
+      "answer": "CHOCOCHINO",
+      "clue": "stoere mannendrank",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_008_len9",
+      "answer": "MR SNOEPIE",
+      "clue": "speelt gitaar",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_009_len6",
+      "answer": "SPOTJE",
+      "clue": "overal ideaal",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_010_len10",
+      "answer": "BOVENFREES",
+      "clue": "elektrisch gereedschap",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_011_len4",
+      "answer": "ANNA",
+      "clue": "Altijd Nakijken...",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_012_len5",
+      "answer": "BODEM",
+      "clue": "bed",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_013_len4",
+      "answer": "BOBO",
+      "clue": "animatieclub leider",
+      "direction": "down",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_014_len3",
+      "answer": "IMU",
+      "clue": "Inertial Measurement Unit",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_015_len3",
+      "answer": "SSS",
+      "clue": "Side Scan Sonar",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_016_len4",
+      "answer": "RUUD",
+      "clue": "meneer geluid",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_017_len4",
+      "answer": "ARIA",
+      "clue": "opera-nummer",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_018_len3",
+      "answer": "BAO",
+      "clue": "beste vriendje",
+      "direction": "right",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_019_len3",
+      "answer": "ZEE",
+      "clue": "nat lichaam",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "v_020_len3",
+      "answer": "CNC",
+      "clue": "Computer Numerical Control",
+      "direction": "down",
+      "clueDirection": "right"
+    },
+    {
+      "id": "h_021_len5",
+      "answer": "CROCS",
+      "clue": "werkschoenen",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "h_022_len4",
+      "answer": "SATE",
+      "clue": "pindakip",
+      "direction": "right",
+      "clueDirection": "down"
+    },
+    {
+      "id": "v_023_len5",
+      "answer": "EIKEN",
+      "clue": "mooiste houtsoort",
+      "direction": "down",
+      "clueDirection": "right"
+    }
+  ]
+}
