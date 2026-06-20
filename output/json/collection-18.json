@@ -1,0 +1,2500 @@
+{
+  "collectionSize": 18,
+  "availableCandidateCount": 26,
+  "selectionMethod": "greedy-swap",
+  "objective": "Minimize total pairwise shared answers, then max pairwise shared answers, then maximize unique answers.",
+  "totalPairwiseSharedWords": 691,
+  "averagePairwiseSharedWords": 4.516,
+  "maxPairwiseSharedWords": 9,
+  "uniqueWordCount": 119,
+  "uniqueWords": [
+    "ADIDAS",
+    "AIDAN",
+    "AJAX",
+    "ANNA",
+    "ANNIE",
+    "ARENASTRAAT",
+    "ARIA",
+    "ARNOLD",
+    "AUV",
+    "BADPUTJE",
+    "BAKKIE",
+    "BAO",
+    "BH",
+    "BIER",
+    "BLOKSCHAAF",
+    "BLUE DRAGON",
+    "BOBO",
+    "BODEM",
+    "BOVENFREES",
+    "BUENAS AIRES",
+    "CHOCOCHINO",
+    "CIRKELZAAG",
+    "CNC",
+    "CPT",
+    "CROCS",
+    "DIKKE",
+    "ED",
+    "EIKEN",
+    "ELEMENT P",
+    "ESSIE",
+    "EUFY",
+    "EURO",
+    "EUROMUNT",
+    "FRIKANDEL",
+    "FUGRO",
+    "GIS",
+    "GPS",
+    "HAMERBOOR",
+    "HAVIK",
+    "HELICAL BUCKLING",
+    "HM",
+    "HMM",
+    "HMMM",
+    "HMMMM",
+    "HMMMMMM",
+    "HYPNOSE",
+    "IMU",
+    "IPHONE",
+    "IT",
+    "ITALO",
+    "KAPZAAG",
+    "KIP CASHEW",
+    "KLUSSEN",
+    "KNIK",
+    "KOMOPNOU",
+    "LAGUNITAS",
+    "LAMMYCOAT",
+    "LAURIE",
+    "LEONIE",
+    "LEONIEDEPIE",
+    "LEUGEN",
+    "LIDAR",
+    "LIJST",
+    "LITTLE PARAGUAYO",
+    "LUH",
+    "LUHLUH",
+    "LUHLUHLUH",
+    "LUHLUHLUHLUHLUH",
+    "LUKAKU",
+    "MAC",
+    "MAKITA",
+    "MANCAVE",
+    "MANNENAVOND",
+    "MARATHON",
+    "MOINEAU",
+    "MR MUSCLE",
+    "MR SNOEPIE",
+    "MR UNIVERSE",
+    "NDT",
+    "OPERA",
+    "ORANJE",
+    "OVERAL",
+    "PAP",
+    "PEETJE",
+    "PETER SPECIAL",
+    "PIETJE",
+    "PINK FLOYD",
+    "PISTACHE",
+    "PROJECT X",
+    "PTC",
+    "PUUR EN EERLIJK",
+    "RABARBER",
+    "ROBBIE",
+    "ROV",
+    "RUUD",
+    "SATE",
+    "SAUNA",
+    "SCHRAPER",
+    "SCHUTZ",
+    "SIKKENS",
+    "SILENCIO",
+    "SMAKKEMO",
+    "SOLDEERBOUT",
+    "SONAR",
+    "SONDE",
+    "SPOTJE",
+    "SSS",
+    "T PLEINTJE",
+    "TEKENING",
+    "TESLA",
+    "TRANSFORMERS",
+    "TUBBO",
+    "VERZINKBOOR",
+    "VOELSPRIET",
+    "VOLVO",
+    "WIJN",
+    "YOU GOT THIS",
+    "ZAUBERFLOTE",
+    "ZEE"
+  ],
+  "selected": [
+    {
+      "file": "puzzle-run-001-random-11x17-72764371.json",
+      "sourcePath": "output\\pdf\\puzzle-run-001-random-11x17-72764371.pdf",
+      "templateId": "random-11x17-72764371",
+      "title": "Randomized 11x17 template 72764371",
+      "slotCount": 24,
+      "uniqueWordCount": 24,
+      "words": [
+        "ARNOLD",
+        "AUV",
+        "BAKKIE",
+        "BH",
+        "BLUE DRAGON",
+        "CNC",
+        "CROCS",
+        "HM",
+        "HMM",
+        "HMMMM",
+        "IT",
+        "ITALO",
+        "LAMMYCOAT",
+        "LAURIE",
+        "LEONIE",
+        "LUKAKU",
+        "MR MUSCLE",
+        "PEETJE",
+        "SATE",
+        "SMAKKEMO",
+        "SONDE",
+        "VOELSPRIET",
+        "VOLVO",
+        "ZEE"
+      ]
+    },
+    {
+      "file": "puzzle-run-003-random-11x17-2241440.json",
+      "sourcePath": "output\\pdf\\puzzle-run-003-random-11x17-2241440.pdf",
+      "templateId": "random-11x17-2241440",
+      "title": "Randomized 11x17 template 2241440",
+      "slotCount": 23,
+      "uniqueWordCount": 23,
+      "words": [
+        "BADPUTJE",
+        "BAO",
+        "BLOKSCHAAF",
+        "BLUE DRAGON",
+        "BOBO",
+        "CNC",
+        "CPT",
+        "DIKKE",
+        "GPS",
+        "HYPNOSE",
+        "IMU",
+        "IPHONE",
+        "IT",
+        "ITALO",
+        "LEONIEDEPIE",
+        "LEUGEN",
+        "PAP",
+        "PIETJE",
+        "SATE",
+        "SOLDEERBOUT",
+        "SONAR",
+        "ZAUBERFLOTE",
+        "ZEE"
+      ]
+    },
+    {
+      "file": "puzzle-run-023-random-11x17-423568.json",
+      "sourcePath": "output\\pdf\\puzzle-run-023-random-11x17-423568.pdf",
+      "templateId": "random-11x17-423568",
+      "title": "Randomized 11x17 template 423568",
+      "slotCount": 20,
+      "uniqueWordCount": 20,
+      "words": [
+        "ANNA",
+        "ARENASTRAAT",
+        "AUV",
+        "BOVENFREES",
+        "BUENAS AIRES",
+        "CNC",
+        "EUFY",
+        "HAVIK",
+        "ITALO",
+        "LAURIE",
+        "LIJST",
+        "LUKAKU",
+        "MAC",
+        "MR MUSCLE",
+        "MR UNIVERSE",
+        "PAP",
+        "PEETJE",
+        "PTC",
+        "PUUR EN EERLIJK",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "file": "puzzle-run-013-random-11x17-45674949.json",
+      "sourcePath": "output\\pdf\\puzzle-run-013-random-11x17-45674949.pdf",
+      "templateId": "random-11x17-45674949",
+      "title": "Randomized 11x17 template 45674949",
+      "slotCount": 19,
+      "uniqueWordCount": 19,
+      "words": [
+        "AJAX",
+        "ARENASTRAAT",
+        "BOVENFREES",
+        "BUENAS AIRES",
+        "ESSIE",
+        "EURO",
+        "IPHONE",
+        "LAURIE",
+        "LEONIE",
+        "NDT",
+        "PETER SPECIAL",
+        "PIETJE",
+        "PROJECT X",
+        "SATE",
+        "SCHUTZ",
+        "SPOTJE",
+        "TEKENING",
+        "TESLA",
+        "ZEE"
+      ]
+    },
+    {
+      "file": "puzzle-run-026-random-11x17-20930915.json",
+      "sourcePath": "output\\pdf\\puzzle-run-026-random-11x17-20930915.pdf",
+      "templateId": "random-11x17-20930915",
+      "title": "Randomized 11x17 template 20930915",
+      "slotCount": 20,
+      "uniqueWordCount": 20,
+      "words": [
+        "ANNIE",
+        "BH",
+        "BOBO",
+        "CHOCOCHINO",
+        "CNC",
+        "ED",
+        "FUGRO",
+        "IMU",
+        "LUH",
+        "LUHLUH",
+        "LUHLUHLUHLUHLUH",
+        "MANNENAVOND",
+        "MOINEAU",
+        "MR MUSCLE",
+        "PINK FLOYD",
+        "RUUD",
+        "SOLDEERBOUT",
+        "VERZINKBOOR",
+        "WIJN",
+        "ZEE"
+      ]
+    },
+    {
+      "file": "puzzle-run-022-random-11x17-16611733.json",
+      "sourcePath": "output\\pdf\\puzzle-run-022-random-11x17-16611733.pdf",
+      "templateId": "random-11x17-16611733",
+      "title": "Randomized 11x17 template 16611733",
+      "slotCount": 21,
+      "uniqueWordCount": 21,
+      "words": [
+        "BAKKIE",
+        "BAO",
+        "BH",
+        "BUENAS AIRES",
+        "CROCS",
+        "EURO",
+        "GIS",
+        "GPS",
+        "LAGUNITAS",
+        "LAURIE",
+        "LIJST",
+        "ORANJE",
+        "OVERAL",
+        "RUUD",
+        "SIKKENS",
+        "SILENCIO",
+        "SSS",
+        "TESLA",
+        "TUBBO",
+        "VERZINKBOOR",
+        "VOELSPRIET"
+      ]
+    },
+    {
+      "file": "puzzle-run-015-random-11x17-80804107.json",
+      "sourcePath": "output\\pdf\\puzzle-run-015-random-11x17-80804107.pdf",
+      "templateId": "random-11x17-80804107",
+      "title": "Randomized 11x17 template 80804107",
+      "slotCount": 21,
+      "uniqueWordCount": 21,
+      "words": [
+        "ARIA",
+        "BAKKIE",
+        "BAO",
+        "BIER",
+        "BLUE DRAGON",
+        "CIRKELZAAG",
+        "CPT",
+        "EUROMUNT",
+        "FUGRO",
+        "HAVIK",
+        "LAURIE",
+        "LEONIE",
+        "LIDAR",
+        "LUH",
+        "LUHLUHLUH",
+        "LUKAKU",
+        "PAP",
+        "PEETJE",
+        "PTC",
+        "SONDE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "file": "puzzle-run-018-random-11x17-52384653.json",
+      "sourcePath": "output\\pdf\\puzzle-run-018-random-11x17-52384653.pdf",
+      "templateId": "random-11x17-52384653",
+      "title": "Randomized 11x17 template 52384653",
+      "slotCount": 22,
+      "uniqueWordCount": 22,
+      "words": [
+        "ARENASTRAAT",
+        "AUV",
+        "BH",
+        "CHOCOCHINO",
+        "CIRKELZAAG",
+        "ELEMENT P",
+        "GIS",
+        "HAVIK",
+        "HELICAL BUCKLING",
+        "HM",
+        "HMM",
+        "HMMM",
+        "HMMMMMM",
+        "IPHONE",
+        "IT",
+        "KIP CASHEW",
+        "LAURIE",
+        "MAC",
+        "OPERA",
+        "PISTACHE",
+        "SATE",
+        "SSS"
+      ]
+    },
+    {
+      "file": "puzzle-run-016-random-11x17-68822355.json",
+      "sourcePath": "output\\pdf\\puzzle-run-016-random-11x17-68822355.pdf",
+      "templateId": "random-11x17-68822355",
+      "title": "Randomized 11x17 template 68822355",
+      "slotCount": 20,
+      "uniqueWordCount": 20,
+      "words": [
+        "AIDAN",
+        "ARENASTRAAT",
+        "BADPUTJE",
+        "BODEM",
+        "BUENAS AIRES",
+        "ED",
+        "EIKEN",
+        "FRIKANDEL",
+        "FUGRO",
+        "IMU",
+        "IT",
+        "LAURIE",
+        "LIJST",
+        "ORANJE",
+        "PIETJE",
+        "ROBBIE",
+        "SONAR",
+        "T PLEINTJE",
+        "VOELSPRIET",
+        "WIJN"
+      ]
+    },
+    {
+      "file": "puzzle-run-010-random-11x17-36919695.json",
+      "sourcePath": "output\\pdf\\puzzle-run-010-random-11x17-36919695.pdf",
+      "templateId": "random-11x17-36919695",
+      "title": "Randomized 11x17 template 36919695",
+      "slotCount": 20,
+      "uniqueWordCount": 20,
+      "words": [
+        "ANNA",
+        "ANNIE",
+        "ARENASTRAAT",
+        "AUV",
+        "BIER",
+        "BOVENFREES",
+        "BUENAS AIRES",
+        "ESSIE",
+        "HM",
+        "KNIK",
+        "LEONIE",
+        "MANNENAVOND",
+        "RABARBER",
+        "SATE",
+        "SCHRAPER",
+        "SONAR",
+        "SONDE",
+        "SSS",
+        "ZAUBERFLOTE",
+        "ZEE"
+      ]
+    },
+    {
+      "file": "puzzle-run-007-random-11x17-61207927.json",
+      "sourcePath": "output\\pdf\\puzzle-run-007-random-11x17-61207927.pdf",
+      "templateId": "random-11x17-61207927",
+      "title": "Randomized 11x17 template 61207927",
+      "slotCount": 21,
+      "uniqueWordCount": 21,
+      "words": [
+        "ADIDAS",
+        "ARENASTRAAT",
+        "ARIA",
+        "BUENAS AIRES",
+        "DIKKE",
+        "ED",
+        "EUROMUNT",
+        "GPS",
+        "IT",
+        "ITALO",
+        "MAC",
+        "MANCAVE",
+        "MANNENAVOND",
+        "MR UNIVERSE",
+        "OPERA",
+        "PTC",
+        "RUUD",
+        "SOLDEERBOUT",
+        "SPOTJE",
+        "TEKENING",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "file": "puzzle-run-025-random-11x17-4602559.json",
+      "sourcePath": "output\\pdf\\puzzle-run-025-random-11x17-4602559.pdf",
+      "templateId": "random-11x17-4602559",
+      "title": "Randomized 11x17 template 4602559",
+      "slotCount": 23,
+      "uniqueWordCount": 23,
+      "words": [
+        "ANNIE",
+        "BH",
+        "BIER",
+        "CHOCOCHINO",
+        "CPT",
+        "CROCS",
+        "DIKKE",
+        "ELEMENT P",
+        "ESSIE",
+        "IMU",
+        "IT",
+        "KLUSSEN",
+        "KNIK",
+        "KOMOPNOU",
+        "LEONIEDEPIE",
+        "MANNENAVOND",
+        "MARATHON",
+        "PAP",
+        "PIETJE",
+        "PTC",
+        "SATE",
+        "SIKKENS",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "file": "puzzle-run-020-random-11x17-73398021.json",
+      "sourcePath": "output\\pdf\\puzzle-run-020-random-11x17-73398021.pdf",
+      "templateId": "random-11x17-73398021",
+      "title": "Randomized 11x17 template 73398021",
+      "slotCount": 22,
+      "uniqueWordCount": 22,
+      "words": [
+        "ARNOLD",
+        "BH",
+        "BOBO",
+        "BOVENFREES",
+        "ED",
+        "GPS",
+        "IPHONE",
+        "ITALO",
+        "LAURIE",
+        "LEONIE",
+        "LEUGEN",
+        "LIDAR",
+        "LITTLE PARAGUAYO",
+        "NDT",
+        "PEETJE",
+        "PIETJE",
+        "RABARBER",
+        "ROV",
+        "SAUNA",
+        "TESLA",
+        "TUBBO",
+        "ZEE"
+      ]
+    },
+    {
+      "file": "puzzle-run-006-random-11x17-70605382.json",
+      "sourcePath": "output\\pdf\\puzzle-run-006-random-11x17-70605382.pdf",
+      "templateId": "random-11x17-70605382",
+      "title": "Randomized 11x17 template 70605382",
+      "slotCount": 22,
+      "uniqueWordCount": 22,
+      "words": [
+        "ARENASTRAAT",
+        "BAKKIE",
+        "BH",
+        "BIER",
+        "BLUE DRAGON",
+        "BODEM",
+        "CIRKELZAAG",
+        "CNC",
+        "ED",
+        "EIKEN",
+        "HAVIK",
+        "HM",
+        "KAPZAAG",
+        "LUH",
+        "MAC",
+        "MANCAVE",
+        "MANNENAVOND",
+        "MR SNOEPIE",
+        "PAP",
+        "SAUNA",
+        "SCHUTZ",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "file": "puzzle-run-005-random-11x17-15694350.json",
+      "sourcePath": "output\\pdf\\puzzle-run-005-random-11x17-15694350.pdf",
+      "templateId": "random-11x17-15694350",
+      "title": "Randomized 11x17 template 15694350",
+      "slotCount": 20,
+      "uniqueWordCount": 20,
+      "words": [
+        "ANNA",
+        "ANNIE",
+        "ARIA",
+        "BADPUTJE",
+        "BIER",
+        "BOBO",
+        "BOVENFREES",
+        "EIKEN",
+        "IT",
+        "LAURIE",
+        "LIDAR",
+        "LITTLE PARAGUAYO",
+        "ORANJE",
+        "PIETJE",
+        "ROBBIE",
+        "SATE",
+        "TUBBO",
+        "VERZINKBOOR",
+        "VOLVO",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "file": "puzzle-run-021-random-11x17-76676542.json",
+      "sourcePath": "output\\pdf\\puzzle-run-021-random-11x17-76676542.pdf",
+      "templateId": "random-11x17-76676542",
+      "title": "Randomized 11x17 template 76676542",
+      "slotCount": 23,
+      "uniqueWordCount": 23,
+      "words": [
+        "ADIDAS",
+        "ARIA",
+        "BAKKIE",
+        "BAO",
+        "BH",
+        "BOBO",
+        "CNC",
+        "CROCS",
+        "ED",
+        "FUGRO",
+        "HAMERBOOR",
+        "HYPNOSE",
+        "IPHONE",
+        "LUH",
+        "LUHLUH",
+        "MAKITA",
+        "MANNENAVOND",
+        "PAP",
+        "RUUD",
+        "SCHRAPER",
+        "SPOTJE",
+        "VOELSPRIET",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "file": "puzzle-run-002-random-11x17-50013106.json",
+      "sourcePath": "output\\pdf\\puzzle-run-002-random-11x17-50013106.pdf",
+      "templateId": "random-11x17-50013106",
+      "title": "Randomized 11x17 template 50013106",
+      "slotCount": 21,
+      "uniqueWordCount": 21,
+      "words": [
+        "ANNA",
+        "ARENASTRAAT",
+        "ARIA",
+        "BADPUTJE",
+        "BH",
+        "BIER",
+        "CNC",
+        "ESSIE",
+        "FUGRO",
+        "HELICAL BUCKLING",
+        "IMU",
+        "IT",
+        "KLUSSEN",
+        "KNIK",
+        "MANNENAVOND",
+        "MOINEAU",
+        "OPERA",
+        "PIETJE",
+        "SOLDEERBOUT",
+        "YOU GOT THIS",
+        "ZEE"
+      ]
+    },
+    {
+      "file": "puzzle-run-002-random-11x17-2702962.json",
+      "sourcePath": "output\\pdf\\puzzle-run-002-random-11x17-2702962.pdf",
+      "templateId": "random-11x17-2702962",
+      "title": "Randomized 11x17 template 2702962",
+      "slotCount": 22,
+      "uniqueWordCount": 22,
+      "words": [
+        "ARENASTRAAT",
+        "ARIA",
+        "BAKKIE",
+        "BLUE DRAGON",
+        "BOBO",
+        "BODEM",
+        "BOVENFREES",
+        "CPT",
+        "ED",
+        "EURO",
+        "HAVIK",
+        "HM",
+        "IT",
+        "KOMOPNOU",
+        "MAC",
+        "MARATHON",
+        "PEETJE",
+        "PTC",
+        "SPOTJE",
+        "TRANSFORMERS",
+        "WIJN",
+        "ZAUBERFLOTE"
+      ]
+    }
+  ],
+  "pairwiseOverlaps": [
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-003-random-11x17-2241440.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "BLUE DRAGON",
+        "CNC",
+        "IT",
+        "ITALO",
+        "SATE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-023-random-11x17-423568.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "AUV",
+        "CNC",
+        "ITALO",
+        "LAURIE",
+        "LUKAKU",
+        "MR MUSCLE",
+        "PEETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-013-random-11x17-45674949.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "LAURIE",
+        "LEONIE",
+        "SATE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-026-random-11x17-20930915.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BH",
+        "CNC",
+        "MR MUSCLE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-022-random-11x17-16611733.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BAKKIE",
+        "BH",
+        "CROCS",
+        "LAURIE",
+        "VOELSPRIET"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-015-random-11x17-80804107.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "BAKKIE",
+        "BLUE DRAGON",
+        "LAURIE",
+        "LEONIE",
+        "LUKAKU",
+        "PEETJE",
+        "SONDE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-018-random-11x17-52384653.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "AUV",
+        "BH",
+        "HM",
+        "HMM",
+        "IT",
+        "LAURIE",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "IT",
+        "LAURIE",
+        "VOELSPRIET"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "AUV",
+        "HM",
+        "LEONIE",
+        "SATE",
+        "SONDE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "IT",
+        "ITALO"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BH",
+        "CROCS",
+        "IT",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "ARNOLD",
+        "BH",
+        "ITALO",
+        "LAURIE",
+        "LEONIE",
+        "PEETJE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BAKKIE",
+        "BH",
+        "BLUE DRAGON",
+        "CNC",
+        "HM"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "IT",
+        "LAURIE",
+        "SATE",
+        "VOLVO"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BAKKIE",
+        "BH",
+        "CNC",
+        "CROCS",
+        "VOELSPRIET"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BH",
+        "CNC",
+        "IT",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-001-random-11x17-72764371.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BAKKIE",
+        "BLUE DRAGON",
+        "HM",
+        "IT",
+        "PEETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-023-random-11x17-423568.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "CNC",
+        "ITALO",
+        "PAP"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-013-random-11x17-45674949.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "IPHONE",
+        "PIETJE",
+        "SATE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-026-random-11x17-20930915.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BOBO",
+        "CNC",
+        "IMU",
+        "SOLDEERBOUT",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-022-random-11x17-16611733.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "BAO",
+        "GPS"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-015-random-11x17-80804107.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BAO",
+        "BLUE DRAGON",
+        "CPT",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-018-random-11x17-52384653.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "IPHONE",
+        "IT",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BADPUTJE",
+        "IMU",
+        "IT",
+        "PIETJE",
+        "SONAR"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "SATE",
+        "SONAR",
+        "ZAUBERFLOTE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "DIKKE",
+        "GPS",
+        "IT",
+        "ITALO",
+        "SOLDEERBOUT"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 9,
+      "sharedWords": [
+        "CPT",
+        "DIKKE",
+        "IMU",
+        "IT",
+        "LEONIEDEPIE",
+        "PAP",
+        "PIETJE",
+        "SATE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "BOBO",
+        "GPS",
+        "IPHONE",
+        "ITALO",
+        "LEUGEN",
+        "PIETJE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BLUE DRAGON",
+        "CNC",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "BADPUTJE",
+        "BOBO",
+        "IT",
+        "PIETJE",
+        "SATE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "BAO",
+        "BOBO",
+        "CNC",
+        "HYPNOSE",
+        "IPHONE",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "BADPUTJE",
+        "CNC",
+        "IMU",
+        "IT",
+        "PIETJE",
+        "SOLDEERBOUT",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-003-random-11x17-2241440.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BLUE DRAGON",
+        "BOBO",
+        "CPT",
+        "IT",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-013-random-11x17-45674949.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BOVENFREES",
+        "BUENAS AIRES",
+        "LAURIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-026-random-11x17-20930915.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "CNC",
+        "MR MUSCLE",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-022-random-11x17-16611733.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BUENAS AIRES",
+        "LAURIE",
+        "LIJST",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-015-random-11x17-80804107.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "HAVIK",
+        "LAURIE",
+        "LUKAKU",
+        "PAP",
+        "PEETJE",
+        "PTC"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-018-random-11x17-52384653.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "AUV",
+        "HAVIK",
+        "LAURIE",
+        "MAC"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BUENAS AIRES",
+        "LAURIE",
+        "LIJST"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ANNA",
+        "ARENASTRAAT",
+        "AUV",
+        "BOVENFREES",
+        "BUENAS AIRES"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BUENAS AIRES",
+        "ITALO",
+        "MAC",
+        "MR UNIVERSE",
+        "PTC",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "PAP",
+        "PTC"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BOVENFREES",
+        "ITALO",
+        "LAURIE",
+        "PEETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "CNC",
+        "HAVIK",
+        "MAC",
+        "PAP"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ANNA",
+        "BOVENFREES",
+        "LAURIE",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "CNC",
+        "PAP"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ANNA",
+        "ARENASTRAAT",
+        "CNC"
+      ]
+    },
+    {
+      "left": "puzzle-run-023-random-11x17-423568.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BOVENFREES",
+        "HAVIK",
+        "MAC",
+        "PEETJE",
+        "PTC"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-026-random-11x17-20930915.json",
+      "sharedWordCount": 1,
+      "sharedWords": [
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-022-random-11x17-16611733.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BUENAS AIRES",
+        "EURO",
+        "LAURIE",
+        "TESLA"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-015-random-11x17-80804107.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "LAURIE",
+        "LEONIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-018-random-11x17-52384653.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "IPHONE",
+        "LAURIE",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BUENAS AIRES",
+        "LAURIE",
+        "PIETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BOVENFREES",
+        "BUENAS AIRES",
+        "ESSIE",
+        "LEONIE",
+        "SATE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BUENAS AIRES",
+        "SPOTJE",
+        "TEKENING"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ESSIE",
+        "PIETJE",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 8,
+      "sharedWords": [
+        "BOVENFREES",
+        "IPHONE",
+        "LAURIE",
+        "LEONIE",
+        "NDT",
+        "PIETJE",
+        "TESLA",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "SCHUTZ"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BOVENFREES",
+        "LAURIE",
+        "PIETJE",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "IPHONE",
+        "SPOTJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "ESSIE",
+        "PIETJE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-013-random-11x17-45674949.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BOVENFREES",
+        "EURO",
+        "SPOTJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-022-random-11x17-16611733.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BH",
+        "RUUD",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-015-random-11x17-80804107.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "FUGRO",
+        "LUH"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-018-random-11x17-52384653.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "BH",
+        "CHOCOCHINO"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ED",
+        "FUGRO",
+        "IMU",
+        "WIJN"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ANNIE",
+        "MANNENAVOND",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ED",
+        "MANNENAVOND",
+        "RUUD",
+        "SOLDEERBOUT",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ANNIE",
+        "BH",
+        "CHOCOCHINO",
+        "IMU",
+        "MANNENAVOND"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BH",
+        "BOBO",
+        "ED",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BH",
+        "CNC",
+        "ED",
+        "LUH",
+        "MANNENAVOND"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ANNIE",
+        "BOBO",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 9,
+      "sharedWords": [
+        "BH",
+        "BOBO",
+        "CNC",
+        "ED",
+        "FUGRO",
+        "LUH",
+        "LUHLUH",
+        "MANNENAVOND",
+        "RUUD"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 8,
+      "sharedWords": [
+        "BH",
+        "CNC",
+        "FUGRO",
+        "IMU",
+        "MANNENAVOND",
+        "MOINEAU",
+        "SOLDEERBOUT",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-026-random-11x17-20930915.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BOBO",
+        "ED",
+        "WIJN"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-015-random-11x17-80804107.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BAKKIE",
+        "BAO",
+        "LAURIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-018-random-11x17-52384653.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BH",
+        "GIS",
+        "LAURIE",
+        "SSS"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BUENAS AIRES",
+        "LAURIE",
+        "LIJST",
+        "ORANJE",
+        "VOELSPRIET"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "BUENAS AIRES",
+        "SSS"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BUENAS AIRES",
+        "GPS",
+        "RUUD",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BH",
+        "CROCS",
+        "SIKKENS"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BH",
+        "GPS",
+        "LAURIE",
+        "TESLA",
+        "TUBBO"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "BAKKIE",
+        "BH"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "LAURIE",
+        "ORANJE",
+        "TUBBO",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "BAKKIE",
+        "BAO",
+        "BH",
+        "CROCS",
+        "RUUD",
+        "VOELSPRIET"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 1,
+      "sharedWords": [
+        "BH"
+      ]
+    },
+    {
+      "left": "puzzle-run-022-random-11x17-16611733.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "BAKKIE",
+        "EURO"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-018-random-11x17-52384653.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "CIRKELZAAG",
+        "HAVIK",
+        "LAURIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "FUGRO",
+        "LAURIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BIER",
+        "LEONIE",
+        "SONDE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARIA",
+        "EUROMUNT",
+        "PTC"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BIER",
+        "CPT",
+        "PAP",
+        "PTC",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "LAURIE",
+        "LEONIE",
+        "LIDAR",
+        "PEETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 8,
+      "sharedWords": [
+        "BAKKIE",
+        "BIER",
+        "BLUE DRAGON",
+        "CIRKELZAAG",
+        "HAVIK",
+        "LUH",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARIA",
+        "BIER",
+        "LAURIE",
+        "LIDAR",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "ARIA",
+        "BAKKIE",
+        "BAO",
+        "FUGRO",
+        "LUH",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARIA",
+        "BIER",
+        "FUGRO"
+      ]
+    },
+    {
+      "left": "puzzle-run-015-random-11x17-80804107.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 8,
+      "sharedWords": [
+        "ARIA",
+        "BAKKIE",
+        "BLUE DRAGON",
+        "CPT",
+        "HAVIK",
+        "PEETJE",
+        "PTC",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-016-random-11x17-68822355.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "IT",
+        "LAURIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "AUV",
+        "HM",
+        "SATE",
+        "SSS"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "IT",
+        "MAC",
+        "OPERA"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BH",
+        "CHOCOCHINO",
+        "ELEMENT P",
+        "IT",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BH",
+        "IPHONE",
+        "LAURIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BH",
+        "CIRKELZAAG",
+        "HAVIK",
+        "HM",
+        "MAC"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "IT",
+        "LAURIE",
+        "SATE"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "BH",
+        "IPHONE"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BH",
+        "HELICAL BUCKLING",
+        "IT",
+        "OPERA"
+      ]
+    },
+    {
+      "left": "puzzle-run-018-random-11x17-52384653.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "HAVIK",
+        "HM",
+        "IT",
+        "MAC"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-010-random-11x17-36919695.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BUENAS AIRES",
+        "SONAR"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BUENAS AIRES",
+        "ED",
+        "IT"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "IMU",
+        "IT",
+        "PIETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ED",
+        "LAURIE",
+        "PIETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BODEM",
+        "ED",
+        "EIKEN"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "BADPUTJE",
+        "EIKEN",
+        "IT",
+        "LAURIE",
+        "ORANJE",
+        "PIETJE",
+        "ROBBIE"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ED",
+        "FUGRO",
+        "VOELSPRIET"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BADPUTJE",
+        "FUGRO",
+        "IMU",
+        "IT",
+        "PIETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-016-random-11x17-68822355.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BODEM",
+        "ED",
+        "IT",
+        "WIJN"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-007-random-11x17-61207927.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BUENAS AIRES",
+        "MANNENAVOND"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "ANNIE",
+        "BIER",
+        "ESSIE",
+        "KNIK",
+        "MANNENAVOND",
+        "SATE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BOVENFREES",
+        "LEONIE",
+        "RABARBER",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BIER",
+        "HM",
+        "MANNENAVOND",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ANNA",
+        "ANNIE",
+        "BIER",
+        "BOVENFREES",
+        "SATE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "MANNENAVOND",
+        "SCHRAPER",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "ANNA",
+        "ARENASTRAAT",
+        "BIER",
+        "ESSIE",
+        "KNIK",
+        "MANNENAVOND",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-010-random-11x17-36919695.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BOVENFREES",
+        "HM",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-007-random-11x17-61207927.json",
+      "right": "puzzle-run-025-random-11x17-4602559.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "DIKKE",
+        "IT",
+        "MANNENAVOND",
+        "PTC"
+      ]
+    },
+    {
+      "left": "puzzle-run-007-random-11x17-61207927.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ED",
+        "GPS",
+        "ITALO"
+      ]
+    },
+    {
+      "left": "puzzle-run-007-random-11x17-61207927.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "ED",
+        "MAC",
+        "MANCAVE",
+        "MANNENAVOND"
+      ]
+    },
+    {
+      "left": "puzzle-run-007-random-11x17-61207927.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARIA",
+        "IT",
+        "VERZINKBOOR"
+      ]
+    },
+    {
+      "left": "puzzle-run-007-random-11x17-61207927.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ADIDAS",
+        "ARIA",
+        "ED",
+        "MANNENAVOND",
+        "RUUD",
+        "SPOTJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-007-random-11x17-61207927.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "ARIA",
+        "IT",
+        "MANNENAVOND",
+        "OPERA",
+        "SOLDEERBOUT"
+      ]
+    },
+    {
+      "left": "puzzle-run-007-random-11x17-61207927.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "ARIA",
+        "ED",
+        "IT",
+        "MAC",
+        "PTC",
+        "SPOTJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-025-random-11x17-4602559.json",
+      "right": "puzzle-run-020-random-11x17-73398021.json",
+      "sharedWordCount": 2,
+      "sharedWords": [
+        "BH",
+        "PIETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-025-random-11x17-4602559.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BH",
+        "BIER",
+        "MANNENAVOND",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-025-random-11x17-4602559.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ANNIE",
+        "BIER",
+        "IT",
+        "PIETJE",
+        "SATE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-025-random-11x17-4602559.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "BH",
+        "CROCS",
+        "MANNENAVOND",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-025-random-11x17-4602559.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 9,
+      "sharedWords": [
+        "BH",
+        "BIER",
+        "ESSIE",
+        "IMU",
+        "IT",
+        "KLUSSEN",
+        "KNIK",
+        "MANNENAVOND",
+        "PIETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-025-random-11x17-4602559.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "CPT",
+        "IT",
+        "KOMOPNOU",
+        "MARATHON",
+        "PTC",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-020-random-11x17-73398021.json",
+      "right": "puzzle-run-006-random-11x17-70605382.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BH",
+        "ED",
+        "SAUNA"
+      ]
+    },
+    {
+      "left": "puzzle-run-020-random-11x17-73398021.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 7,
+      "sharedWords": [
+        "BOBO",
+        "BOVENFREES",
+        "LAURIE",
+        "LIDAR",
+        "LITTLE PARAGUAYO",
+        "PIETJE",
+        "TUBBO"
+      ]
+    },
+    {
+      "left": "puzzle-run-020-random-11x17-73398021.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BH",
+        "BOBO",
+        "ED",
+        "IPHONE"
+      ]
+    },
+    {
+      "left": "puzzle-run-020-random-11x17-73398021.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BH",
+        "PIETJE",
+        "ZEE"
+      ]
+    },
+    {
+      "left": "puzzle-run-020-random-11x17-73398021.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 4,
+      "sharedWords": [
+        "BOBO",
+        "BOVENFREES",
+        "ED",
+        "PEETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-006-random-11x17-70605382.json",
+      "right": "puzzle-run-005-random-11x17-15694350.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "BIER",
+        "EIKEN",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-006-random-11x17-70605382.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 8,
+      "sharedWords": [
+        "BAKKIE",
+        "BH",
+        "CNC",
+        "ED",
+        "LUH",
+        "MANNENAVOND",
+        "PAP",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-006-random-11x17-70605382.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BH",
+        "BIER",
+        "CNC",
+        "MANNENAVOND"
+      ]
+    },
+    {
+      "left": "puzzle-run-006-random-11x17-70605382.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 9,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "BAKKIE",
+        "BLUE DRAGON",
+        "BODEM",
+        "ED",
+        "HAVIK",
+        "HM",
+        "MAC",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-005-random-11x17-15694350.json",
+      "right": "puzzle-run-021-random-11x17-76676542.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARIA",
+        "BOBO",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-005-random-11x17-15694350.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ANNA",
+        "ARIA",
+        "BADPUTJE",
+        "BIER",
+        "IT",
+        "PIETJE"
+      ]
+    },
+    {
+      "left": "puzzle-run-005-random-11x17-15694350.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARIA",
+        "BOBO",
+        "BOVENFREES",
+        "IT",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-021-random-11x17-76676542.json",
+      "right": "puzzle-run-002-random-11x17-50013106.json",
+      "sharedWordCount": 5,
+      "sharedWords": [
+        "ARIA",
+        "BH",
+        "CNC",
+        "FUGRO",
+        "MANNENAVOND"
+      ]
+    },
+    {
+      "left": "puzzle-run-021-random-11x17-76676542.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 6,
+      "sharedWords": [
+        "ARIA",
+        "BAKKIE",
+        "BOBO",
+        "ED",
+        "SPOTJE",
+        "ZAUBERFLOTE"
+      ]
+    },
+    {
+      "left": "puzzle-run-002-random-11x17-50013106.json",
+      "right": "puzzle-run-002-random-11x17-2702962.json",
+      "sharedWordCount": 3,
+      "sharedWords": [
+        "ARENASTRAAT",
+        "ARIA",
+        "IT"
+      ]
+    }
+  ],
+  "selectionPdfDir": "output\\pdf\\selection",
+  "copiedPdfs": [
+    "output\\pdf\\selection\\puzzle-run-001-random-11x17-72764371.pdf",
+    "output\\pdf\\selection\\puzzle-run-001-random-11x17-72764371-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-003-random-11x17-2241440.pdf",
+    "output\\pdf\\selection\\puzzle-run-003-random-11x17-2241440-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-023-random-11x17-423568.pdf",
+    "output\\pdf\\selection\\puzzle-run-023-random-11x17-423568-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-013-random-11x17-45674949.pdf",
+    "output\\pdf\\selection\\puzzle-run-013-random-11x17-45674949-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-026-random-11x17-20930915.pdf",
+    "output\\pdf\\selection\\puzzle-run-026-random-11x17-20930915-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-022-random-11x17-16611733.pdf",
+    "output\\pdf\\selection\\puzzle-run-022-random-11x17-16611733-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-015-random-11x17-80804107.pdf",
+    "output\\pdf\\selection\\puzzle-run-015-random-11x17-80804107-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-018-random-11x17-52384653.pdf",
+    "output\\pdf\\selection\\puzzle-run-018-random-11x17-52384653-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-016-random-11x17-68822355.pdf",
+    "output\\pdf\\selection\\puzzle-run-016-random-11x17-68822355-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-010-random-11x17-36919695.pdf",
+    "output\\pdf\\selection\\puzzle-run-010-random-11x17-36919695-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-007-random-11x17-61207927.pdf",
+    "output\\pdf\\selection\\puzzle-run-007-random-11x17-61207927-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-025-random-11x17-4602559.pdf",
+    "output\\pdf\\selection\\puzzle-run-025-random-11x17-4602559-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-020-random-11x17-73398021.pdf",
+    "output\\pdf\\selection\\puzzle-run-020-random-11x17-73398021-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-006-random-11x17-70605382.pdf",
+    "output\\pdf\\selection\\puzzle-run-006-random-11x17-70605382-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-005-random-11x17-15694350.pdf",
+    "output\\pdf\\selection\\puzzle-run-005-random-11x17-15694350-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-021-random-11x17-76676542.pdf",
+    "output\\pdf\\selection\\puzzle-run-021-random-11x17-76676542-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-002-random-11x17-50013106.pdf",
+    "output\\pdf\\selection\\puzzle-run-002-random-11x17-50013106-solution.pdf",
+    "output\\pdf\\selection\\puzzle-run-002-random-11x17-2702962.pdf",
+    "output\\pdf\\selection\\puzzle-run-002-random-11x17-2702962-solution.pdf"
+  ]
+}
